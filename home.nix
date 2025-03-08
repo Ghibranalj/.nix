@@ -1,11 +1,32 @@
-{ config, pkgs, ...} :{
+{ config, pkgs, lib, ...} :{
 
   home.username = "gibi";
   home.homeDirectory = "/home/gibi";
   home.stateVersion = "24.11";
 
-  home.file.".bashrc".source= config.lib.file.mkOutOfStoreSymlink
-     "${config.home.homeDirectory}/.nix/home/.bashrc";
+  home.file.".bashrc".source = lib.mkForce (
+    config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/.nix/home/.bashrc"
+  
+  );
+
+  home.file.".config/git-prompt.sh".source = "${pkgs.git}/share/git/contrib/completion/git-prompt.sh";
+
+
+  programs.bash = {
+   enable = true;
+   initExtra = ''
+      # Source system-wide bashrc
+      if [ -f /etc/bashrc ]; then
+        source /etc/bashrc
+      fi
+
+      # Source user-specific bashrc
+      if [ -f ~/.bashrc ]; then
+        source ~/.bashrc
+      fi
+    '';
+  };
 
   programs.git = {
     enable = true;

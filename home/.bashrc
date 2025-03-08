@@ -1,8 +1,3 @@
-# If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-    *) return ;;
-esac
 
 if ! shopt -oq posix; then
     if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -36,7 +31,11 @@ ex() {
     esac
 }
 
-[[ -f /usr/share/git/completion/git-prompt.sh ]] && source /usr/share/git/completion/git-prompt.sh
+source ~/.config/git-prompt.sh
+
+export GIT_PS1_SHOWDIRTYSTATE=1        # Show '*' for unstaged, '+' for staged
+export GIT_PS1_SHOWUNTRACKEDFILES=1    # Show '%' for untracked files
+export GIT_PS1_SHOWUPSTREAM="auto"     # Show upstream status (e.g., <, >, <>)
 
 export PS1="\[\033[38;5;6m\]\u\[\033[38;5;8m\]@\[\033[38;5;10m\]\h\[\033[38;5;8m\]-\[\033[38;5;6m\][\[\033[38;5;9m\]\W\[\033[38;5;7m\]\$(__git_ps1 ' (%s) ')\[\033[38;5;6m\]]\[\033[38;5;8m\]\\$ \[\$(tput  sgr0)\]"
 
