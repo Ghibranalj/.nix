@@ -28,6 +28,10 @@
     stow
     emacs30
     btop
+    fd
+    fzf
+    coreutils
+    ripgrep
   ];
 
   services.openssh.enable = true;

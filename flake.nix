@@ -33,7 +33,7 @@
     hosts = {
       server = mkHost { 
         hostName = "server";
-	gui = false;
+	      gui = false;
       };
     };
 

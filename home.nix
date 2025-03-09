@@ -36,9 +36,6 @@
       init.defaultBranch = "master";
     };
   };
-  home.packages = with pkgs; [
-    openssh
-  ];
 
   programs.doom-emacs = {
     enable = true;
@@ -67,7 +64,10 @@
         Type = "notify";
         ExecStart = "/usr/bin/env PATH=$PATH ${config.home.profileDirectory}/bin/emacs --fg-daemon";
         ExecStop = "${pkgs.emacs}/bin/emacsclient --eval '(kill-emacs)'";
-        Environment = "SSH_AUTH_SOCK=%t/keyring/ssh";
+        Environment = lib.mkForce [
+          "SSH_AUTH_SOCK=%t/keyring/ssh"
+				  "PATH=/run/current-system/sw/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${config.home.profileDirectory}/bin"
+        ];
         Restart = "always";
       };
       Install = {
@@ -84,7 +84,10 @@
         Type = "notify";
         ExecStart = "/usr/bin/env PATH=$PATH ${config.home.profileDirectory}/bin/emacs --fg-daemon=term";
         ExecStop = "${pkgs.emacs}/bin/emacsclient --eval -s term '(kill-emacs)'";
-        Environment = "SSH_AUTH_SOCK=%t/keyring/ssh";
+        Environment = lib.mkForce [
+          "SSH_AUTH_SOCK=%t/keyring/ssh"
+				  "PATH=/run/current-system/sw/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${config.home.profileDirectory}/bin"
+        ];
         Restart = "always";
       };
       Install = {
