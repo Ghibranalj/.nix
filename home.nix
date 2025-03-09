@@ -1,4 +1,6 @@
-{ config, pkgs, lib, ...} :{
+{ config, pkgs, lib, nix-doom-emacs-unstraightened, ...} :{
+
+  imports = [ nix-doom-emacs-unstraightened.hmModule ];
 
   home.username = "gibi";
   home.homeDirectory = "/home/gibi";
@@ -7,11 +9,7 @@
   home.file.".bashrc".source = lib.mkForce (
     config.lib.file.mkOutOfStoreSymlink
       "${config.home.homeDirectory}/.nix/home/.bashrc"
-  
   );
-
-  home.file.".config/git-prompt.sh".source = "${pkgs.git}/share/git/contrib/completion/git-prompt.sh";
-
 
   programs.bash = {
    enable = true;
@@ -28,6 +26,7 @@
     '';
   };
 
+  home.file.".config/git-prompt.sh".source = "${pkgs.git}/share/git/contrib/completion/git-prompt.sh";
   programs.git = {
     enable = true;
     userName = "Ghibranalj";
@@ -35,5 +34,16 @@
     extraConfig = {
       init.defaultBranch = "master";
     };
+  };
+
+
+#  home.file.".config/doom".source =  lib.mkForce (
+#    config.lib.file.mkOutOfStoreSymlink
+#      "${config.home.homeDirectory}/.nix/home/doom"
+#  );
+
+  programs.doom-emacs = {
+    enable = true;
+    doomDir = ./home/doom;
   };
 }

@@ -26,6 +26,8 @@
     curl
     openssh
     stow
+    emacs30
+    btop
   ];
 
   services.openssh.enable = true;

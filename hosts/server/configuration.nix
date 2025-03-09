@@ -29,4 +29,15 @@
   # Optional: Docker setup
   virtualisation.docker.enable = true;
   users.users.gibi.extraGroups = [ "docker" ];
+
+
+  services.openssh = {
+    enable = true;
+    settings = {
+      ClientAliveInterval = 300;    # 5 minutes
+      ClientAliveCountMax = 36;     # 36 attempts
+      # LoginGraceTime = "30s";     # Optional: Time to authenticate
+    };
+  };
+
 }
