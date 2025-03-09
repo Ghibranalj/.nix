@@ -1,5 +1,6 @@
-{ config, pkgs, lib, nix-doom-emacs-unstraightened, ...} :{
+{ config, pkgs, lib, nix-doom-emacs-unstraightened, gui, ... }:
 
+{
   imports = [ nix-doom-emacs-unstraightened.hmModule ];
 
   home.username = "gibi";
@@ -12,8 +13,8 @@
   );
 
   programs.bash = {
-   enable = true;
-   initExtra = ''
+    enable = true;
+    initExtra = ''
       # Source system-wide bashrc
       if [ -f /etc/bashrc ]; then
         source /etc/bashrc
@@ -36,14 +37,54 @@
     };
   };
 
-
-#  home.file.".config/doom".source =  lib.mkForce (
-#    config.lib.file.mkOutOfStoreSymlink
-#      "${config.home.homeDirectory}/.nix/home/doom"
-#  );
-
   programs.doom-emacs = {
     enable = true;
     doomDir = ./home/doom;
+    provideEmacs = true;
+
+    extraBinPackages = with pkgs; [
+      ripgrep  # already included by default
+      fd       # already included by default
+      git      # already included by default
+      fzf      # additional package
+      bat      # additional package
+      coreutils
+    ];
+  };
+
+  systemd.user.services = {
+    emacs = lib.mkIf gui {
+      Unit = {
+        Description = "Emacs text editor";
+        Documentation = [ "info:emacs" "man:emacs(1)" "https://gnu.org/software/emacs/" ];
+      };
+      Service = {
+        Type = "notify";
+        ExecStart = "${config.home.profileDirectory}/bin/emacs --fg-daemon";
+        ExecStop = "${pkgs.emacs}/bin/emacsclient --eval '(kill-emacs)'";
+        Environment = "SSH_AUTH_SOCK=%t/keyring/ssh";
+        Restart = "always";
+      };
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
+    };
+
+    emacs-term = lib.mkIf (!gui) {
+      Unit = {
+        Description = "Emacs text editor";
+        Documentation = [ "info:emacs" "man:emacs(1)" "https://gnu.org/software/emacs/" ];
+      };
+      Service = {
+        Type = "notify";
+        ExecStart = "${config.home.profileDirectory}/bin/emacs --fg-daemon=term";
+        ExecStop = "${pkgs.emacs}/bin/emacsclient --eval -s term '(kill-emacs)'";
+        Environment = "SSH_AUTH_SOCK=%t/keyring/ssh";
+        Restart = "always";
+      };
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
+    };
   };
 }
