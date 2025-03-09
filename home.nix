@@ -36,6 +36,9 @@
       init.defaultBranch = "master";
     };
   };
+  home.packages = with pkgs; [
+    openssh
+  ];
 
   programs.doom-emacs = {
     enable = true;
@@ -48,7 +51,9 @@
       git      # already included by default
       fzf      # additional package
       bat      # additional package
+      git
       coreutils
+      openssh
     ];
   };
 
@@ -60,7 +65,7 @@
       };
       Service = {
         Type = "notify";
-        ExecStart = "${config.home.profileDirectory}/bin/emacs --fg-daemon";
+        ExecStart = "/usr/bin/env PATH=$PATH ${config.home.profileDirectory}/bin/emacs --fg-daemon";
         ExecStop = "${pkgs.emacs}/bin/emacsclient --eval '(kill-emacs)'";
         Environment = "SSH_AUTH_SOCK=%t/keyring/ssh";
         Restart = "always";
@@ -77,7 +82,7 @@
       };
       Service = {
         Type = "notify";
-        ExecStart = "${config.home.profileDirectory}/bin/emacs --fg-daemon=term";
+        ExecStart = "/usr/bin/env PATH=$PATH ${config.home.profileDirectory}/bin/emacs --fg-daemon=term";
         ExecStop = "${pkgs.emacs}/bin/emacsclient --eval -s term '(kill-emacs)'";
         Environment = "SSH_AUTH_SOCK=%t/keyring/ssh";
         Restart = "always";
