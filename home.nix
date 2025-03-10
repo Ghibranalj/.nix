@@ -66,7 +66,7 @@
         ExecStart = "${config.home.profileDirectory}/bin/emacs --fg-daemon=term";
         ExecStop = "${pkgs.emacs}/bin/emacsclient --eval -s term '(kill-emacs)'";
         Environment = "PATH=/run/current-system/sw/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${config.home.profileDirectory}/bin";
-	PassEnvironment = "";
+        PassEnvironment = "";
         Restart = "always";
       };
       Install = {
@@ -77,10 +77,6 @@
 
   programs.neovim = {
     enable = true;
-    extraConfig = ''
-      set number relativenumber
-      colorscheme material
-    ''; 
     plugins = with pkgs.vimPlugins; [
       material-nvim
     ]; 
