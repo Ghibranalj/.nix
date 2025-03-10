@@ -10,9 +10,10 @@
   };
   outputs = { self, nixpkgs, home-manager, nix-doom-emacs-unstraightened }: let
     # Host generator function (thanks deepseek)
-    mkHost = { hostName, system ? "x86_64-linux", hmEnabled ? true, gui ? true }: 
+    mkHost = { hostName, system ? "x86_64-linux", hmEnabled ? true, gui ? true, dev ? true }: 
       nixpkgs.lib.nixosSystem {
         inherit system;
+        specialArgs = { inherit gui dev; };
         modules = [
           (./hosts + "/${hostName}/hardware-configuration.nix")
           (./hosts + "/${hostName}/configuration.nix")

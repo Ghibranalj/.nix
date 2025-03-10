@@ -154,8 +154,8 @@ function mkcdir() {
     mkdir -p $1 && cd $1
 }
 
-if command -v exa &>/dev/null; then
-    alias ls='exa -g --icons --color=always'
+if command -v eza &>/dev/null; then
+    alias ls='eza -g --icons --color=always'
     alias ll='ls -alhF --git'
 else
     alias ls='ls --color=auto'
@@ -224,41 +224,29 @@ alias gitc='git commit -m'
 alias gitpull='git pull origin $(git branch --show-current)'
 
 # Emacs aliases
-alias emacst='emacsclient -c -t -s term'
-alias codet=emacst
-alias emacs-server='/usr/bin/emacs'
-alias restart-emacs='systemctl reload-or-restart emacs --user ; systemctl status --user emacs'
+if [[ GUI == "TRUE" ]]; then
+    function code() {
+        local e=$(emacsclient -n -e -s server "(> (length (frame-list)) 1)")
+        if [ "$e" = "t" ]; then
+            emacsclient -n -s server -a "" "$@"
+        else
+            emacsclient -c -s server -n -a "" "$@"
+        fi
+    }
+    alias emacs='code'
+    alias restart-emacs='systemctl reload-or-restart emacs --user ; systemctl status --user emacs'
+else
+    alias emacs='emacsclient -c -t -s term'
+    alias code=emacs
+    alias restart-emacs='systemctl reload-or-restart emacs-term --user ; systemctl status --user emacs-term'
+fi
 
 function file() {
     code -e "(dired \"$1\")"
 }
 
-alias dbg-emacs='emacs-server --debug-init --fg-daemon=debug'
+alias dbg-emacs='\emacs --debug-init --fg-daemon=debug'
 alias kill-emacs="emacsclient -e  '(kill-emacs) || killall emacs'"
-
-function code() {
-
-    local e=$(emacsclient -n -e -s server "(> (length (frame-list)) 1)")
-    if [ "$e" = "t" ]; then
-        emacsclient -n -s server -a "" "$@"
-    else
-        emacsclient -c -s server -n -a "" "$@"
-    fi
-}
-
-alias emacs='code'
-alias vcode='/usr/bin/code'
-
-# function man() {
-#     emacst -s term -e "(man \"$*\")"
-# }
-
-[ -f /opt/asdf-vm/asdf.sh ] && source /opt/asdf-vm/asdf.sh
-
-alias yas="yay -Slq | fzf -m --preview 'yay -Si {1}' | xargs -ro  yay -S"
-alias yar="yay -Qqe | fzf -m --preview 'yay -Si {1}' | xargs -ro  yay -Rns"
-alias yayu="yay -Qu | fzf -m --preview 'yay -Si {1}' | cut -d' ' -f1 | xargs -ro  yay -Syy"
-alias sman="apropos . | fzf -m --preview 'man {1}{2}'  --bind ctrl-h:preview-up,ctrl-l:preview-down | awk '{printf(\"%s%s\",\$1,\$2)}' | xargs man"
 
 [ -d $HOME/.bin ] && export PATH=$PATH:$HOME/.bin
 [ -d $HOME/.config/emacs/bin ] && export PATH=$PATH:$HOME/.config/emacs/bin
@@ -284,10 +272,6 @@ function see-docker() {
 }
 
 alias unadb="adb shell pm list packages  | fzf | awk -F':' '{print \$2}' | xargs -ro adb shell pm uninstall -k --user 0"
-
-# if [ -f /usr/share/doc/find-the-command/ftc.bash ]; then
-#     source /usr/share/doc/find-the-command/ftc.bash
-# fi
 
 alias make='make --no-print-directory '
 

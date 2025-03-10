@@ -12,19 +12,12 @@
       "${config.home.homeDirectory}/.nix/home/.bashrc"
   );
 
+  home.sessionVariables = {
+    GUI = if gui then "TRUE" else "FALSE";
+  }; 
+
   programs.bash = {
     enable = true;
-    initExtra = ''
-      # Source system-wide bashrc
-      if [ -f /etc/bashrc ]; then
-        source /etc/bashrc
-      fi
-
-      # Source user-specific bashrc
-      if [ -f ~/.bashrc ]; then
-        source ~/.bashrc
-      fi
-    '';
   };
 
   home.file.".config/git-prompt.sh".source = "${pkgs.git}/share/git/contrib/completion/git-prompt.sh";
@@ -41,17 +34,6 @@
     enable = true;
     doomDir = ./home/doom;
     provideEmacs = true;
-
-    extraBinPackages = with pkgs; [
-      ripgrep  # already included by default
-      fd       # already included by default
-      git      # already included by default
-      fzf      # additional package
-      bat      # additional package
-      git
-      coreutils
-      openssh
-    ];
   };
 
   systemd.user.services = {
@@ -91,5 +73,22 @@
         WantedBy = [ "default.target" ];
       };
     };
+  };
+
+  programs.neovim = {
+    enable = true;
+    extraConfig = ''
+      set number relativenumber
+      colorscheme material
+    ''; 
+    plugins = with pkgs.vimPlugins; [
+      material-nvim
+    ]; 
+    extraLuaConfig = ''
+      require('material').setup()
+      vim.g.material_style = "darker"
+      vim.cmd 'colorscheme material'
+      vim.cmd 'set number relativenumber'
+    '';
   };
 }
