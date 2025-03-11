@@ -37,7 +37,12 @@ export GIT_PS1_SHOWDIRTYSTATE=1        # Show '*' for unstaged, '+' for staged
 export GIT_PS1_SHOWUNTRACKEDFILES=1    # Show '%' for untracked files
 export GIT_PS1_SHOWUPSTREAM="auto"     # Show upstream status (e.g., <, >, <>)
 
-export PS1="\[\033[38;5;6m\]\u\[\033[38;5;8m\]@\[\033[38;5;10m\]\h\[\033[38;5;8m\]-\[\033[38;5;6m\][\[\033[38;5;9m\]\W\[\033[38;5;7m\]\$(__git_ps1 ' (%s) ')\[\033[38;5;6m\]]\[\033[38;5;8m\]\\$ \[\$(tput  sgr0)\]"
+NIX_SHELL_PRESERVE_PROMPT=1;
+export PS1="\[\033[38;5;6m\]\u\[\033[38;5;8m\]@\[\033[38;5;10m\]\h\[\033[38;5;6m\][\[\033[38;5;9m\]\W\[\033[38;5;7m\]\$(__git_ps1 ' (%s) ')\[\033[38;5;6m\]]\[\033[38;5;8m\]\\$\[\$(tput  sgr0)\]"
+if [[ -n "$IN_NIX_SHELL" ]]; then
+  export PS1="$PS1 \[\e[38;5;22m\](nix-shell)\[\e[0m\]"
+fi
+export PS1="$PS1 "
 
 #coloured manpages
 export LESS_TERMCAP_mb=$'\e[1;32m'

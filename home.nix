@@ -36,28 +36,26 @@
     provideEmacs = true;
   };
 
-  systemd.user.services = let
+  systemd.user.services.emacs = let
     emacs-server = if host.isGui then "server" else "term";
     in {
-      emacs = {
-        Unit = {
-          Description = "Emacs text editor";
-          Documentation = [ "info:emacs" "man:emacs(1)" "https://gnu.org/software/emacs/" ];
-        };
-        Service = {
-          Type = "notify";
-          ExecStart = "${config.home.profileDirectory}/bin/emacs --fg-daemon=${emacs-server}";
-          ExecStop = "${pkgs.emacs}/bin/emacsclient -s ${emacs-server} --eval '(kill-emacs)'";
-          Environment = lib.mkForce [
-            "PATH=/run/current-system/sw/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${config.home.profileDirectory}/bin"
-          ];
-          Restart = "always";
-        };
-        Install = {
-          WantedBy = [ "default.target" ];
-        };
+      Unit = {
+        Description = "Emacs text editor";
+        Documentation = [ "info:emacs" "man:emacs(1)" "https://gnu.org/software/emacs/" ];
       };
-  };
+      Service = {
+        Type = "notify";
+        ExecStart = "${config.home.profileDirectory}/bin/emacs --fg-daemon=${emacs-server}";
+        ExecStop = "${pkgs.emacs}/bin/emacsclient -s ${emacs-server} --eval '(kill-emacs)'";
+        Environment = lib.mkForce [
+          "PATH=/run/current-system/sw/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${config.home.profileDirectory}/bin"
+        ];
+        Restart = "always";
+      };
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
+    };
 
   programs.neovim = {
     enable = true;
