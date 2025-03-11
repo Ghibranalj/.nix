@@ -1,4 +1,4 @@
-{ config, pkgs, dev, ... }:
+{ config, pkgs, inputs, host, ... }:
 {
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
@@ -39,7 +39,7 @@
     ripgrep
     killall
     eza
-  ] ++ (if  dev then [
+  ] ++ (if host.dev then [
     ## Compilers
     go
     gcc

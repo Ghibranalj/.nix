@@ -8,12 +8,17 @@
     };
     nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
   };
-  outputs = { self, nixpkgs, home-manager, nix-doom-emacs-unstraightened }: let
+  outputs = { self, nixpkgs, home-manager, ... } @ inputs : let
     # Host generator function (thanks deepseek)
-    mkHost = { hostName, system ? "x86_64-linux", hmEnabled ? true, gui ? true, dev ? true }: 
+    mkHost = { hostName, system ? "x86_64-linux", hmEnabled ? true, isGui ? true, dev ? true }:
+      let
+        host = {
+          inherit isGui dev;
+        }; 
+      in
       nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit gui dev; };
+        specialArgs = { inherit inputs host; };
         modules = [
           (./hosts + "/${hostName}/hardware-configuration.nix")
           (./hosts + "/${hostName}/configuration.nix")
@@ -21,7 +26,7 @@
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
-	    home-manager.extraSpecialArgs = { inherit nix-doom-emacs-unstraightened gui; };
+            home-manager.extraSpecialArgs = { inherit inputs host; };
             home-manager.users.gibi = 
               if hmEnabled
               then import ./home.nix
@@ -34,7 +39,7 @@
     hosts = {
       server = mkHost { 
         hostName = "server";
-	      gui = false;
+	      isGui = false;
       };
     };
 
