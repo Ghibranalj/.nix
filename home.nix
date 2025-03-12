@@ -3,24 +3,32 @@
 {
   imports = [ inputs.nix-doom-emacs-unstraightened.hmModule ];
 
-  home.username = "gibi";
-  home.homeDirectory = "/home/gibi";
-  home.stateVersion = "24.11";
+  home = {
+    username = "gibi";
+    homeDirectory = "/home/gibi";
+    stateVersion = "24.11";
 
-  home.file.".bashrc".source = lib.mkForce (
-    config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/.nix/home/.bashrc"
-  );
+    file.".bashrc".source = lib.mkForce (
+      config.lib.file.mkOutOfStoreSymlink
+        "${config.home.homeDirectory}/.nix/home/.bashrc"
+    );
 
-  home.sessionVariables = {
-    GUI = if host.isGui then "TRUE" else "FALSE";
-  }; 
+    sessionVariables = {
+      GUI = if host.isGui then "TRUE" else "FALSE";
+    }; 
+
+    file.".config/git-prompt.sh".source = "${pkgs.git}/share/git/contrib/completion/git-prompt.sh";
+  };
 
   programs.bash = {
     enable = true;
+    profileExtra = ''
+    alias nix-rebuild="sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/.nix#${host.hostName}"
+    alias nix-update="sudo nix-channel --update && nix-rebuild"
+    alias nix-cleanup="sudo nix-collect-garbage -d"
+    '';
   };
 
-  home.file.".config/git-prompt.sh".source = "${pkgs.git}/share/git/contrib/completion/git-prompt.sh";
   programs.git = {
     enable = true;
     userName = "Ghibranalj";

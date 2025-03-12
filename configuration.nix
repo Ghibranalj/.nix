@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, host, ... }:
+{ config, pkgs, lib, inputs, host, ... }:
 {
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
@@ -63,7 +63,7 @@
     gocode-gomod
     ] else []) ;
 
-  services.openssh.enable = true;
+  services.openssh.enable = lib.mkDefault true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;

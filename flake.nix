@@ -13,7 +13,7 @@
     mkHost = { hostName, system ? "x86_64-linux", hmEnabled ? true, isGui ? true, dev ? true }:
       let
         host = {
-          inherit isGui dev;
+          inherit hostName isGui dev;
         }; 
       in
       nixpkgs.lib.nixosSystem {
