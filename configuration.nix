@@ -61,7 +61,10 @@
     lua-language-server
     typescript-language-server
     gocode-gomod
-    ] else []) ;
+    bash-language-server
+    ## tree sitter
+    tree-sitter
+  ] else []) ;
 
   services.openssh.enable = lib.mkDefault true;
 

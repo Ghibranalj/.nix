@@ -7,13 +7,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
+    templ-ts-mode = {
+      url = "github:Ghibranalj/templ-ts-mode";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = { self, nixpkgs, home-manager, ... } @ inputs : let
     # Host generator function (thanks deepseek)
     mkHost = { hostName, system ? "x86_64-linux", hmEnabled ? true, isGui ? true, dev ? true }:
       let
         host = {
-          inherit hostName isGui dev;
+          inherit hostName isGui dev system;
         }; 
       in
       nixpkgs.lib.nixosSystem {

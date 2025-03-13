@@ -144,3 +144,12 @@
 
 (package! highlight-indent-guides :pin "3205abe2721053416e354a1ff53947dd122a6941")
 (package! evil-collection :pin "cb850ff0d11f644dbd133428cff57e82e655ecd7")
+
+;; (package! :pin "016bd286a1ba4628f833a626f8b9d497882ecdf3"
+;;   (:type git :host github :repo "renzmann/treesit-auto.git")
+;;   :files ("*.el") :branch "master")
+
+(package! tree-sitter-langs :built-in t)
+(package! tree-sitter :built-in t)
+(package! treesit-grammars :built-in t)
+(package! templ-ts-mode :built-in t) 

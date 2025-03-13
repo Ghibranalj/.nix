@@ -42,7 +42,16 @@
     enable = true;
     doomDir = ./home/doom;
     provideEmacs = true;
+    experimentalFetchTree= true;
+
+    extraPackages = (ps: with ps; [
+      tree-sitter tree-sitter-langs treesit-grammars.with-all-grammars
+      inputs.templ-ts-mode.packages.${host.system}.templ-mode-emacs
+      inputs.templ-ts-mode.packages.${host.system}.templ-grammar
+    ]);
   };
+
+  programs.home-manager.enable = true;
 
   systemd.user.services.emacs = let
     emacs-server = if host.isGui then "server" else "term";

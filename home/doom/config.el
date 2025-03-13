@@ -205,8 +205,12 @@
 (use-package! lsp-mode
   :custom
   (lsp-headerline-breadcrumb-mode t)
+  (lsp-disabled-clients '(emacs-lisp-mode))
   :hook
-  (lsp-mode . lsp-headerline-breadcrumb-mode)
+  (prog-mode . (lambda ()
+                (unless (derived-mode-p 'emacs-lisp-mode)
+                    (lsp-deferred))))
+  (prog-mode . lsp-headerline-breadcrumb-mode)
   :config
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\tmp\\'")
   ;; GLSL language support
@@ -594,7 +598,9 @@ Shows terminal and dired in seperate section."
   (vterm-posframe-vterm-func '+vterm/toggle)
   (vterm-posframe-vterm-func-interactive t))
 
+(use-package! templ-ts-mode
+  :custom
+  (templ-ts-mode-grammar-install nil))
+
 (message "=== Done Loading Config ===")
 
-
-()
