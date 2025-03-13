@@ -17,12 +17,12 @@
       GUI = if host.isGui then "TRUE" else "FALSE";
     }; 
 
-    file.".config/git-prompt.sh".source = "${pkgs.git}/share/git/contrib/completion/git-prompt.sh";
   };
 
   programs.bash = {
     enable = true;
     profileExtra = ''
+    . ${pkgs.git}/share/git/contrib/completion/git-prompt.sh
     alias nix-rebuild="sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/.nix#${host.hostName}"
     alias nix-update="sudo nix-channel --update && nix-rebuild"
     alias nix-cleanup="sudo nix-collect-garbage -d"

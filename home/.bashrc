@@ -1,11 +1,10 @@
-
-if ! shopt -oq posix; then
-    if [ -f /usr/share/bash-completion/bash_completion ]; then
-        . /usr/share/bash-completion/bash_completion
-    elif [ -f /etc/bash_completion ]; then
-        . /etc/bash_completion
-    fi
-fi
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+    *) return ;;
+esac
+# include .profile if it exists
+[[ -f ~/.profile ]] && . ~/.profile
 
 ex() {
     if [[ ! -f $1 ]]; then
@@ -31,7 +30,7 @@ ex() {
     esac
 }
 
-source ~/.config/git-prompt.sh
+# source ~/.config/git-prompt.sh
 
 export GIT_PS1_SHOWDIRTYSTATE=1        # Show '*' for unstaged, '+' for staged
 export GIT_PS1_SHOWUNTRACKEDFILES=1    # Show '%' for untracked files
@@ -110,13 +109,6 @@ function delete() {
     files="$(/bin/ls -a | fzf -m | tr '\n' ' ')"
     [[ $files == "" ]] && return
     rm $@ -v $files
-}
-function make-homework() {
-    if [ $# -eq 0 ]; then
-        echo "err: No arguments"
-        return 254
-    fi
-    touch vclj2729_B$1_A{1..4}.tex
 }
 
 function ind() {
@@ -238,13 +230,18 @@ if [[ GUI == "TRUE" ]]; then
             emacsclient -c -s server -n -a "" "$@"
         fi
     }
-    alias emacs='code'
-    alias restart-emacs='systemctl reload-or-restart emacs --user ; systemctl status --user emacs'
 else
-    alias emacs='emacsclient -c -t -s term'
-    alias code=emacs
-    alias restart-emacs='systemctl reload-or-restart emacs-term --user ; systemctl status --user emacs-term'
+    function code() {
+        if [ -z "$INSIDE_EMACS" ]; then
+            emacsclient -c -t -s term "$@"
+        else
+            emacsclient -n -s term "$@"
+        fi
+    }
 fi
+alias emacs='code'
+
+alias restart-emacs='systemctl reload-or-restart emacs --user ; systemctl status --user emacs'
 
 function file() {
     code -e "(dired \"$1\")"
