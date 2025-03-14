@@ -1,0 +1,174 @@
+# For the benefit of emacs users: -*- mode: sh; eval: (format-all-mode -1)-*-
+#
+###########################
+# xbindkeys configuration #
+###########################
+#
+# Version: 1.8.7
+#
+# If you edit this file, do not forget to uncomment any lines
+# that you change.
+# The pound(#) symbol may be used anywhere for comments.
+#
+# To specify a key, you can use 'xbindkeys --key' or
+# 'xbindkeys --multikey' and put one of the two lines in this file.
+#
+# The format of a command line is:
+#    "command to start"
+#       associated key
+#
+#
+# A list of keys is in /usr/include/X11/keysym.h and in
+# /usr/include/X11/keysymdef.h
+# The XK_ is not needed.
+#
+# List of modifier:
+#   Release, Control, Shift, Mod1 (Alt), Mod2 (NumLock),
+#   Mod3 (CapsLock), Mod4, Mod5 (Scroll).
+#
+
+# The release modifier is not a standard X modifier, but you can
+# use it if you want to catch release events instead of press events
+
+# By defaults, xbindkeys does not pay attention with the modifiers
+# NumLock, CapsLock and ScrollLock.
+# Uncomment the lines above if you want to pay attention to them.
+
+#keystate_numlock = enable
+# keystate_capslock = enable
+#keystate_scrolllock= enable
+
+#"echo `whoami` > $HOME/test"
+#    m:0xc + c:28
+#    # Control+Alt + t
+"blueman-manager"
+    m:0x1c + c:56
+    # Control+Alt+Mod2 + b
+"$HOME/.bin/calculator.sh"
+    m:0x1c + c:54
+    # Control+Alt+Mod2 + c
+"pavucontrol -t 3"
+    m:0xc + c:55
+    Control+Alt + v
+"spotify"
+    m:0xc + c:58
+    #Control+Alt + m
+"gnome-screenshot --interactive"
+    m:0x1c + c:39
+    #Control+Alt+Mod2 + s
+"pop-shell-shortcut"
+    m:0xc + c:43
+ Control+Alt + h
+"rofi -show drun"
+    m:0xc + c:65
+    Control+Alt + space
+"$HOME/.bin/shutdown.sh"
+    m:0xc + c:119
+    Control+Alt + Delete
+"rofi -show emoji -modi emoji"
+    m:0xc + c:26
+    Control+Alt + e
+# "rofi -show window -kb-row-down Alt+Tab"
+"$HOME/.bin/rofi-window.sh"
+    m:0x8 + c:23
+    Alt + Tab
+
+"emacsclient --create-frame"
+    m:0xc + c:36
+    Control+Alt + Return
+
+"rofi -show run -modi run"
+    m:0xc + c:53
+    Control+Alt + x
+
+"bash -i -c \"$(alias | awk -F'[ =]' '{print $2}' | rofi -dmenu -p 'Alias')\""
+    m:0xc + c:37
+    Control+Alt + Control_L
+
+"$HOME/.bin/terminal"
+    m:0xc + c:28
+    Control+Alt + t
+
+"$HOME/.bin/volume down"
+    m:0xc + c:20
+    Control+Alt + minus
+
+"$HOME/.bin/volume up"
+    m:0xc + c:21
+    Control+Alt + equal
+
+"$HOME/.bin/volume mute"
+    m:0xc + c:19
+    Control+Alt + 0
+
+"$HOME/.bin/player toggle"
+    m:0xc + c:22
+    Control+Alt + BackSpace
+
+"$HOME/.bin/player next"
+    m:0xc + c:35
+    Control+Alt + bracketright
+
+"$HOME/.bin/player prev"
+    m:0xc + c:34
+    Control+Alt + bracketleft
+
+"$HOME/.bin/player next"
+    m:0x0 + c:171
+    XF86AudioNext
+
+"$HOME/.bin/player prev"
+    m:0x0 + c:173
+    XF86AudioPrev
+
+"$HOME/.bin/player toggle"
+    m:0xc + c:51
+    Control+Alt + backslash
+
+"$HOME/.bin/player toggle"
+    m:0x0 + c:209
+    XF86AudioPause
+
+"$HOME/.bin/player toggle"
+    m:0x0 + c:208
+    XF86AudioPlay
+
+"$HOME/.bin/brightness up"
+    m:0x0 + c:233
+    XF86MonBrightnessUp
+
+"$HOME/.bin/brightness down"
+    m:0x0 + c:232
+    XF86MonBrightnessDown
+
+"$HOME/.bin/brightness up"
+    m:0xc + c:33
+    Control+Alt + p
+
+"$HOME/.bin/brightness down"
+    m:0xc + c:32
+    Control+Alt + o
+
+"$HOME/.bin/volume up"
+    m:0x0 + c:123
+    XF86AudioRaiseVolume
+
+"$HOME/.bin/volume down"
+    m:0x0 + c:122
+    XF86AudioLowerVolume
+
+"$HOME/.bin/toggle-touchpad.sh"
+    m:0xc + c:45
+    Control+Alt + k
+
+"$HOME/.bin/volume mute"
+    m:0x0 + c:121
+    XF86AudioMute
+
+"missioncenter"
+    m:0x5 + c:9
+    Control+Shift + Escape
+
+"nautilus -w"
+    m:0x40 + c:26
+    Mod4 + e

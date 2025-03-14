@@ -221,7 +221,7 @@ alias gitc='git commit -m'
 alias gitpull='git pull origin $(git branch --show-current)'
 
 # Emacs aliases
-if [[ GUI == "TRUE" ]]; then
+if [[ $GUI == "TRUE" ]]; then
     function code() {
         local e=$(emacsclient -n -e -s server "(> (length (frame-list)) 1)")
         if [ "$e" = "t" ]; then
@@ -355,11 +355,11 @@ shell() {
     done
 }
 alias pip='pipx'
-
 alias serveweb='python3 -m http.server 8000'
-
 alias telnet='busybox telnet'
 alias volumecli='pulsemixer'
+alias lsblk='lsblk -o NAME,PARTLABEL,MOUNTPOINTS,SIZE,TYPE,UUID'
+
 
 function gitignore() {
     local args=${@// /,}

@@ -1,5 +1,6 @@
 { config, pkgs, lib, inputs, host, ... }:
 {
+    
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
     keyMap = "us";
@@ -15,7 +16,7 @@
       openssh.authorizedKeys.keys =  let
         keys = pkgs.fetchurl {
           url = "https://github.com/ghibranalj.keys";
-          sha256 = "09nfj3bmyjx23z4kcy1w3ah1vpkvm0lgwp12nzzbb51a6x4bnfy3";
+          sha256 = "0pk2a1fmnr17amy9sq8an3y2afxj15djv3iymi4rp1mmyrmgddvm";
         };
       in pkgs.lib.splitString "\n" (builtins.readFile keys);
     };
@@ -23,6 +24,12 @@
       hashedPassword = "$6$rounds=500000$v3JKwQ2X5E1jLEf4$CVyW22XBpa/.Pk1L.blU3nHpELplifcFXjsU2IteYtZrPCsFJJbdO6mocQ.6rYr1110HaK3tU7twbX4qRS557/";
     };
   };
+
+  fonts.packages = with pkgs; (if host.isGui then [
+    nerdfonts
+    noto-fonts-emoji
+    fira-code-symbols
+  ] else []);
 
   environment.systemPackages = with pkgs; [
     neovim  # Install Neovim
@@ -39,7 +46,15 @@
     ripgrep
     killall
     eza
-  ] ++ (if host.dev then [
+  ]
+  ++(if host.isGui then [
+    google-chrome
+    alacritty
+    xbindkeys
+    vesktop
+    # bluegon
+  ] else [])
+  ++(if host.dev then [
     ## Compilers
     go
     gcc
@@ -54,7 +69,7 @@
     ## LSP
     gopls
     ccls
-    nil
+    nixd
     eslint
     yaml-language-server
     jdt-language-server

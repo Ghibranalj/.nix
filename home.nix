@@ -1,8 +1,13 @@
 { config, pkgs, lib, inputs, host, ... }:
 
 {
-  imports = [ inputs.nix-doom-emacs-unstraightened.hmModule ];
+  imports = [
+    inputs.nix-doom-emacs-unstraightened.hmModule
+    inputs.nix-colors.homeManagerModules.default
+    (./hosts + "/${host.hostName}/home.nix")
+  ];
 
+  colorScheme = inputs.nix-colors.colorSchemes.material-darker;
   home = {
     username = "gibi";
     homeDirectory = "/home/gibi";
@@ -45,23 +50,26 @@
   };
 
   systemd.user.services.emacs = let
-    emacs-server = if host.isGui then "server" else "term";
+    emacsServer = if host.isGui then "server" else "term";
+    wantedBy = if host.isGui then "graphical-session" else "default";
     in {
       Unit = {
         Description = "Emacs text editor";
         Documentation = [ "info:emacs" "man:emacs(1)" "https://gnu.org/software/emacs/" ];
+        After = lib.mkIf host.isGui [ "graphical-session.target" "default.target" ];
+        Wants = lib.mkIf host.isGui [ "graphical-session.target" ];
       };
       Service = {
         Type = "notify";
-        ExecStart = "${config.home.profileDirectory}/bin/emacs --fg-daemon=${emacs-server}";
-        ExecStop = "${pkgs.emacs}/bin/emacsclient -s ${emacs-server} --eval '(kill-emacs)'";
+        ExecStart = "${config.home.profileDirectory}/bin/emacs --fg-daemon=${emacsServer}";
+        ExecStop = "${pkgs.emacs}/bin/emacsclient -s ${emacsServer} --eval '(kill-emacs)'";
         Environment = lib.mkForce [
-          "PATH=/run/current-system/sw/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${config.home.profileDirectory}/bin"
+          "PATH=/run/wrappers/bin:/run/current-system/sw/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${config.home.profileDirectory}/bin:/run/"
         ];
         Restart = "always";
       };
       Install = {
-        WantedBy = [ "default.target" ];
+        WantedBy = [ "${wantedBy}.target" ];
       };
     };
 
@@ -81,5 +89,48 @@
         ensure_installed = { "c", "bash", "nix", "markdown", "markdown_inline" },
       }
     '';
+  };
+
+  programs.alacritty = lib.mkIf host.isGui {
+    enable = true;
+    settings = lib.importTOML ./home/alacritty.toml;
+  };
+
+  # xbindkeys
+  home.file.".config/xbindkeys/xbindkeysrc".source = ./home/xbindkeysrc;
+
+  systemd.user.services.xbindkeys = lib.mkIf (host.isGui && host.X11) {
+    Unit = {
+      Description = "xbindkeys";
+      After = [ "graphical-session.target" "default.target" ];
+      Wants = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "notify";
+      ExecStart = "${pkgs.xbindkeys}/bin/xbindkeys -f ${config.home.homeDirectory}/.config/xbindkeys/xbindkeysrc --nodaemon";
+      Environment = lib.mkForce [
+        "PATH=/run/current-system/sw/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${config.home.profileDirectory}/bin"
+      ];
+      Restart = "always";
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
+  # GTK
+  gtk = {
+    enable = true;
+    theme = {
+      name = config.colorScheme.slug;
+      package = 
+      let
+        inherit
+          (inputs.nix-colors.lib-contrib {inherit pkgs;})
+          gtkThemeFromScheme
+          ;
+      in
+        gtkThemeFromScheme {scheme = config.colorScheme;};
+      };
   };
 }

@@ -61,10 +61,10 @@
  doom-theme 'doom-material-dark
  doom-font (font-spec
             :family "Source Code Pro"
-            :size 14)
+            :size 16)
  doom-variable-pitch-font (font-spec
                            :family "Source Code Pro"
-                           :size 14)
+                           :size 16)
  doom-big-font (font-spec
                 :family "Source Code Pro"
                 :size 20)
@@ -161,7 +161,13 @@
 
 ;; company; make it load before copilot
 (use-package! company
-  :defer t)
+  :hook
+  ;; (prog-mode . company-mode)
+  (after-init . global-company-mode)
+  :custom
+  (company-idle-delay
+      (lambda () (if (company-in-string-or-comment) nil 0.3)))
+  )
 
 ;; Coplilot
 (use-package! copilot
@@ -205,8 +211,10 @@
 (use-package! lsp-mode
   :custom
   (lsp-headerline-breadcrumb-mode t)
+  (lsp-warn-no-matched-clients nil)
   :hook
   (lsp-mode . lsp-headerline-breadcrumb-mode)
+  (prog-mode . lsp-deferred)
   :config
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\tmp\\'")
   ;; GLSL language support
@@ -595,6 +603,3 @@ Shows terminal and dired in seperate section."
   (vterm-posframe-vterm-func-interactive t))
 
 (message "=== Done Loading Config ===")
-
-
-()

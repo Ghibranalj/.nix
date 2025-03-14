@@ -1,6 +1,6 @@
 {config, pkgs, ...}: {
 
-  boot.loader = {
+ boot.loader = {
    efi = {
      efiSysMountPoint = "/boot/efi";
      canTouchEfiVariables = true;

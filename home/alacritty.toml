@@ -1,0 +1,53 @@
+[colors.bright]
+black = "0x5a5860"
+blue = "0x7dc6bf"
+cyan = "0x35434d"
+green = "0xc3e88d"
+magenta = "0x6c71c4"
+red = "0xf57373"
+white = "0xffffff"
+yellow = "0xf7eb95"
+
+[colors.normal]
+black = "0x666666"
+blue = "0x80cbc4"
+cyan = "0xaeddff"
+green = "0xc3e88d"
+magenta = "0xff2f90"
+red = "0xf57373"
+white = "0xffffff"
+yellow = "0xf7eb95"
+
+[colors.primary]
+background = "0x212121"
+foreground = "0xc4c7d1"
+
+[cursor]
+style = "beam"
+
+[font]
+size = 9.5
+
+[font.bold]
+family = "Source Code Pro"
+style = "Regular"
+
+[font.italic]
+family = "Source Code Pro"
+style = "Italic"
+
+[font.normal]
+family = "Source Code Pro"
+style = "semi-light"
+
+[font.offset]
+x = 0
+y = 1
+
+[window]
+opacity = 1.0
+title = "Terminal"
+
+[window.padding]
+x = 6
+y = 6
