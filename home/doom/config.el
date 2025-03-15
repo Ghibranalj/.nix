@@ -159,15 +159,18 @@
     '(treemacs-root-face :foreground "#F78C6C")
     '(doom-themes-treemacs-root-face :foreground "#F78C6C")))
 
+(use-package! yasnippet
+  :config
+  (yas-global-mode 1))
+
 ;; company; make it load before copilot
 (use-package! company
-  :hook
-  ;; (prog-mode . company-mode)
-  (after-init . global-company-mode)
   :custom
   (company-idle-delay
       (lambda () (if (company-in-string-or-comment) nil 0.3)))
-  )
+  :config
+  (add-to-list 'company-backends 'company-yasnippet)
+  (global-company-mode 1))
 
 ;; Coplilot
 (use-package! copilot

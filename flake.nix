@@ -11,6 +11,10 @@
       url = "github:vinceliuice/grub2-themes";
     };
     nix-colors.url = "github:misterio77/nix-colors";
+    evdev-keymapper = {
+      url = "github:kambi-ng/evdev-keymapper";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = { self, nixpkgs, home-manager, ... } @ inputs : let
     # Host generator function (thanks deepseek)
@@ -39,6 +43,7 @@
               else {};
           }
           inputs.grub2-themes.nixosModules.default
+          inputs.evdev-keymapper.nixosModules.default
         ];
       };
 

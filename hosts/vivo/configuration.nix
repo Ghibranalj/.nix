@@ -23,7 +23,28 @@
       useOSProber = true;
     };
   };
-
+  services.evdev-keymapper = {
+    enable = true;
+    settings = {
+      Config = {
+        toggle=false;
+        device="/dev/input/event0";
+      };
+      Keymap = {
+        "RIGHTALT"="CAPSLOCK";
+        CAPSLOCK = {
+          "I"="UP";
+          "K"="DOWN";
+          "J"="LEFT";
+          "L"="RIGHT";
+          "B"="BACKSPACE";
+          "F"="ESC";
+          "N"="LEFTSHIFT+MINUS";
+          "APOSTROPHE"="GRAVE";
+        };
+      };
+    };
+  };
 
   networking.hostName = "CreepRvivo"; # Define your hostname.
   # networking.wireless.enable = true; 
@@ -175,13 +196,14 @@
   #         CPU_MAX_PERF_ON_AC = 100;
   #         CPU_MIN_PERF_ON_BAT = 0;
   #         CPU_MAX_PERF_ON_BAT = 20;
+  #         CPU_SCALING_MAX_FREQ_ON_BAT= 1000000000;
 
   #       #Optional helps save long term battery health
   #       START_CHARGE_THRESH_BAT0 = 40; # 40 and below it starts to charge
-  #       STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
-
+  #       STOP_CHARGE_THRESH_BAT0 = 90; # 80 and above it stops charging
   #       };
   # };
+
   # services.auto-cpufreq.enable = true;
   # services.auto-cpufreq.settings = {
   #   battery = {

@@ -1,6 +1,5 @@
 { config, pkgs, lib, inputs, host, ... }:
 {
-    
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
     keyMap = "us";
@@ -52,6 +51,8 @@
     alacritty
     xbindkeys
     vesktop
+    winbox3
+    winbox4
     # bluegon
   ] else [])
   ++(if host.dev then [
