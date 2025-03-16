@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 {
   home.packages = with pkgs; [
+
   ] ++ (with pkgs.gnomeExtensions; [
     caffeine
     blur-my-shell
@@ -13,7 +14,7 @@
       disable-user-extensions = false;
       enabled-extensions = [
         "blur-my-shell@aunetx" "caffeine@patapon.info" "batterytime@typeof.pw"
-        "hibernate-status@dromi"
+        "hibernate-status@dromi" "gsconnect@andyholmes.github.io"
       ];
     };
     "org/gnome/shell/extensions/blur-my-shell/panel" = {
@@ -36,6 +37,18 @@
       binding = "<Control><Alt>Return";
       command = "emacsclient -c";
       name = "emacs";
+    };
+    "org/gnome/desktop/background" = {
+      color-shading-type="solid";
+      picture-options="zoom";
+      picture-uri="file://${../../home/background.png}";
+      picture-uri-dark="file://${../../home/background.png}";
+      primary-color="#FFCB6B";
+    };
+    "org/gnome/desktop/peripherals/mouse" = {
+      accel-profile="flat";
+      natural-scroll=false;
+      speed=-0.37593984962406013;
     };
   };
 
