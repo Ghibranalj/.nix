@@ -160,17 +160,18 @@
     '(doom-themes-treemacs-root-face :foreground "#F78C6C")))
 
 (use-package! yasnippet
-  :config
-  (yas-global-mode 1))
+  :hook
+  (prog-mode . yas-minor-mode))
 
 ;; company; make it load before copilot
 (use-package! company
+  :hook
+  (prog-mode . company-mode)
   :custom
   (company-idle-delay
       (lambda () (if (company-in-string-or-comment) nil 0.3)))
   :config
-  (add-to-list 'company-backends 'company-yasnippet)
-  (global-company-mode 1))
+  (add-to-list 'company-backends 'company-yasnippet))
 
 ;; Coplilot
 (use-package! copilot
@@ -198,7 +199,10 @@
 
 (use-package! company-box
   :disabled
-  :hook (company-mode . company-box-mode))
+  :hook
+  (company-mode . (lambda ()
+                  (when my-is-gui-frame
+                    company-box-mode))))
 
 (use-package! lsp-ui-sideline
   :custom
@@ -605,4 +609,14 @@ Shows terminal and dired in seperate section."
   (vterm-posframe-vterm-func '+vterm/toggle)
   (vterm-posframe-vterm-func-interactive t))
 
+(use-package! nix-mode
+  :custom
+  (lsp-nix-nixd-nixos-options-expr
+    (format "(builtins.getFlake (\"git+file://\" + toString ./.)).nixosConfigurations.%s.options"
+                            (getenv "NIX_HOSTNAME")))
+  (lsp-nix-nixd-home-manager-options-expr
+    (format "(builtins.getFlake (\"git+file://\" + toString ./.)).nixosConfigurations.%s.options.home-manager.users.type.getSubOptions []"
+                            (getenv "NIX_HOSTNAME"))))
+
 (message "=== Done Loading Config ===")
+

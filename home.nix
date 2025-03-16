@@ -8,11 +8,11 @@
   ];
 
   colorScheme = inputs.nix-colors.colorSchemes.material-darker;
+
   home = {
     username = "gibi";
     homeDirectory = "/home/gibi";
     stateVersion = "24.11";
-
     file.".bashrc".source = lib.mkForce (
       config.lib.file.mkOutOfStoreSymlink
         "${config.home.homeDirectory}/.nix/home/.bashrc"
@@ -88,7 +88,7 @@
       require'nvim-treesitter.configs'.setup {
         ensure_installed = { "c", "bash", "nix", "markdown", "markdown_inline" },
       }
-    '';
+   '';
   };
 
   programs.alacritty = lib.mkIf host.isGui {
@@ -119,7 +119,7 @@
   };
 
   # GTK
-  gtk = {
+  gtk = lib.mkIf host.isGui {
     enable = true;
     theme = {
       name = config.colorScheme.slug;
@@ -133,4 +133,15 @@
         gtkThemeFromScheme {scheme = config.colorScheme;};
       };
   };
+
+  programs.rofi = {
+    enable = (! host.X11);
+    package = pkgs.rofi; # (if host.X11 then pkgs.rofi else pkgs.rofi-wayland);
+    configPath = "";
+    plugins = [
+        pkgs.rofi-calc
+        pkgs.rofi-emoji
+    ];
+  };
+  home.file.".config/rofi/config.rasi".source = ./home/config.rasi;
 }

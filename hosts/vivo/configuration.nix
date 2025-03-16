@@ -23,12 +23,14 @@
       useOSProber = true;
     };
   };
+
+
   services.evdev-keymapper = {
     enable = true;
     settings = {
       Config = {
-        toggle=false;
-        device="/dev/input/event0";
+        toggle= false;
+        device= "/dev/input/event0";
       };
       Keymap = {
         "RIGHTALT"="CAPSLOCK";
@@ -52,8 +54,8 @@
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
+  
+ # Enable networking
   networking.networkmanager.enable = true;
 
   # Set your time zone.
@@ -182,6 +184,7 @@
     AllowHybridSleep=yes
     AllowSuspendThenHibernate=yes
   '';
+  services.power-profiles-daemon.enable = false;
   # if gnome extension doenst work
   # services.tlp = {
   #       enable = true;
@@ -204,15 +207,18 @@
   #       };
   # };
 
-  # services.auto-cpufreq.enable = true;
-  # services.auto-cpufreq.settings = {
-  #   battery = {
-  #     governor = "powersave";
-  #     turbo = "never";
-  #   };
-  #   charger = {
-  #     governor = "performance";
-  #     turbo = "auto";
-  #   };
-  # };
+  services.auto-cpufreq = {
+    enable = true;
+    settings = {
+      battery = {
+        governor = "schedutil";
+        turbo = "never";
+        scaling_max_freq = 1800000;
+      };
+      charger = {
+        governor = "performance";
+        turbo = "auto";
+      };
+    };
+  };
 }

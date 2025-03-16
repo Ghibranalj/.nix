@@ -4,6 +4,7 @@
   console = {
     keyMap = "us";
   };
+  
 
   users.users = {
     gibi = {
@@ -77,7 +78,17 @@
     lua-language-server
     typescript-language-server
     gocode-gomod
-    ] else []) ;
+    ] else [])
+  ++ (if host.X11 then [
+     rofi
+    ] # wayland
+    else []);
+
+  nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}"];
+
+  environment.variables = {
+      NIX_HOSTNAME = host.hostName;
+  }; 
 
   services.openssh.enable = lib.mkDefault true;
 
