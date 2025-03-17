@@ -2,9 +2,7 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, ... }:
-let
-  swap = "/dev/disk/by-uuid/a0ba45fe-6158-465b-b567-7977ff59832b";
-in
+
 {
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
@@ -15,26 +13,24 @@ in
     initrd.kernelModules = [ ];
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
-    resumeDevice = swap;
-    kernelParams = ["resume=${swap}"];
-  };
+    resumeDevice = "/dev/disk/by-uuid/052d1cae-ce44-4579-8cd8-e725ffd5d0b5";
+    kernelParams = [ "resume=/dev/disk/by-uuid/052d1cae-ce44-4579-8cd8-e725ffd5d0b5" ];
+   };
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/84f46482-9296-43fc-b8d8-d295d926c1cc";
+    { device = "/dev/disk/by-uuid/903dd86d-2382-4408-9160-15a7235303a0";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/64B7-C2BA";
+    { device = "/dev/disk/by-uuid/3B58-4268";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  swapDevices = [
-    {
-      device = swap;
-    }
-  ];
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/052d1cae-ce44-4579-8cd8-e725ffd5d0b5"; }
+    ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
