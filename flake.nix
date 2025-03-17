@@ -30,6 +30,7 @@
         inherit system;
         specialArgs = { inherit inputs host; };
         modules = [
+          ./modules/sys
           (./hosts + "/${hostName}/hardware-configuration.nix")
           (./hosts + "/${hostName}/configuration.nix")
           ./configuration.nix  # Base config for all hosts

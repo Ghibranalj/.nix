@@ -4,6 +4,7 @@
   imports = [
     inputs.nix-doom-emacs-unstraightened.hmModule
     inputs.nix-colors.homeManagerModules.default
+    ./modules/home
     (./hosts + "/${host.hostName}/home.nix")
   ];
 

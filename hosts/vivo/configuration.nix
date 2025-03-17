@@ -4,7 +4,6 @@
 { config, pkgs, lib ,inputs, ... }:
 
 {
-
   # Bootloader.
   boot.loader = {
     efi = {
@@ -23,6 +22,8 @@
       useOSProber = true;
     };
   };
+
+  sys.gnome.enable = true;
 
 
   services.evdev-keymapper = {
@@ -49,48 +50,13 @@
   };
 
   networking.hostName = "CreepRvivo"; # Define your hostname.
-  # networking.wireless.enable = true; 
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-  
- # Enable networking
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
   time.timeZone = "Asia/Jakarta";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  environment.gnome.excludePackages = with pkgs; [
-    # baobab      # disk usage analyzer
-    # eog         # image viewer
-    epiphany    # web browser
-    gedit       # text editor
-    simple-scan # document scanner
-    totem       # video player
-    yelp        # help viewer
-    evince      # document viewer
-    file-roller # archive manager
-    geary       # email client
-    seahorse    # password manager
-
-    # these should be self explanatory
-    # gnome-logs gnome-clocks gnome-weather
-    gnome-calendar gnome-characters  gnome-contacts
-    gnome-font-viewer  gnome-maps gnome-music gnome-photos
-    gnome-system-monitor  pkgs.gnome-connections
-  ];
-
-  # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
     variant = "";
