@@ -52,10 +52,25 @@
     alacritty
     xbindkeys
     vesktop
-    winbox3
-    winbox4
-    # bluegon
-  ] else [])
+    winbox
+  ] ++ ( let
+      winbox4_override = pkgs.winbox4.overrideAttrs (old: {
+        postInstall = ''
+          install -Dm644 "assets/img/winbox.png" "$out/share/pixmaps/winbox4.png"
+        '';
+        desktopItems = old.desktopItems or [] ++ [
+          (pkgs.makeDesktopItem {
+            name = "winbox4";
+            desktopName = "Winbox 4";
+            comment = "GUI administration for Mikrotik RouterOS";
+            exec = "WinBox";
+            icon = "winbox4";
+            categories = [ "Utility" ];
+          })
+        ];
+      });
+  in [winbox4_override])
+     else [])
   ++(if host.dev then [
     ## Compilers
     go
@@ -84,6 +99,7 @@
     ] # wayland
     else []);
 
+  #winbox4 override
   nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}"];
 
   environment.variables = {
