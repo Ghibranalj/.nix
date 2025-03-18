@@ -2,7 +2,6 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 { config, pkgs, lib ,inputs, ... }:
-
 {
   gui.enable = true;
   grub.enable = true;
@@ -14,7 +13,6 @@
   winbox.enable =true;
 
   networking.hostName = "CreepRvivo"; # Define your hostname.
-
 
   environment.systemPackages = with pkgs; [
   ];

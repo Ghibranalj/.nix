@@ -6,7 +6,7 @@
      gui.enable = mkEnableOption "enables gnome";
   };
 
-  config = lib.mkIf config.gui.enable {
+  config = if config.gui.enable then {
     # Enable sound with pipewire.
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
@@ -30,5 +30,9 @@
       noto-fonts-emoji
       fira-code-symbols
     ];
+  } else {
+    boot.plymouth.enable = false;
+    services.xserver.enable = false;
+    hardware.pulseaudio.enable = false;
   };
 }
