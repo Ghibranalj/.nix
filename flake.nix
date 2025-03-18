@@ -19,20 +19,19 @@
   outputs = { self, nixpkgs, home-manager, ... } @ inputs : let
     # Host generator function (thanks deepseek)
     mkHost =
-      { hostName, system ? "x86_64-linux", hmEnabled ? true, isGui ? true, dev ? true,
-        X11 ? true}:
+      { hostName, system ? "x86_64-linux", hmEnabled ? true}:
       let
         host = {
-          inherit hostName isGui dev X11;
+          inherit hostName;
         }; 
       in
       nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs host; };
         modules = [
+          ./sys
           (./hosts + "/${hostName}/hardware-configuration.nix")
           (./hosts + "/${hostName}/configuration.nix")
-          ./configuration.nix  # Base config for all hosts
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -47,16 +46,12 @@
         ];
       };
 
-    # Define all your hosts
     hosts = {
       server = mkHost { 
         hostName = "server";
-        isGui = false;
       };
       vivo = mkHost {
       	hostName = "vivo";
-        isGui = true;
-        X11 = false;
       };
     };
 
