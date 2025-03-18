@@ -1,10 +1,11 @@
 { config, lib, pkgs, ... }:
 {
-  options = {
-    sys.gnome.enable = lib.mkEnableOption "enables gnome";
+
+  options = with lib; {
+     gnome.enable = mkEnableOption "enables gnome";
   };
 
-  config = lib.mkIf config.sys.gnome.enable {
+  config = lib.mkIf config.gnome.enable {
     services.xserver.enable = true;
     services.xserver.displayManager.gdm.enable = true;
     services.xserver.desktopManager.gnome.enable = true;
