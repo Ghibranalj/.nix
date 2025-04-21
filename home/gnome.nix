@@ -2,7 +2,7 @@
 
 {
   options = with lib; {
-    gnome.enable = mkEnableOption "enable gnome user";
+    gnome.enable = mkEnableOption "gnome user";
   };
 
   config = lib.mkIf config.gnome.enable {
@@ -13,14 +13,16 @@
         battery-time-2
         hibernate-status-button
         gsconnect
+        boost-volume
     ]);
 
     dconf.settings = with lib.hm.gvariant; {
         "org/gnome/shell" = {
         disable-user-extensions = false;
-        enabled-extensions = [
+        enabled-extensions = with pkgs.gnomeExtensions; [
             "blur-my-shell@aunetx" "caffeine@patapon.info" "batterytime@typeof.pw"
             "hibernate-status@dromi" "gsconnect@andyholmes.github.io"
+            boost-volume.extensionUuid
         ];
         };
         "org/gnome/shell/extensions/blur-my-shell/panel" = {
@@ -56,6 +58,9 @@
         natural-scroll=false;
         speed=-0.37593984962406013;
         };
+        "org/gnome/desktop/wm/preferences".num-workspaces = 9;
+        "org/gnome/desktop/interface".color-scheme = "prefer-dark";
+        "org/gnome/mutter".dynamic-workspaces = false;
     };
   };
 }

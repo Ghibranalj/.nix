@@ -18,7 +18,7 @@ let
 in
 {
   options = with lib; {
-     winbox.enable = mkEnableOption "enables gnome";
+     winbox.enable = mkEnableOption "enables winbox";
   };
  
   config = lib.mkIf config.winbox.enable {

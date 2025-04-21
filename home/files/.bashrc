@@ -358,7 +358,7 @@ alias pip='pipx'
 alias serveweb='python3 -m http.server 8000'
 alias telnet='busybox telnet'
 alias volumecli='pulsemixer'
-alias lsblk='lsblk -o NAME,PARTLABEL,MOUNTPOINTS,SIZE,TYPE,UUID'
+alias lsblk='lsblk -o NAME,PARTLABEL,MOUNTPOINTS,SIZE,TYPE,UUID | col'
 
 
 function gitignore() {

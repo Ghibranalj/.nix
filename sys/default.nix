@@ -12,6 +12,7 @@ with lib;
     ./users.nix
     ./powerconf.nix
     ./gui.nix
+    ./non-gui.nix
     ./evdev-keymapper.nix
     ./winbox.nix
     ./dev.nix
@@ -46,13 +47,15 @@ with lib;
   time.timeZone = mkDefault "Asia/Jakarta";
   networking.networkmanager.enable = mkDefault true;
 
+
   nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}"];
   environment.variables = {
       NIX_HOSTNAME = host.hostName;
+      NIXPKGS_ALLOW_UNFREE = 1;
   }; 
 
   environment.shellAliases = {
-      nix-rebuild="sudo nixos-rebuild switch --flake ${toString ../.}#${host.hostName}";
+      nix-rebuild="sudo nixos-rebuild switch --flake /home/gibi/.nix#${host.hostName}";
       nix-update="sudo nix-channel --update && nix-rebuild";
       nix-cleanup="sudo nix-collect-garbage -d";
   };

@@ -17,9 +17,9 @@
   environment.systemPackages = with pkgs; [
   ];
 
-  networking.firewall.allowedTCPPorts = [ 22 23 8080 443 1716 ];
-  networking.firewall.allowedUDPPorts = [ 443 8080 1716 ];
+  # networking.firewall.allowedTCPPorts = [ 22 23 8080 443 1716 ];
+  # networking.firewall.allowedUDPPorts = [ 443 8080 1716 ];
   # Or disable the firewall altogether.
-  networking.firewall.enable = true;
+  networking.firewall.enable = false;
 
 }

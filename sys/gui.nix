@@ -1,12 +1,10 @@
 { config, lib, pkgs, ... }:
-
 {
-  
   options = with lib; {
      gui.enable = mkEnableOption "enables gnome";
   };
 
-  config = if config.gui.enable then {
+  config = lib.mkIf config.gui.enable {
     # Enable sound with pipewire.
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
@@ -23,6 +21,8 @@
     environment.systemPackages = with pkgs; [
       google-chrome
       vesktop
+      pavucontrol
+      spotify
     ];
 
     fonts.packages = with pkgs; [
@@ -30,9 +30,5 @@
       noto-fonts-emoji
       fira-code-symbols
     ];
-  } else {
-    boot.plymouth.enable = false;
-    services.xserver.enable = false;
-    hardware.pulseaudio.enable = false;
   };
 }
