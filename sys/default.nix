@@ -16,6 +16,7 @@ with lib;
     ./evdev-keymapper.nix
     ./winbox.nix
     ./dev.nix
+    ./libvirt.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -33,6 +34,8 @@ with lib;
     ripgrep
     killall
     eza
+    ntfs3g
+    gh
   ];
 
   sysUsers.enable = mkDefault true;
@@ -60,6 +63,23 @@ with lib;
       nix-cleanup="sudo nix-collect-garbage -d";
   };
 
+  # Enable sound with pipewire.
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
+
+    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # no need to redefine it in your config for now)
+    #media-session.enable = true;
+  };
+
+ 
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "24.11"; # Did you read the comment?
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

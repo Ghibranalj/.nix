@@ -6,14 +6,38 @@
       type = types.enum ["gui" "term"];
       default = "term";
     };
+    doom.fontSize = {
+        normal = mkOption {
+            type = types.int;
+            default = 16;
+        };
+        big = mkOption {
+            type = types.int;
+            default = 20;
+        };
+
+    };
   };
-  
+
   config = lib.mkIf config.doom.enable {
     programs.doom-emacs = {
         enable = true;
         doomDir = ./files/doom;
         provideEmacs = true;
     };
+
+    xdg.configFile."doomfont/font.el".text  = ''
+    (setq
+        doom-font (font-spec
+                    :family "Source Code Pro"
+                    :size ${toString config.doom.fontSize.normal})
+        doom-variable-pitch-font (font-spec
+                                :family "Source Code Pro"
+                                :size ${toString config.doom.fontSize.normal})
+        doom-big-font (font-spec
+                        :family "Source Code Pro"
+                        :size ${toString config.doom.fontSize.big}))
+    '';
 
     systemd.user.services.emacs = let
         isGui = config.doom.mode == "gui";

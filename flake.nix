@@ -53,6 +53,9 @@
       vivo = mkHost {
       	hostName = "vivo";
       };
+      pc = mkHost {
+      	hostName = "pc";
+      };
     };
 
   in {

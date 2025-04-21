@@ -59,17 +59,19 @@
  make-backup-files t
  ;; Doom Variables
  doom-theme 'doom-material-dark
- doom-font (font-spec
-            :family "Source Code Pro"
-            :size 16)
- doom-variable-pitch-font (font-spec
-                           :family "Source Code Pro"
-                           :size 16)
- doom-big-font (font-spec
-                :family "Source Code Pro"
-                :size 20)
+ ;; doom-font (font-spec
+ ;;            :family "Source Code Pro"
+ ;;            :size 16)
+ ;; doom-variable-pitch-font (font-spec
+ ;;                           :family "Source Code Pro"
+ ;;                           :size 16)
+ ;; doom-big-font (font-spec
+ ;;                :family "Source Code Pro"
+ ;;                :size 20)
  doom-bin "doom"
  )
+;; load the font set by nix
+(load! "~/.config/doomfont/font.el")
 
 ;;;
 ;;; Free floating functions
