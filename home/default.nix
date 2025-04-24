@@ -16,6 +16,7 @@ with lib;
     ./rofi.nix
     ./xbindkeys.nix
     ./gnome.nix
+    ./gns3.nix
   ];
 
   home = {
@@ -32,4 +33,6 @@ with lib;
   git.enable = mkDefault true;
   neovim.enable = mkDefault true;
   doom.enable = mkDefault true;
+
+  gns3-handlers.enable = mkDefault true;
 }
