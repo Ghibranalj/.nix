@@ -180,7 +180,7 @@ if command -v ranger &>/dev/null; then
 fi
 
 if command -v go &>/dev/null; then
-    export GOPATH="$HOME/.go"
+    export GOPATH="$HOME/.cache/go"
     export PATH=$PATH:$(go env GOPATH)/bin
 fi
 

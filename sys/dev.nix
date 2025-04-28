@@ -30,7 +30,10 @@
     lua-language-server
     typescript-language-server
     gocode-gomod
+    templ
 
+    ## DB stuff
+    beekeeper-studio
     ];
   };
 }

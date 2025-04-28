@@ -21,9 +21,13 @@
 
   config = lib.mkIf config.doom.enable {
     programs.doom-emacs = {
+        extraBinPackages = with pkgs;[
+            git fd ripgrep tree-sitter
+        ];
         enable = true;
         doomDir = ./files/doom;
         provideEmacs = true;
+        extraPackages = epkgs: [ epkgs.treesit-grammars.with-all-grammars ];
     };
 
     xdg.configFile."doomfont/font.el".text  = ''

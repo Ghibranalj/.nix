@@ -15,6 +15,7 @@
   networking.hostName = "CreepRvivo"; # Define your hostname.
 
   environment.systemPackages = with pkgs; [
+    qemu
   ];
 
   # networking.firewall.allowedTCPPorts = [ 22 23 8080 443 1716 ];

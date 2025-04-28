@@ -231,8 +231,11 @@
    (make-lsp-client :new-connection (lsp-stdio-connection '("glslls" "--stdin"))
                     :activation-fn (lsp-activate-on "glsl")
                     :server-id 'glslls))
+
   (add-to-list 'lsp-language-id-configuration
                '(glsl-mode . "glsl"))
+
+
 
   (define-derived-mode astro-mode web-mode "astro")
   (setq auto-mode-alist
@@ -430,7 +433,7 @@ Shows terminal and dired in seperate section."
     "decide if copilot, yas or emmet should expand."
     (interactive)
     (or (emmet-expand-line nil)
-        (copilot-accept-completion)
+        ;; (copilot-accept-completion)
         (indent-relative))))
 
 (use-package! projectile

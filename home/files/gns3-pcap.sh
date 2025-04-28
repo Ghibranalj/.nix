@@ -20,9 +20,11 @@ STREAM_URL="$PROTOCOL://$HOST:$PORT/$API_VERSION/projects/$PROJECT_ID/links/$LIN
 # Validate required parameters
 if [[ -z "$PROJECT_ID" || -z "$LINK_ID" ]]; then
     echo "Error: Missing project_id or link_id" >&2
+    read 
     exit 1
 fi
 
+# set the title
 printf "\033]0;%s\a" "PCAP: $NAME" 
 
 CHECK=`curl -s -o /dev/null -w "%{http_code}" $PROTOCOL://$HOST:$PORT/$API_VERSION/version`
