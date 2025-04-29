@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: use-template
+# key: usetemplate
+# -
+
+{{ template "${1}" . }}
+{{ define "content" }}
+$0
+{{ end }}

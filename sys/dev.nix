@@ -7,8 +7,9 @@
   };
 
   config = lib.mkIf config.dev.enable {
-
+    services.lorri.enable = true; # speeds up direnv for emacs
     environment.systemPackages = with pkgs; [
+    direnv
     ## Compilers
     go
     gcc
@@ -31,7 +32,8 @@
     typescript-language-server
     gocode-gomod
     templ
-
+    emmet-ls
+    sqls
     ## DB stuff
     beekeeper-studio
     ];

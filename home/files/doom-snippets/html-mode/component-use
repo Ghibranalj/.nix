@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: component
+# key: comp
+# --
+
+{{ template "${1}" $0 }}

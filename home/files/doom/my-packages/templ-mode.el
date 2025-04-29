@@ -34,8 +34,8 @@
 
 (define-innermode poly-templ-go-expr-innermode
   :mode 'go-mode
-  :head-matcher "{{\\s-*"
-  :tail-matcher "\\s-*}}"
+  :head-matcher "{"
+  :tail-matcher "}"
   :head-mode 'host
   :tail-mode 'host)
 
@@ -59,11 +59,11 @@
 
 (add-to-list 'lsp-language-id-configuration '(poly-templ-mode . "templ"))
 
-;; 5. Handle Go mode inheritance
-(with-eval-after-load 'go-mode
-  (defun poly-templ--go-mode-setup ()
-    (when (derived-mode-p 'poly-templ-mode)
-    (setq-local lsp-disabled-clients '(gopls)))))
+;; ;; 5. Handle Go mode inheritance
+;; (with-eval-after-load 'go-mode
+;;   (defun poly-templ--go-mode-setup ()
+;;     (when (derived-mode-p 'poly-templ-mode)
+;;     (setq-local lsp-disabled-clients '(gopls)))))
 
 (provide 'poly-templ-mode)
 ;;; templ-mode.el ends here

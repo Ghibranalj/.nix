@@ -365,3 +365,5 @@ function gitignore() {
     local args=${@// /,}
     curl -sL https://www.toptal.com/developers/gitignore/api/$args > .gitignore
 }
+
+eval "$(direnv hook bash)"

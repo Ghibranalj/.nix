@@ -69,6 +69,7 @@
  ;;                :family "Source Code Pro"
  ;;                :size 20)
  doom-bin "doom"
+ +snippets-dir "~/.config/doom-snippets"
  )
 ;; load the font set by nix
 (load! "~/.config/doomfont/font.el")
@@ -163,7 +164,9 @@
 
 (use-package! yasnippet
   :hook
-  (prog-mode . yas-minor-mode))
+  (prog-mode . yas-minor-mode)
+  :config
+  )
 
 ;; company; make it load before copilot
 (use-package! company
@@ -235,6 +238,13 @@
   (add-to-list 'lsp-language-id-configuration
                '(glsl-mode . "glsl"))
 
+  (add-to-list 'lsp-language-id-configuration '(sql-mode . "sql"))
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection "sqls")
+    :major-modes '(sql-mode)
+    :server-id 'sqls
+    :priority 1))
 
 
   (define-derived-mode astro-mode web-mode "astro")
@@ -624,4 +634,8 @@ Shows terminal and dired in seperate section."
                             (getenv "NIX_HOSTNAME"))))
 
 (message "=== Done Loading Config ===")
+
+(let ((d (expand-file-name "my-packages" doom-user-dir)))
+  (dolist (file (directory-files d t "\\.el$"))
+    (load file))
 
