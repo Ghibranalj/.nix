@@ -63,6 +63,7 @@ RESPONSIVE and DISPLAY are ignored."
          '(rainbow-delimiters-depth-6-face ((t :inherit rainbow-indent-and-delimeters-face6))))
         (setq highlight-indent-guides-highlighter-function 'rainbow-indent-and-delimiters--highlight-function)
         (setq rainbow-delimiters-max-face-count 6)
+        (setq highlight-indent-guides-method 'character)
         (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
         (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
         (add-hook 'lsp-mode-hook 'highlight-indent-guides-mode))
