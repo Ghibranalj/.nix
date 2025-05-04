@@ -145,10 +145,10 @@
 (package! highlight-indent-guides :pin "3205abe2721053416e354a1ff53947dd122a6941")
 (package! evil-collection :pin "cb850ff0d11f644dbd133428cff57e82e655ecd7")
 
-;; (package! templ-ts-mode
-;;   :pin "020976f0cf2cf27a1a6e1b59e92c443c52b03a52"
-;;   :recipe ( :type git :host github :repo "danderson/templ-ts-mode"
-;;                  :files ("*.el") :branch "main"))
+(package! templ-ts-mode
+  :pin "020976f0cf2cf27a1a6e1b59e92c443c52b03a52"
+  :recipe ( :type git :host github :repo "danderson/templ-ts-mode"
+                 :files ("*.el") :branch "main"))
 
 (package! mmm-mode :pin "b1f5c7dbdc405e6e10d9ddd99a43a6b2ad61b176"
   :recipe ( :type git :host gitub :repo "dgutov/mmm-mode"

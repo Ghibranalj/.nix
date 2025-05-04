@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: children
+# key: children
+# --
+
+{{ block "content" . }}{{ end }} $0

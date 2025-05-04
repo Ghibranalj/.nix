@@ -48,6 +48,9 @@ in
         };
     };
 
+    xdg.configFile."mimeapps.list".enable = false;
+    xdg.dataFile."applications/mimeapps.list".force = true;
+
     xdg.desktopEntries.gns3-telnet = {
         name = "GNS3 Telnet";
         exec = "${telnetScript}/bin/gns3-telnet %u";

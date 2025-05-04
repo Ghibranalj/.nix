@@ -152,7 +152,8 @@
   (prog-mode . evil-megasave-mode)
   (git-commit-mode . evil-megasave-mode)
   (conf-mode . evil-megasave-mode)
-  (yaml-mode . evil-megasave-mode))
+  (yaml-mode . evil-megasave-mode)
+  (html-mode . evil-megasave-mode))
 
 ;; tremacs colors
 (use-package treemacs
@@ -256,7 +257,18 @@
   (lsp-register-client
    (make-lsp-client :new-connection (lsp-stdio-connection '("astro-ls" "--stdio"))
                     :activation-fn (lsp-activate-on "astro")
-                    :server-id 'astro-ls)))
+                    :server-id 'astro-ls))
+
+  ;; templ
+  ;;  
+  (add-to-list 'lsp-language-id-configuration '(templ-ts-mode . "templ"))
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection '("templ" "lsp"))
+                    :activation-fn (lsp-activate-on "templ")
+                    :priority -1
+                    :server-id 'templ-ls))
+
+  )
 
 (use-package! magit
   :custom
@@ -485,7 +497,7 @@ Shows terminal and dired in seperate section."
                    :height 80
                    :italic t)))
   :config
-  (global-blamer-mode 1))
+  (global-blamer-mode 0))
 
 (use-package! vertico-posframe
   :after vertico
@@ -633,9 +645,101 @@ Shows terminal and dired in seperate section."
     (format "(builtins.getFlake (\"git+file://\" + toString ./.)).nixosConfigurations.%s.options.home-manager.users.type.getSubOptions []"
                             (getenv "NIX_HOSTNAME"))))
 
-(message "=== Done Loading Config ===")
 
-(let ((d (expand-file-name "my-packages" doom-user-dir)))
-  (dolist (file (directory-files d t "\\.el$"))
-    (load file))
+(use-package! templ-ts-mode
+  :mode "\\.templ\\'"
+  :config
+  ;; Fix the tree-sitter query error
+  (defun templ-ts--fix-font-lock-rules ()
+    "Fix the font-lock rules for templ-ts-mode."
+    (when (and (treesit-available-p) (treesit-language-available-p 'templ))
+      ;; Modify the font-lock rules to use patterns that match the actual templ grammar
+      (setq templ-ts--go-font-lock-rules
+        (list
+         :language 'templ
+         :feature 'bracket
+         '((["(" ")" "[" "]" "{" "}"]) @font-lock-bracket-face)
+
+         :language 'templ
+         :feature 'comment
+         '((comment) @font-lock-comment-face)
+
+         :language 'templ
+         :feature 'constant
+         '([(false) (nil) (true)] @font-lock-constant-face
+           (const_declaration (const_spec name: (_) @font-lock-constant-face)))
+
+         :language 'templ
+         :feature 'delimiter
+         '((["," "." ";" ":"]) @font-lock-delimiter-face)
+
+         :language 'templ
+         :feature 'definition
+         ;; This is the section that was causing the error
+         ;; Simplified version that works with the templ grammar
+         '((function_declaration name: (_) @font-lock-function-name-face)
+           (method_declaration name: (_) @font-lock-function-name-face)
+           (field_declaration name: (_) @font-lock-property-name-face)
+           (parameter_declaration name: (_) @font-lock-variable-name-face)
+           (short_var_declaration left: (expression_list (_) @font-lock-variable-name-face))
+           (var_spec name: (_) @font-lock-variable-name-face))
+
+         :language 'templ
+         :feature 'function
+         '((call_expression function: (_) @font-lock-function-call-face))
+
+         :language 'templ
+         :feature 'keyword
+         `([,@go-ts-mode--keywords] @font-lock-keyword-face)
+
+         :language 'templ
+         :feature 'number
+         '([(float_literal) (imaginary_literal) (int_literal)] @font-lock-number-face)
+
+         :language 'templ
+         :feature 'string
+         '([(interpreted_string_literal) (raw_string_literal) (rune_literal)] @font-lock-string-face)
+
+         :language 'templ
+         :feature 'type
+         '([(package_identifier) (type_identifier)] @font-lock-type-face)
+
+         :language 'templ
+         :feature 'variable
+         '((identifier) @font-lock-variable-use-face)
+
+         :language 'templ
+         :feature 'error
+         :override t
+         '((ERROR) @font-lock-warning-face)))
+
+      ;; Re-initialize font-lock settings
+      (setq-local treesit-font-lock-settings
+                  (let* ((root-rules (append templ-ts--templ-font-lock-rules
+                                             templ-ts--go-font-lock-rules))
+                         (root-compiled (apply #'treesit-font-lock-rules
+                                               root-rules))
+                         (js-compiled js--treesit-font-lock-settings))
+                    (append js-compiled root-compiled)))
+      
+      ;; Force font-lock refresh
+      (when (eq major-mode 'templ-ts-mode)
+        (font-lock-flush))))
+
+  ;; Apply the fix when setting up templ-ts-mode
+  (advice-add 'templ-ts--setup :after (lambda () (templ-ts--fix-font-lock-rules))))
+
+(use-package! apheleia
+  :config
+  ;; Define the templ formatter
+  (pushnew! apheleia-formatters
+           '(templ-fmt . ("templ" "fmt")))
+ ;; Associate templ-ts-mode with the formatter
+  (setf (alist-get 'templ-ts-mode apheleia-mode-alist) 'templ-fmt))
+
+(use-package!  emmet-mode
+  :hook
+  (templ-ts-mode . emmet-mode))
+
+(message "=== Done Loading Config ===")
 
