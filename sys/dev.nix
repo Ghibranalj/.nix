@@ -21,6 +21,7 @@
     nodejs
     pnpm
     zig
+
     ## LSP
     gopls
     ccls
@@ -35,6 +36,8 @@
     emmet-ls
     sqls
     rustywind
+    upkgs.copilot-language-server-fhs
+
     ## DB stuff
     beekeeper-studio
     ];

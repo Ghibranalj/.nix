@@ -181,7 +181,6 @@
 
 ;; Coplilot
 (use-package! copilot
-  :disabled
   :after company
   :config
   (defun +copilot/tab ()

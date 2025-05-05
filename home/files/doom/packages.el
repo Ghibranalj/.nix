@@ -47,10 +47,10 @@
 ;; ...or multiple packages
                                         ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
-(package! evil :pin "6bed0e58dbafd75755c223a5c07aacd479386568")
+;; (package! evil :pin "6bed0e58dbafd75755c223a5c07aacd479386568")
 (package! copilot
-  :pin "7d105d708a23d16cdfd5240500be8bb02f95a46e"
-  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+  :pin "784edd550508c88582f04013b1d5ea5b3824746c"
+  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
 (package! company-box
   :pin "c4f2e243fba03c11e46b1600b124e036f2be7691"
   :recipe (

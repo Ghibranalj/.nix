@@ -2,6 +2,7 @@
   description = "Ghibran Jaringan";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11"; # Match Nixpkgs version
       inputs.nixpkgs.follows = "nixpkgs";
@@ -16,18 +17,31 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, home-manager, ... } @ inputs : let
+  outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, ... } @ inputs : let
     # Host generator function (thanks deepseek)
     mkHost =
       { hostName, system ? "x86_64-linux", hmEnabled ? true}:
       let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [
+            (final: prev: {
+              upkgs = import nixpkgs-unstable {
+                inherit system;
+                config.allowUnfree = true;
+              };
+            })
+          ];
+          config.allowUnfree = true;
+        };
+
         host = {
           inherit hostName;
         }; 
       in
       nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs host; };
+        specialArgs = { inherit inputs host pkgs; };
         modules = [
           ./sys
           (./hosts + "/${hostName}/hardware-configuration.nix")
