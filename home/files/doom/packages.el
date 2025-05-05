@@ -94,7 +94,7 @@
            :files ("*.el")
            :branch "master"))
 (package! lsp-tailwindcss
-	  :pin "ca5e611d2a38fea8802a365bcdd6fdc73e3d79af"
+	  :pin "294121ada4feb4f4ad4d1a8b2dc69de89d518d31"
 	  :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
 ; (package! smudge :pin "")
 (package! pcap-mode

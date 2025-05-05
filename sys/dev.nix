@@ -34,6 +34,7 @@
     templ
     emmet-ls
     sqls
+    rustywind
     ## DB stuff
     beekeeper-studio
     ];

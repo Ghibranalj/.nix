@@ -741,5 +741,9 @@ Shows terminal and dired in seperate section."
   :hook
   (templ-ts-mode . emmet-mode))
 
+(use-package! lsp-tailwindcss
+  :config
+  (add-to-list 'lsp-tailwindcss-major-modes 'templ-ts-mode))
+
 (message "=== Done Loading Config ===")
 
