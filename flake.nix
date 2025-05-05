@@ -56,6 +56,9 @@
       pc = mkHost {
       	hostName = "pc";
       };
+      tuf = mkHost {
+      	hostName = "tuf";
+      };
     };
 
   in {

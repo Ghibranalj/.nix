@@ -70,30 +70,30 @@
 
 
     # snippets
-    home.activation.copyDoomSnippets = lib.hm.dag.entryAfter ["writeBoundary"] ''
-        # Create the snippets directory
-        OUT=${config.home.homeDirectory}/.config/doom-snippets
-
-        $DRY_RUN_CMD rm -rf $OUT
-        $DRY_RUN_CMD mkdir -p $OUT
-
-        # Copy snippets from your nix config
-        $DRY_RUN_CMD cp -r ${./files/doom-snippets}/* $OUT
-
-        $DRY_RUN_CMD chmod -R +wr $OUT
-
-        $DRY_RUN_CMD ${pkgs.emacs}/bin/emacs --batch \
-           --eval "(require 'package)" \
-           --eval "(package-initialize)" \
-           --eval "(unless (package-installed-p 'yasnippet) 
-                   (add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\") t)
-                   (package-refresh-contents) 
-                   (package-install 'yasnippet))" \
-           --eval "(require 'yasnippet)" \
-           --eval "(yas-compile-directory \"$OUT\")"
-
-        echo "Doom snippets copied to $OUT"
-    '';
+#    home.activation.copyDoomSnippets = lib.hm.dag.entryAfter ["writeBoundary"] ''
+#        # Create the snippets directory
+#        OUT=${config.home.homeDirectory}/.config/doom-snippets
+#
+#        $DRY_RUN_CMD rm -rf $OUT
+#        $DRY_RUN_CMD mkdir -p $OUT
+#
+#        # Copy snippets from your nix config
+#        $DRY_RUN_CMD cp -r ${./files/doom-snippets}/* $OUT
+#
+#        $DRY_RUN_CMD chmod -R +wr $OUT
+#
+#        $DRY_RUN_CMD ${pkgs.emacs}/bin/emacs --batch \
+#           --eval "(require 'package)" \
+#           --eval "(package-initialize)" \
+#           --eval "(unless (package-installed-p 'yasnippet) 
+#                   (add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\") t)
+#                   (package-refresh-contents) 
+#                   (package-install 'yasnippet))" \
+#           --eval "(require 'yasnippet)" \
+#           --eval "(yas-compile-directory \"$OUT\")"
+#
+#        echo "Doom snippets copied to $OUT"
+#    '';
     # home.packages = [
     #     (pkgs.writeShellScriptBin "setup-doom-snippets" ''
     #     # Create writable snippets directory
