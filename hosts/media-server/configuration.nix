@@ -45,7 +45,7 @@
 
     transmission = {
       enable = true;
-      vpn.enable = true;
+      vpn.enable = false;
       peerPort = 50000; # Set this to the port forwarded by your VPN
     };
 
