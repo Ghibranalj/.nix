@@ -8,7 +8,7 @@
   ];
 
   networking.hostName = "absolutely-legal-media-server";
-  grub.enable = false
+  grub.enable = false;
 
   networking.firewall.enable = false;
 
