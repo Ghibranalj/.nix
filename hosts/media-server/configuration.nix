@@ -3,8 +3,6 @@
 {
   imports = [ ./nginx.nix ];
 
-  doom.enable = false;
-  gns3-handlers.enable = false;
   grub.enable = true;
   networking.hostName = "absolutely-legal-media-server";
 
