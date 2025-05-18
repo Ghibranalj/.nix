@@ -21,7 +21,7 @@
       automount_opts =
         "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
     in [
-      "${automount_opts},credentials=${./smb_secret}"
+      "${automount_opts},credentials=${./smb_secret},uid=0,gid=0,file_mode=0777,dir_mode=0777"
     ]; # DONT BOTHER HACKING THESE. THIS IS LOCAL ONLY AND OTHER IPS ARE BLOCKED
   };
 
