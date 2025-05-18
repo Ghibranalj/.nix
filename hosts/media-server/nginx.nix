@@ -80,7 +80,7 @@
       "transmission.jellyfin.local" = {
         locations."/" = {
           proxyPass =
-            "http://127.0.0.1:9091"; # Default transmission web UI port
+            "http://127.0.0.1:9091/transmission/"; # Added trailing slash and path
           proxyWebsockets = true;
           extraConfig = ''
             proxy_set_header Host $host;
