@@ -45,8 +45,11 @@
       enable = true;
       vpn.enable = false;
       extraAllowedIps = [ "10.0.*" ];
+      extraSettings = {
+        "rpc-host-whitelist-enabled" = true;
+        "rpc-host-whitelist" = "transmission.jellyfin.local,jellyfin.local,localhost,127.0.0.1";
+      };
 
-      package = pkgs.transmission_3;
       peerPort = 50000; # Set this to the port forwarded by your VPN
     };
 
