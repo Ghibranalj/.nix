@@ -59,6 +59,7 @@
     jellyseerr.enable = true;
   };
 
+  virtualisation.oci-containers.backend = "docker";
   virtualisation.oci-containers = {
     containers.unmanic = {
       volumes = [
