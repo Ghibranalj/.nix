@@ -79,13 +79,14 @@
       # Transmission subdomain
       "transmission.jellyfin.local" = {
         locations."/" = {
-          proxyPass =
-            "http://127.0.0.1:9091/transmission/"; # Added trailing slash and path
+          proxyPass = "http://127.0.0.1:9091";
           proxyWebsockets = true;
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
+          extraConfig = ''
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+          '';
         };
       };
 
