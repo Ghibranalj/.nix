@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports = [ ./nginx.conf ];
+  imports = [ ./nginx.nix ];
 
   doom.enable = false;
   gns3-handlers.enable = false;
