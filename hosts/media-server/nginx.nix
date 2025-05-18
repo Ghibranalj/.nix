@@ -93,6 +93,14 @@
         };
       };
 
+      # Unmanic subdomain
+      "unmanic.jellyfin.local" = {
+        locations."/" = {
+          proxyPass = "http://localhost:8889";
+          proxyWebsockets = true;
+        };
+      };
+
       # Admin Dashboard subdomain
       "admin.jellyfin.local" = {
         locations."/" = {
@@ -250,9 +258,27 @@
                         <i data-lucide="list-plus" class="h-5 w-5"></i>
                       </div>
                       <div class="p-4">
-                        <p class="text-gray-600 text-sm">Media Requests</p>
+                        <p class="text-gray-600 text-sm">Request Management</p>
                         <div class="mt-4 flex justify-end">
                           <span class="text-xs inline-flex items-center font-medium rounded-full px-2.5 py-0.5 bg-pink-100 text-pink-800">
+                            <i data-lucide="external-link" class="h-3 w-3 mr-1"></i> Open
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                  
+                  <!-- Unmanic -->
+                  <a href="http://unmanic.jellyfin.local" class="block">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full">
+                      <div class="bg-orange-500 p-4 text-white flex items-center justify-between">
+                        <span class="font-medium">Transcoding</span>
+                        <i data-lucide="file-video-2" class="h-5 w-5"></i>
+                      </div>
+                      <div class="p-4">
+                        <p class="text-gray-600 text-sm">Video Library Optimizer</p>
+                        <div class="mt-4 flex justify-end">
+                          <span class="text-xs inline-flex items-center font-medium rounded-full px-2.5 py-0.5 bg-orange-100 text-orange-800">
                             <i data-lucide="external-link" class="h-3 w-3 mr-1"></i> Open
                           </span>
                         </div>

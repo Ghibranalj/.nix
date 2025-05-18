@@ -58,4 +58,23 @@
     sonarr.enable = true;
     jellyseerr.enable = true;
   };
+
+  virtualisation.oci-containers = {
+    containers.unmanic = {
+      volumes = [
+        "/var/media/.state/unmanic/config:/config"
+        #"/media/arr/unmanic/library:/library"
+        "/var/media/.state/unmanic/tmp:/tmp/unmanic"
+        "/media:/library"
+      ];
+      environment = {
+        PUID = toString config.users.users.media.uid;
+        PGID = toString config.users.groups.media.gid;
+      };
+      ports = [
+        "127.0.0.1:8889:8888"
+      ];
+      image = "josh5/unmanic:latest";
+    };
+  };
 }
