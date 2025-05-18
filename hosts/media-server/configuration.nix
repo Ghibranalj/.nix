@@ -1,9 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports = [
-    ./nginx.conf
-  ];
+  imports = [ ./nginx.conf ];
 
   doom.enable = false;
   gns3-handlers.enable = false;
@@ -22,7 +20,9 @@
     options = let
       automount_opts =
         "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-    in [ "${automount_opts},credentials=${./smb_secret}" ]; #DONT BOTHER HACKING THESE. THIS IS LOCAL ONLY AND OTHER IPS ARE BLOCKED
+    in [
+      "${automount_opts},credentials=${./smb_secret}"
+    ]; # DONT BOTHER HACKING THESE. THIS IS LOCAL ONLY AND OTHER IPS ARE BLOCKED
   };
 
   nixarr = {
