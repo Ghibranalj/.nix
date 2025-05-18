@@ -44,13 +44,17 @@
             ./sys
             (./hosts + "/${hostName}/hardware-configuration.nix")
             (./hosts + "/${hostName}/configuration.nix")
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.extraSpecialArgs = { inherit inputs host; };
-              home-manager.users.gibi =
-                if hmEnabled then import ./home.nix else { };
-            }
+            # Only include home-manager if hmEnabled is true
+            (nixpkgs.lib.mkIf hmEnabled 
+              [
+                home-manager.nixosModules.home-manager
+                {
+                  home-manager.useGlobalPkgs = true;
+                  home-manager.extraSpecialArgs = { inherit inputs host; };
+                  home-manager.users.gibi = import ./home.nix;
+                }
+              ]
+            )
             inputs.grub2-themes.nixosModules.default
             inputs.evdev-keymapper.nixosModules.default
           ];
