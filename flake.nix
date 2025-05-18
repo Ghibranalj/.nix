@@ -61,7 +61,7 @@
         pc = mkHost { hostName = "pc"; };
         tuf = mkHost { hostName = "tuf"; };
         media-server = mkHost {
-          hostname = "media-server";
+          hostName = "media-server";
           hmEnabled = false;
         };
       };
