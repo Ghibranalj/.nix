@@ -15,7 +15,7 @@
         openssh.authorizedKeys.keys =  let
             keys = pkgs.fetchurl {
             url = "https://github.com/ghibranalj.keys";
-            sha256 = "09kl2jv200nxqxx6b811kb0ba8gbmyfpd3hyfk47si6s49kwk3s3";
+            sha256 = "sha256-Dg/Pi4DRoMVygyH50fgPKHut6Z6bMG9egG7YUq4u8dY=";
             };
         in pkgs.lib.splitString "\n" (builtins.readFile keys);
         };

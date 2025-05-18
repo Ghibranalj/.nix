@@ -106,17 +106,17 @@
   :desc "Run Last debug" "d" #'my-dap-debug-last
   )
 
- (:prefix-map ("d" . "Debug")
-  :desc "Debug last" "d" #'my-dap-debug-last
-  :desc "Debug" "D" #'my-dap-debug
-  :desc "Continue" "c" #'dap-continue
-  :desc "Next" "n" #'dap-next
-  :desc "Step in" "i" #'dap-step-in
-  :desc "Step out" "o" #'dap-step-out
-  :desc "Toggle breakpoint" "b" #'dap-breakpoint-toggle
-  :desc "Quit" "q" #'dap-disconnect
-  :desc "Restart" "r" #'dap-hydra
-  )
+ ;; (:prefix-map ("d" . "Debug")
+ ;;  :desc "Debug last" "d" #'my-dap-debug-last
+ ;;  :desc "Debug" "D" #'my-dap-debug
+ ;;  :desc "Continue" "c" #'dap-continue
+ ;;  :desc "Next" "n" #'dap-next
+ ;;  :desc "Step in" "i" #'dap-step-in
+ ;;  :desc "Step out" "o" #'dap-step-out
+ ;;  :desc "Toggle breakpoint" "b" #'dap-breakpoint-toggle
+ ;;  :desc "Quit" "q" #'dap-disconnect
+ ;;  :desc "Restart" "r" #'dap-hydra
+ ;  )
  )
 
 (message "==== Keymap loaded ====")

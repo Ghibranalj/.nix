@@ -17,6 +17,7 @@ with lib;
     ./winbox.nix
     ./dev.nix
     ./libvirt.nix
+    ./gaming.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -69,7 +70,7 @@ with lib;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
-    enable = true;
+    enable = lib.mkDefault true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
@@ -81,8 +82,21 @@ with lib;
     wireplumber.enable = true;
   };
 
+  services.openssh = {
+    enable = lib.mkDefault true;
+    ports = [ 22 ];
+    settings = {
+      PasswordAuthentication = lib.mkDefault true;
+      AllowUsers = null; # Allows all users by default. Can be [ "user1" "user2" ]
+      UseDns = true;
+      X11Forwarding = false;
+      PermitRootLogin = lib.mkDefault "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
+    };
+  };
  
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "24.11"; # Did you read the comment?
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  gaming.enable = mkDefault false;
 }

@@ -360,7 +360,9 @@ Shows terminal and dired in seperate section."
   (dired-dwim-target t)
   (delete-by-moving-to-trash t)
   (dired-mouse-drag-files t)
+
   :config
+  (require 'dired-x)
   (defun my-dired-navigate-into ()
     "Open directory in same dired buffer. Open file in new buffer"
     (interactive)
@@ -381,6 +383,15 @@ Shows terminal and dired in seperate section."
     "w" 'my-dired-posframe-scroll-up
     "e" 'lsp-dired-mode)
   (put 'dired-find-alternate-file 'disabled nil))
+
+(use-package! dired-x
+  :hook
+  (dired-mode . dired-omit-mode)
+  :config
+  (setq dired-omit-files
+        (concat dired-omit-files
+                "\\|_templ\\.go\\'"
+                "\\|_templ\\.txt\\'")))
 
 (use-package! ivy-posframe
   :custom
@@ -467,19 +478,21 @@ Shows terminal and dired in seperate section."
   (add-to-list 'projectile-globally-ignored-directories "web-legacy"))
 
 (use-package! dap-mode
-  :init
-  (defun my-dap-debug-last()
-    (interactive)
-    (call-interactively '+make/run-last)
-    (call-interactively 'dap-debug-last))
-
-  (defun my-dap-debug ()
-    (interactive)
-    (call-interactively '+make/run)
-    (call-interactively 'dap-debug))
-  :custom
-  ;; (sessions locals breakpoints expressions controls tooltip)
-  (dap-auto-configure-features '(locals controls tooltip)))
+  :after lsp-mode
+  :config
+  (dap-auto-configure-mode)
+  ;; Set up Go debugging
+  (require 'dap-go)
+  (dap-register-debug-template "Go Launch File Configuration"
+                             (list :type "go"
+                                   :request "launch"
+                                   :name "Launch Go Program"
+                                   :mode "auto"
+                                   :program "${fileDirname}"
+                                   :buildFlags ""
+                                   :args ""
+                                   :env nil
+                                   :envFile nil)))
 
 ;; Git Blame
 (use-package blamer
@@ -733,16 +746,39 @@ Shows terminal and dired in seperate section."
   ;; Define the templ formatter
   (pushnew! apheleia-formatters
            '(templ-fmt . ("templ" "fmt")))
+  (pushnew! apheleia-formatters
+            '(nix-fmt . ("nixfmt")))
  ;; Associate templ-ts-mode with the formatter
-  (setf (alist-get 'templ-ts-mode apheleia-mode-alist) 'templ-fmt))
+  (setf (alist-get 'templ-ts-mode apheleia-mode-alist) 'templ-fmt)
+  (setf (alist-get 'nix-mode apheleia-mode-alist) 'nix-fmt))
 
-(use-package!  emmet-mode
-  :hook
-  (templ-ts-mode . emmet-mode))
+;; (use-package!  emmet-mode
+;;   :config
+;;   (templ-ts-mode . emmet-mode))
 
 (use-package! lsp-tailwindcss
   :config
   (add-to-list 'lsp-tailwindcss-major-modes 'templ-ts-mode))
 
+(use-package! all-the-icons
+  :config
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\.templ\\'" all-the-icons-fileicon "html5" :face all-the-icons-orange)))
+
+(use-package! files
+  :config
+  (add-to-list 'completion-ignored-extensions "_templ.go")
+  (add-to-list 'completion-ignored-extensions "_templ.txt"))
+
+(use-package! projectile
+  :config
+  (add-to-list 'projectile-globally-ignored-file-suffixes "_templ.go")
+  (add-to-list 'projectile-globally-ignored-file-suffixes "_templ.txt"))
+
 (message "=== Done Loading Config ===")
 
+(after! all-the-icons
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(templ-ts-mode all-the-icons-fileicon "go" :face all-the-icons-blue))
+  (add-to-list 'all-the-icons-regexp-icon-alist
+               '("\\.templ$" all-the-icons-fileicon "go" :face all-the-icons-blue)))

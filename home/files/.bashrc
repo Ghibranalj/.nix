@@ -1,8 +1,4 @@
-# If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-    *) return ;;
-esac
+
 # include .profile if it exists
 [[ -f ~/.profile ]] && . ~/.profile
 

@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  
   options = with lib; {
      dev.enable = mkEnableOption "enables gnome";
   };
@@ -32,7 +31,7 @@
     lua-language-server
     typescript-language-server
     gocode-gomod
-    templ
+    upkgs.templ
     emmet-ls
     sqls
     rustywind
@@ -40,6 +39,15 @@
 
     ## DB stuff
     beekeeper-studio
+
+    # formatters
+    nixfmt
+
+    httpie-desktop
+    httpie
+
+    #reverse engineering
+    ghidra-bin
     ];
   };
 }
