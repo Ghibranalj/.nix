@@ -101,6 +101,14 @@
         };
       };
 
+      # Flaresolverr subdomain
+      "flaresolverr.jellyfin.local" = {
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:8191"; # Flaresolverr port
+          proxyWebsockets = true; # Though Flaresolverr might not use websockets, it's harmless to include
+        };
+      };
+
       # Admin Dashboard subdomain
       "admin.jellyfin.local" = {
         locations."/" = {
@@ -286,6 +294,24 @@
                     </div>
                   </a>
                   
+                  <!-- Flaresolverr -->
+                  <a href="http://flaresolverr.jellyfin.local" class="block">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full">
+                      <div class="bg-cyan-600 p-4 text-white flex items-center justify-between">
+                        <span class="font-medium">Flaresolverr</span>
+                        <i data-lucide="shield-check" class="h-5 w-5"></i>
+                      </div>
+                      <div class="p-4">
+                        <p class="text-gray-600 text-sm">Cloudflare Bypass</p>
+                        <div class="mt-4 flex justify-end">
+                          <span class="text-xs inline-flex items-center font-medium rounded-full px-2.5 py-0.5 bg-cyan-100 text-cyan-800">
+                            <i data-lucide="external-link" class="h-3 w-3 mr-1"></i> Open
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                  
                   <!-- Transmission -->
                   <a href="http://transmission.jellyfin.local" class="block">
                     <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full">
@@ -353,5 +379,6 @@
     127.0.0.1 transmission.jellyfin.local
     127.0.0.1 sabnzbd.jellyfin.local
     127.0.0.1 admin.jellyfin.local
+    127.0.0.1 flaresolverr.jellyfin.local
   '';
 }

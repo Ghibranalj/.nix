@@ -78,4 +78,9 @@
       image = "josh5/unmanic:latest";
     };
   };
+
+  services.flaresolverr = {
+    enable = true;
+    port = 8191;
+  };
 }
