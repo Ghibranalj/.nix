@@ -44,16 +44,17 @@
             ./sys
             (./hosts + "/${hostName}/hardware-configuration.nix")
             (./hosts + "/${hostName}/configuration.nix")
-            # Only include home-manager when enabled
-            (nixpkgs.lib.mkIf hmEnabled home-manager.nixosModules.home-manager)
-            (nixpkgs.lib.mkIf hmEnabled {
+            inputs.grub2-themes.nixosModules.default
+            inputs.evdev-keymapper.nixosModules.default
+          ] ++ (if hmEnabled then [
+            home-manager.nixosModules.home-manager
+            {
               home-manager.useGlobalPkgs = true;
               home-manager.extraSpecialArgs = { inherit inputs host; };
               home-manager.users.gibi = import ./home.nix;
-            })
-            inputs.grub2-themes.nixosModules.default
-            inputs.evdev-keymapper.nixosModules.default
-          ];
+            }
+          ] else
+            [ ]);
         };
 
       hosts = {
