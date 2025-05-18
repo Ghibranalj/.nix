@@ -6,7 +6,6 @@
     nixarr.nixosModules.default
   ];
 
-  grub.enable = true;
   networking.hostName = "absolutely-legal-media-server";
 
   networking.firewall.enable = false;

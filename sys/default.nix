@@ -66,7 +66,6 @@ with lib;
       nix-cleanup="sudo nix-collect-garbage -d";
   };
 
-
   services.openssh = {
     enable = lib.mkDefault true;
     ports = [ 22 ];
