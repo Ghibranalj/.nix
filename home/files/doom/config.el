@@ -776,9 +776,3 @@ Shows terminal and dired in seperate section."
   (add-to-list 'projectile-globally-ignored-file-suffixes "_templ.txt"))
 
 (message "=== Done Loading Config ===")
-
-(after! all-the-icons
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(templ-ts-mode all-the-icons-fileicon "go" :face all-the-icons-blue))
-  (add-to-list 'all-the-icons-regexp-icon-alist
-               '("\\.templ$" all-the-icons-fileicon "go" :face all-the-icons-blue)))
