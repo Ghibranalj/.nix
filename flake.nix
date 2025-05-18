@@ -5,7 +5,7 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url =
-        "github:nix-community/home-manager/release-25.05"; # Match Nixpkgs version
+        "github:nix-community/home-manager/release-24.11"; # Match Nixpkgs version
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-doom-emacs-unstraightened.url =
@@ -18,7 +18,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, nixarr, ... }@inputs:
+  outputs =
+    { self, nixpkgs, home-manager, nixpkgs-unstable, nixarr, ... }@inputs:
     let
       # Host generator function (thanks deepseek)
       mkHost = { hostName, system ? "x86_64-linux", hmEnabled ? true }:
