@@ -1,11 +1,11 @@
 {
   description = "Ghibran Jaringan";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url =
-        "github:nix-community/home-manager/release-24.11"; # Match Nixpkgs version
+        "github:nix-community/home-manager/release-25.05"; # Match Nixpkgs version
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-doom-emacs-unstraightened.url =
