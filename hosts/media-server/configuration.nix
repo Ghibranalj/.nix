@@ -46,6 +46,7 @@
       vpn.enable = false;
       extraAllowedIps = [ "10.0.*" ];
 
+      package = pkgs.transmission_3;
       peerPort = 50000; # Set this to the port forwarded by your VPN
     };
 
