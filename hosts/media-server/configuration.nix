@@ -1,10 +1,7 @@
 { config, lib, pkgs, nixarr, ... }:
 
 {
-  imports = [ 
-    ./nginx.nix
-    nixarr.nixosModules.default
-  ];
+  imports = [ ./nginx.nix nixarr.nixosModules.default ];
 
   networking.hostName = "absolutely-legal-media-server";
 
@@ -21,7 +18,9 @@
       automount_opts =
         "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
     in [
-      "${automount_opts},credentials=${./smb_secret},uid=0,gid=0,file_mode=0777,dir_mode=0777"
+      "${automount_opts},credentials=${
+        ./smb_secret
+      },uid=0,gid=0,file_mode=0777,dir_mode=0777"
     ]; # DONT BOTHER HACKING THESE. THIS IS LOCAL ONLY AND OTHER IPS ARE BLOCKED
   };
 
@@ -45,6 +44,8 @@
     transmission = {
       enable = true;
       vpn.enable = false;
+      extraAllowedIps = [ "10.0.*" ];
+
       peerPort = 50000; # Set this to the port forwarded by your VPN
     };
 
@@ -72,9 +73,7 @@
         PUID = "1000";
         PGID = "1000";
       };
-      ports = [
-        "127.0.0.1:8889:8888"
-      ];
+      ports = [ "127.0.0.1:8889:8888" ];
       image = "josh5/unmanic:latest";
     };
   };
