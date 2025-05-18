@@ -1,7 +1,10 @@
-{ config, lib, pkgs, nixarr ,... }:
+{ config, lib, pkgs, nixarr, ... }:
 
 {
-  imports = [ ./nginx.nix ];
+  imports = [ 
+    ./nginx.nix
+    nixarr.nixosModules.default
+  ];
 
   grub.enable = true;
   networking.hostName = "absolutely-legal-media-server";
