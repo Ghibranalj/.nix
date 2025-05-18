@@ -18,7 +18,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, nixarr, ... }@inputs:
     let
       # Host generator function (thanks deepseek)
       mkHost = { hostName, system ? "x86_64-linux", hmEnabled ? true }:
@@ -38,7 +38,7 @@
           host = { inherit hostName; };
         in nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit inputs host pkgs; };
+          specialArgs = { inherit inputs host pkgs nixarr; };
           modules = [
             ./sys
             (./hosts + "/${hostName}/hardware-configuration.nix")
