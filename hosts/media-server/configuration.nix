@@ -98,17 +98,18 @@
     text = ''
       if [ ! -f /var/media/.state/filebrowser/filebrowser.db ]; then
         mkdir -p /var/media/.state/filebrowser/
-        echo "Initializing filebrowser config..."
+        pushd /var/media/.state/filebrowser/
+
         ${pkgs.filebrowser}/bin/filebrowser config init \
           --port "8889" \
           --root "/media" \
           --auth.method noauth \
           --database /var/media/.state/filebrowser/filebrowser.db \
-          --config /var/media/.state/filebrowser/.filebrowser.json
-
+          --config /var/media/.state/filebrowser/filebrowser.json > filebrowser.json
+        popd
         chown -R filebrowser:filebrowser /var/media/.state/filebrowser
       else
-        echo "Filebrowser already initialized, skipping."
+        echo "Filebrowser already initialized..."
       fi
     '';
   };
