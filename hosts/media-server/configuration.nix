@@ -88,7 +88,7 @@
       Group = "filebrowser";
       ExecStart = ''
         ${pkgs.filebrowser}/bin/filebrowser 
-          -c /var/media/.state/filebrowser/.filebrowser.json 
+          -c /var/media/.state/filebrowser/filebrowser.json 
           -d /var/media/.state/filebrowser/filebrowser.db'';
       Restart = "on-failure";
     };
