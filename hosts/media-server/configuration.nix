@@ -1,11 +1,8 @@
 { config, lib, pkgs, nixarr, ... }:
 
 {
-  imports = [ 
-    ./nginx.nix
-    ./orig-configuration.nix
-    nixarr.nixosModules.default
-  ];
+  imports =
+    [ ./nginx.nix ./orig-configuration.nix nixarr.nixosModules.default ];
 
   networking.hostName = "absolutely-legal-media-server";
   grub.enable = false;
@@ -20,6 +17,13 @@
     fsType = "nfs";
     options = [ "defaults" "vers=4" ];
   };
+
+  system.activationScripts.createMountPoint = {
+    text = ''
+      mkdir -p /mnt/media
+    '';
+  };
+
   # optional, but ensures rpc-statsd is running for on demand mounting
   boot.supportedFilesystems = [ "nfs" ];
 
@@ -46,7 +50,8 @@
       extraAllowedIps = [ "10.0.*" ];
       extraSettings = {
         "rpc-host-whitelist-enabled" = true;
-        "rpc-host-whitelist" = "transmission.jellyfin.local,jellyfin.local,localhost,127.0.0.1";
+        "rpc-host-whitelist" =
+          "transmission.jellyfin.local,jellyfin.local,localhost,127.0.0.1";
       };
 
       peerPort = 50000; # Set this to the port forwarded by your VPN
