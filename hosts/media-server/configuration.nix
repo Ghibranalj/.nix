@@ -70,17 +70,30 @@
   };
 
   virtualisation.oci-containers.backend = "docker";
-  virtualisation.oci-containers = {
-    containers.filebrowser = {
-      volumes = [
-        "/media:/srv"
-        "/var/media/.state/filebrowser/filebrowser.db:/database.db"
-        "/var/media/.state/filebrowser/.filebrowser.json:/.filebrowser.json"
-      ];
-      extraOptions = [ "--user=1000:1000" ];
-      ports = [ "8889:80" ];
-      image = "filebrowser/filebrowser:latest";
+  systemd.services."filebrowser" = {
+    description = "File browser";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+
+    serviceConfig = {
+      User = "filebrowser";
+      Group = "filebrowser";
+      ExecStart =
+        "${pkgs.filebrowser}/bin/filebrowser -c /var/media/.state/filebrowser";
+      Restart = "on-failure";
     };
+  };
+
+  system.activationScripts.initFilebrowser = {
+    text = ''
+      mkdir -p /var/media/.state/filebrowser
+      pushd /var/media/.state/filebrowser
+      ${pkgs.filebrowser}/bin/filebrowser config init \
+                                          --port "8889" \
+                                          --root "/media" \
+                                          --auth.method=noauth
+      popd
+    '';
   };
 
   services.flaresolverr = {
