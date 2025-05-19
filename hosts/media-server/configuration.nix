@@ -97,6 +97,7 @@
   system.activationScripts.initFilebrowser = {
     text = ''
       if [ ! -f /var/media/.state/filebrowser/filebrowser.db ]; then
+        mkdir -p /var/media/.state/filebrowser/
         echo "Initializing filebrowser config..."
         ${pkgs.filebrowser}/bin/filebrowser config init \
           --port "8889" \
