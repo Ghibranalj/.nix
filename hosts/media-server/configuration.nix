@@ -12,17 +12,12 @@
   # For mount.cifs, required unless domain name resolution is not needed.
   environment.systemPackages = [ pkgs.cifs-utils ];
   fileSystems."/media" = {
-    device = "//10.0.16.50/jellyfin";
-    fsType = "cifs";
-    options = let
-      automount_opts =
-        "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-    in [
-      "${automount_opts},credentials=${
-        ./smb_secret
-      },uid=0,gid=0,file_mode=0777,dir_mode=0777"
-    ]; # DONT BOTHER HACKING THESE. THIS IS LOCAL ONLY AND OTHER IPS ARE BLOCKED
+    device = "10.0.16.50:/mnt/NAS/jellyfin";
+    fsType = "nfs";
+    options = [ "defaults" "vers=4" ];  # or "vers=3" if v4 doesn’t work
   };
+  # optional, but ensures rpc-statsd is running for on demand mounting
+  boot.supportedFilesystems = [ "nfs" ];
 
   nixarr = {
     enable = true;
