@@ -71,19 +71,15 @@
 
   virtualisation.oci-containers.backend = "docker";
   virtualisation.oci-containers = {
-    containers.unmanic = {
+    containers.filebrowser = {
       volumes = [
-        "/var/media/.state/unmanic/config:/config"
-        #"/media/arr/unmanic/library:/library"
-        "/var/media/.state/unmanic/tmp:/tmp/unmanic"
-        "/media:/library"
+        "/media:/srv"
+        "/var/media/.state/filebrowser/filebrowser.db:/database.db"
+        "/var/media/.state/filebrowser/.filebrowser.json:/.filebrowser.json"
       ];
-      environment = {
-        PUID = "1000";
-        PGID = "1000";
-      };
-      ports = [ "127.0.0.1:8889:8888" ];
-      image = "josh5/unmanic:latest";
+      extraOptions = [ "--user=1000:1000" ];
+      ports = [ "8889:80" ];
+      image = "filebrowser/filebrowser:latest";
     };
   };
 
