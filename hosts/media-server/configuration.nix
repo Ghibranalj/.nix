@@ -12,15 +12,16 @@
   services.pipewire = { enable = false; };
 
   # For mount.cifs, required unless domain name resolution is not needed.
-  fileSystems."/mnt/media" = {
+  fileSystems."/media" = {
     device = "10.0.16.50:/mnt/NAS/jelllyfin";
     fsType = "nfs";
-    options = [ "defaults" "vers=4" ];
+    options = [ "rw" "hard" "intr" "vers=4.2" "sec=sys" ];
+
   };
 
   system.activationScripts.createMountPoint = {
     text = ''
-      mkdir -p /mnt/media
+      mkdir -p /media
     '';
   };
 
