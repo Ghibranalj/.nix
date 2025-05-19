@@ -82,7 +82,6 @@
   virtualisation.oci-containers.containers = {
     filebrowser = {
       image = "hurlenko/filebrowser";
-      user = "1000:1000"; # Replace "myuser" with your actual username
       ports = [ "8889:8080" ];
       volumes = [
         "/var/media/.state/filebrowser/data:/data"
