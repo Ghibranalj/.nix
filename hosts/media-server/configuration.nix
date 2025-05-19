@@ -17,7 +17,7 @@
   # For mount.cifs, required unless domain name resolution is not needed.
   environment.systemPackages = [ pkgs.cifs-utils ];
   fileSystems."/media" = {
-    device = "10.0.16.50:/mnt/NAS/jellyfin";
+    device = "10.0.16.50:/mnt/NAS/jelllyfin";
     fsType = "nfs";
     options = [ "defaults" "vers=3" ];  # or "vers=3" if v4 doesn’t work
   };
