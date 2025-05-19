@@ -84,7 +84,6 @@
       image = "hurlenko/filebrowser";
       ports = [ "8889:8080" ];
       volumes = [
-        "/var/media/.state/filebrowser/data:/data"
         "/var/media/.state/filebrowser/config:/config"
         "/media:/data"
       ];
