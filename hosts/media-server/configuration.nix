@@ -78,40 +78,20 @@
   users.groups.filebrowser = { };
 
   virtualisation.oci-containers.backend = "docker";
-  systemd.services."filebrowser" = {
-    description = "File browser";
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
 
-    serviceConfig = {
-      User = "filebrowser";
-      Group = "filebrowser";
-      ExecStart = ''
-        ${pkgs.filebrowser}/bin/filebrowser 
-          -c /var/media/.state/filebrowser/filebrowser.json 
-          -d /var/media/.state/filebrowser/filebrowser.db'';
-      Restart = "on-failure";
+  virtualisation.oci-containers.containers = {
+    filebrowser = {
+      image = "hurlenko/filebrowser";
+      user = "1000:1000"; # Replace "myuser" with your actual username
+      ports = [ "8889:8080" ];
+      volumes = [
+        "/var/media/.state/filebrowser/data:/data"
+        "/var/media/.state/filebrowser/config:/config"
+        "/media:/media"
+      ];
+      environment = { FB_BASEURL = "/media"; };
+      restartPolicy = "always";
     };
-  };
-
-  system.activationScripts.initFilebrowser = {
-    text = ''
-      if [ ! -f /var/media/.state/filebrowser/filebrowser.db ]; then
-        mkdir -p /var/media/.state/filebrowser/
-        pushd /var/media/.state/filebrowser/
-
-        ${pkgs.filebrowser}/bin/filebrowser config init \
-          --port "8889" \
-          --root "/media" \
-          --auth.method noauth \
-          --database /var/media/.state/filebrowser/filebrowser.db \
-          --config /var/media/.state/filebrowser/filebrowser.json > filebrowser.json
-        popd
-        chown -R filebrowser:filebrowser /var/media/.state/filebrowser
-      else
-        echo "Filebrowser already initialized..."
-      fi
-    '';
   };
 
   services.flaresolverr = {
