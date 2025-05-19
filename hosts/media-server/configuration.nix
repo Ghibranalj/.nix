@@ -86,7 +86,7 @@
       volumes = [
         "/var/media/.state/filebrowser/data:/data"
         "/var/media/.state/filebrowser/config:/config"
-        "/media:/media"
+        "/media:/data"
       ];
       environment = { FB_BASEURL = "/media"; };
     };
