@@ -15,11 +15,10 @@
   services.pipewire = { enable = false; };
 
   # For mount.cifs, required unless domain name resolution is not needed.
-  environment.systemPackages = [ pkgs.cifs-utils ];
-  fileSystems."/media" = {
+  fileSystems."/mnt/media" = {
     device = "10.0.16.50:/mnt/NAS/jelllyfin";
     fsType = "nfs";
-    options = [ "defaults" "vers=3" ];  # or "vers=3" if v4 doesn’t work
+    options = [ "defaults" "vers=4" ];
   };
   # optional, but ensures rpc-statsd is running for on demand mounting
   boot.supportedFilesystems = [ "nfs" ];
