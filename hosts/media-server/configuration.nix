@@ -90,7 +90,6 @@
         "/media:/media"
       ];
       environment = { FB_BASEURL = "/media"; };
-      restartPolicy = "always";
     };
   };
 
