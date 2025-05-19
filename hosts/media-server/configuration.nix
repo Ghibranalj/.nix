@@ -69,6 +69,14 @@
     jellyseerr.enable = true;
   };
 
+  users.users.filebrowser = {
+    isSystemUser = true;
+    group = "filebrowser";
+    createHome = false;
+  };
+
+  users.groups.filebrowser = { };
+
   virtualisation.oci-containers.backend = "docker";
   systemd.services."filebrowser" = {
     description = "File browser";
@@ -78,8 +86,10 @@
     serviceConfig = {
       User = "filebrowser";
       Group = "filebrowser";
-      ExecStart =
-        "${pkgs.filebrowser}/bin/filebrowser -c /var/media/.state/filebrowser";
+      ExecStart = ''
+        ${pkgs.filebrowser}/bin/filebrowser 
+          -c /var/media/.state/filebrowser/.filebrowser.json 
+          -d /var/media/.state/filebrowser/filebrowser.db'';
       Restart = "on-failure";
     };
   };
@@ -87,12 +97,14 @@
   system.activationScripts.initFilebrowser = {
     text = ''
       mkdir -p /var/media/.state/filebrowser
-      pushd /var/media/.state/filebrowser
+      chown -R filebrowser:filebrowser /var/media/.state/filebrowser
       ${pkgs.filebrowser}/bin/filebrowser config init \
-                                          --port "8889" \
-                                          --root "/media" \
-                                          --auth.method=noauth
-      popd
+        --port "8889" \
+        --root "/media" \
+        --auth.method noauth \
+        --database /var/media/.state/filebrowser/filebrowser.db \
+        --config /var/media/.state/filebrowser/.filebrowser.json
+      chown -R filebrowser:filebrowser /var/media/.state/filebrowser
     '';
   };
 
