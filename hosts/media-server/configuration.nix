@@ -19,7 +19,7 @@
   fileSystems."/media" = {
     device = "10.0.16.50:/mnt/NAS/jellyfin";
     fsType = "nfs";
-    options = [ "defaults" "vers=4" ];  # or "vers=3" if v4 doesn’t work
+    options = [ "defaults" "vers=3" ];  # or "vers=3" if v4 doesn’t work
   };
   # optional, but ensures rpc-statsd is running for on demand mounting
   boot.supportedFilesystems = [ "nfs" ];
