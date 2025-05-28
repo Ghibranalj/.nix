@@ -54,7 +54,6 @@
         "rpc-host-whitelist" =
           "transmission.jellyfin.local,jellyfin.local,localhost,127.0.0.1";
       };
-
       peerPort = 50000; # Set this to the port forwarded by your VPN
     };
 
