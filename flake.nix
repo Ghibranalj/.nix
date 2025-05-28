@@ -1,7 +1,7 @@
 {
   description = "Ghibran Jaringan";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url =
@@ -18,7 +18,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, nixarr, ... }@inputs:
+  outputs =
+    { self, nixpkgs, home-manager, nixpkgs-unstable, nixarr, ... }@inputs:
     let
       # Host generator function (thanks deepseek)
       mkHost = { hostName, system ? "x86_64-linux", hmEnabled ? true }:
@@ -43,16 +44,17 @@
             ./sys
             (./hosts + "/${hostName}/hardware-configuration.nix")
             (./hosts + "/${hostName}/configuration.nix")
+            inputs.grub2-themes.nixosModules.default
+            inputs.evdev-keymapper.nixosModules.default
+          ] ++ (if hmEnabled then [
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.extraSpecialArgs = { inherit inputs host; };
-              home-manager.users.gibi =
-                if hmEnabled then import ./home.nix else { };
+              home-manager.users.gibi = import ./home.nix;
             }
-            inputs.grub2-themes.nixosModules.default
-            inputs.evdev-keymapper.nixosModules.default
-          ];
+          ] else
+            [ ]);
         };
 
       hosts = {

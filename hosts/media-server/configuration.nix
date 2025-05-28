@@ -1,30 +1,32 @@
 { config, lib, pkgs, nixarr, ... }:
 
 {
-  imports = [ 
-    ./nginx.nix
-    nixarr.nixosModules.default
-  ];
+  imports =
+    [ ./nginx.nix ./orig-configuration.nix nixarr.nixosModules.default ];
 
-  grub.enable = true;
   networking.hostName = "absolutely-legal-media-server";
+  grub.enable = false;
 
   networking.firewall.enable = false;
 
   services.pipewire = { enable = false; };
 
   # For mount.cifs, required unless domain name resolution is not needed.
-  environment.systemPackages = [ pkgs.cifs-utils ];
   fileSystems."/media" = {
-    device = "//10.0.16.50/jellyfin";
-    fsType = "cifs";
-    options = let
-      automount_opts =
-        "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-    in [
-      "${automount_opts},credentials=${./smb_secret}"
-    ]; # DONT BOTHER HACKING THESE. THIS IS LOCAL ONLY AND OTHER IPS ARE BLOCKED
+    device = "10.0.16.50:/mnt/NAS/jelllyfin";
+    fsType = "nfs";
+    options = [ "rw" "hard" "intr" "vers=4.2" "sec=sys" ];
+
   };
+
+  system.activationScripts.createMountPoint = {
+    text = ''
+      mkdir -p /media
+    '';
+  };
+
+  # optional, but ensures rpc-statsd is running for on demand mounting
+  boot.supportedFilesystems = [ "nfs" ];
 
   nixarr = {
     enable = true;
@@ -46,6 +48,12 @@
     transmission = {
       enable = true;
       vpn.enable = false;
+      extraAllowedIps = [ "10.0.*" ];
+      extraSettings = {
+        "rpc-host-whitelist-enabled" = true;
+        "rpc-host-whitelist" =
+          "transmission.jellyfin.local,jellyfin.local,localhost,127.0.0.1";
+      };
       peerPort = 50000; # Set this to the port forwarded by your VPN
     };
 
@@ -58,5 +66,32 @@
     readarr.enable = true;
     sonarr.enable = true;
     jellyseerr.enable = true;
+  };
+
+  users.users.filebrowser = {
+    isSystemUser = true;
+    group = "filebrowser";
+    createHome = false;
+  };
+
+  users.groups.filebrowser = { };
+
+  virtualisation.oci-containers.backend = "docker";
+
+  virtualisation.oci-containers.containers = {
+    filebrowser = {
+      image = "hurlenko/filebrowser";
+      ports = [ "8889:8080" ];
+      volumes = [
+        "/var/media/.state/filebrowser/config:/config"
+        "/media:/data"
+      ];
+      environment = { FB_BASEURL = "/media"; };
+    };
+  };
+
+  services.flaresolverr = {
+    enable = true;
+    port = 8191;
   };
 }

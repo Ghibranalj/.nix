@@ -21,7 +21,7 @@
             theme = "stylish";
             footer = true;
         };
-        grub = {
+        grub = lib.mkDefault {
             enable = true;
             efiSupport = true;
             device = "nodev";  
