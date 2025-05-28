@@ -18,7 +18,6 @@
     texliveSmall
     jdk
     nodejs
-    pnpm
     zig
 
     ## LSP
@@ -36,6 +35,7 @@
     sqls
     rustywind
     upkgs.copilot-language-server-fhs
+    typescript-language-server
 
     ## DB stuff
     beekeeper-studio
