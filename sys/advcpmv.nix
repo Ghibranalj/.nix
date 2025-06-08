@@ -1,10 +1,10 @@
-{ config, lib, pkgs, ... }:let
-advcpmv_pkg = (pkgs.coreutils.override { singleBinary = false; }).overrideAttrs (old:
+{ config, lib, pkgs, prevpkgs ,... }:let
+advcpmv_pkg = (prevpkgs.coreutils.override { singleBinary = false; }).overrideAttrs (old:
   let
     advcpmv-data = {
       pname = "advcpmv";
       patch-version = "0.9";
-      coreutils-version = pkgs.coreutils.version;
+      coreutils-version = "9.5";
       version = "${advcpmv-data.patch-version}-${advcpmv-data.coreutils-version}";
       src = pkgs.fetchFromGitHub {
         owner = "jarun";

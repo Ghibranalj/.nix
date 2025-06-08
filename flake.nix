@@ -3,6 +3,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-prev.url = "github:NixOS/nixpkgs/nixos-24.11";
     home-manager = {
       url =
         "github:nix-community/home-manager/release-25.05"; # Match Nixpkgs version
@@ -19,7 +20,7 @@
     };
   };
   outputs =
-    { self, nixpkgs, home-manager, nixpkgs-unstable, nixarr, ... }@inputs:
+    { self, nixpkgs, home-manager, nixpkgs-unstable, nixarr, nixpkgs-prev ,... }@inputs:
     let
       # Host generator function (thanks deepseek)
       mkHost = { hostName, system ? "x86_64-linux", hmEnabled ? true }:
@@ -31,11 +32,18 @@
               permittedInsecurePackages = [ "*" ];
             };
           };
+          prevpkgs = import nixpkgs-prev {
+            inherit system;
+            config = {
+              allowUnfree = true;
+              permittedInsecurePackages = [ "*" ];
+            };
+          };
 
           host = { inherit hostName; };
         in nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit inputs host nixarr upkgs; };
+          specialArgs = { inherit inputs host nixarr upkgs prevpkgs; };
           modules = [
             ./sys
             (./hosts + "/${hostName}/hardware-configuration.nix")
