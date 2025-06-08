@@ -13,16 +13,28 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/ee2fe63e-f8f7-422e-96a2-cf0d04a42169";
+  fileSystems = {
+    "/" = { 
+      device = "/dev/disk/by-uuid/ee2fe63e-f8f7-422e-96a2-cf0d04a42169";
       fsType = "ext4";
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/394D-0A5C";
+  "/home/gibi/Drive" = {
+      device = "/dev/disk/by-uuid/fb70765c-0e93-49f6-b3c2-3e5cad02ff9f";
+      fsType = "ext4";
+      options = [ # If you don't have this options attribute, it'll default to "defaults" 
+        # boot options for fstab. Search up fstab mount options you can use
+        "users" # Allows any user to mount and unmount
+        "nofail" # Prevent system from failing if this drive doesn't mount
+      ];
+  };
+
+  "/boot" = { 
+      device = "/dev/disk/by-uuid/394D-0A5C";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
+  };
 
   swapDevices =
     [ { device = "/dev/disk/by-uuid/6c8134b5-42d1-4259-bc3f-47bb585ad9f4"; }

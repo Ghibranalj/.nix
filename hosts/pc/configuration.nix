@@ -20,23 +20,24 @@
 
   libvirt.enable = true;
 
-  environment.systemPackages = with pkgs; [
-  ];
-
   networking.firewall.enable = false;
   
   services.udev.extraRules = ''
     # Keyboard
-    KERNEL=="event*", SUBSYSTEM=="input", ATTRS{name}=="AJAZZ K680T Keyboard", SYMLINK+="input/by-id/btkeyboard"
+    KERNEL=="event*", SUBSYSTEM=="input", ATTRS{name}=="AJAZZ K680T Keyboard", ACTION=="add", SYMLINK+="input/by-id/btkeyboard"
 
-    # Mouse
-    KERNEL=="event*", SUBSYSTEM=="input", ATTRS{name}=="Basilisk X HyperSpeed Mouse", SYMLINK+="input/by-id/btmouse"
+    KERNEL=="event*", SUBSYSTEM=="input", ATTRS{name}=="BT5.0 Mouse", ACTION=="add", SYMLINK+="input/by-id/btmouse"
   '';
 
 
+  boot.resumeDevice="/dev/disk/by-uuid/6c8134b5-42d1-4259-bc3f-47bb585ad9f4";
   boot.kernelParams = [
+    "hid.persist=0"             # Disable HID device persistence
+    "btusb.disable_scofix=1"    # Fix Bluetooth HID latency
+    "bluetooth.disable_ertm=1"  # Disable unreliable Bluetooth mode
     "amd_iommu=on"
     "iommu=pt"
+    "resume=/dev/disk/by-uuid/6c8134b5-42d1-4259-bc3f-47bb585ad9f4"
   ];
 
   boot.kernelModules = [
@@ -46,10 +47,24 @@
     "vfio_virqfd"
   ];
 
-  # Replace with actual vendor:device IDs of the RX 6700 XT and its HDMI audio
   boot.extraModprobeConfig = ''
+    softdep drm pre: vfio vfio_pci
     options vfio-pci ids=1002:73df,1002:ab28
   '';
+
+  services.persistent-evdev = {
+    enable = true;
+    devices = {
+      persist-mouse0 = "btmouse";
+    };
+
+  };
+
+  services.pipewire.extraConfig.pipewire."99-noflat" = {
+    "context.properties" = {
+      "flat-volumes" = false;
+    };
+  };
 
   # DO NOT blacklist amdgpu — you still need it for the RX580
   # services.xserver.videoDrivers = [ "amdgpu" ]; # Optional: use this to ensure host gets GPU driver
