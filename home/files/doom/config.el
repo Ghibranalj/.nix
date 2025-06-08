@@ -229,6 +229,7 @@
   (prog-mode . lsp-deferred)
   :config
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\tmp\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.devenv\\'")
   ;; GLSL language support
   (lsp-register-client
    (make-lsp-client :new-connection (lsp-stdio-connection '("glslls" "--stdin"))
@@ -390,6 +391,7 @@ Shows terminal and dired in seperate section."
   :config
   (setq dired-omit-files
         (concat dired-omit-files
+                "node_modules"
                 "\\|_templ\\.go\\'"
                 "\\|_templ\\.txt\\'")))
 
@@ -475,24 +477,13 @@ Shows terminal and dired in seperate section."
   (add-to-list 'projectile-globally-ignored-directories "CMakeFiles")
   (add-to-list 'projectile-globally-ignored-directories "build")
   (add-to-list 'projectile-globally-ignored-directories "^.*vendor.*$")
-  (add-to-list 'projectile-globally-ignored-directories "web-legacy"))
+  (add-to-list 'projectile-globally-ignored-directories "web-legacy")
+  (add-to-list 'projectile-globally-ignored-directories ".devenv"))
 
 (use-package! dap-mode
   :after lsp-mode
   :config
-  (dap-auto-configure-mode)
-  ;; Set up Go debugging
-  (require 'dap-go)
-  (dap-register-debug-template "Go Launch File Configuration"
-                             (list :type "go"
-                                   :request "launch"
-                                   :name "Launch Go Program"
-                                   :mode "auto"
-                                   :program "${fileDirname}"
-                                   :buildFlags ""
-                                   :args ""
-                                   :env nil
-                                   :envFile nil)))
+  (dap-auto-configure-mode))
 
 ;; Git Blame
 (use-package blamer

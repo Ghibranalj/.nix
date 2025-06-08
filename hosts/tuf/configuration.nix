@@ -1,4 +1,5 @@
 { config, pkgs, lib, inputs, ... }: {
+
   gui.enable = true;
   grub.enable = true;
   gnome.enable = true;
@@ -7,10 +8,9 @@
   evdev-keymapper.enable = true;
   dev.enable = true;
   winbox.enable = true;
+  libvirt.enable = true;
 
   networking.hostName = "CreeprTUF"; # Define your hostname.
-
-  environment.systemPackages = with pkgs; [ qemu upkgs.code-cursor ];
 
   hardware.nvidia = {
     modesetting.enable = true;
@@ -45,9 +45,6 @@
 
   services.xserver.videoDrivers = [ "nvidia" ];
 
-  # networking.firewall.allowedTCPPorts = [ 22 23 8080 443 1716 ];
-  # networking.firewall.allowedUDPPorts = [ 443 8080 1716 ];
-  # Or disable the firewall altogether.
   networking.firewall.enable = false;
 
 }

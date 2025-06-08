@@ -5,8 +5,8 @@
   gtk-theme.enable = true;
   doom.mode = "gui";
 
-  doom.fontSize.normal = "15";
-  doom.fontSize.big = "18";
+  doom.fontSize.normal = 15;
+  doom.fontSize.big = 18;
   home.sessionVariables = {
     STEAM_EXTRA_COMPAT_TOOLS_PATHS =
       "\\\${HOME}/.steam/root/compatibilitytools.d";
