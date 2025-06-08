@@ -7,6 +7,11 @@
       ./hardware-configuration.nix
     ];
 
+
+  environment.systemPackages = with pkgs; [
+    vlc
+  ];
+
   networking.hostName = "CreeprPC"; # Define your hostname.
   gui.enable = true;
   grub.enable = true;

@@ -4,7 +4,7 @@ advcpmv_pkg = (pkgs.coreutils.override { singleBinary = false; }).overrideAttrs 
     advcpmv-data = {
       pname = "advcpmv";
       patch-version = "0.9";
-      coreutils-version = "9.5";
+      coreutils-version = pkgs.coreutils.version;
       version = "${advcpmv-data.patch-version}-${advcpmv-data.coreutils-version}";
       src = pkgs.fetchFromGitHub {
         owner = "jarun";

@@ -36,13 +36,10 @@ with lib; {
     eza
     ntfs3g
     gh
-<<<<<<< HEAD
     inetutils
     termshark
-=======
     pavucontrol
     bash-completion
->>>>>>> d015917 (feat: working PC)
   ];
 
   sysUsers.enable = mkDefault true;
@@ -85,7 +82,6 @@ with lib; {
     nix-cleanup = "sudo nix-collect-garbage -d";
   };
 
-<<<<<<< HEAD
   services.openssh = {
     enable = lib.mkDefault true;
     ports = [ 22 ];
@@ -98,7 +94,8 @@ with lib; {
       PermitRootLogin = lib.mkDefault
         "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
     };
-=======
+  };
+
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -113,16 +110,13 @@ with lib; {
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
->>>>>>> d015917 (feat: working PC)
   };
 
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "25.05"; # Did you read the comment?
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-<<<<<<< HEAD
   gaming.enable = mkDefault false;
-=======
 
   virtualisation.docker = {
     enable = lib.mkDefault true;
@@ -132,5 +126,4 @@ with lib; {
     };
   };
   advcpmv.enable = lib.mkDefault true;
->>>>>>> d015917 (feat: working PC)
 }
