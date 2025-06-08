@@ -1,7 +1,18 @@
 { config, lib, pkgs, ... }:
 
 {
-  options = with lib; { hyprland.enable = mkEnableOption "enable hyprland"; };
+  options = with lib; {
+    hyprland.enable = mkEnableOption "enable hyprland";
+    hyprland.monitorConfig = mkOption {
+      type = types.listOf types.str;
+      default = [
+        "HDMI-A-1,1920x1080@100,0x0,1"
+        "DP1,1920x1080@100,1920x0,1"
+        #
+      ];
+      description = "List of monitor configurations for Hyprland.";
+    };
+  };
 
   config = lib.mkIf config.hyprland.enable {
     rofi.enable = true;
@@ -13,12 +24,7 @@
         plugin = { hyprsplit = { num_workspaces = 9; }; };
 
         # Monitor configuration
-        monitor = [
-          "HDMI-A-1,1920x1080@100,0x0,1"
-          "DP1,1920x1080@100,1920x0,1"
-          #
-        ];
-
+        monitor = lib.mkDefault config.hyprland.monitorConfig;
         # Startup applications
         exec-once = [ "waybar" "hyprpaper" "dunst" ];
 
