@@ -6,7 +6,7 @@
   
   gtk-theme.enable = true;
   doom.mode = "gui";
-  doom.fontSize.normal = 15;
-  doom.fontSize.big = 20;
+  doom.fontSize.normal = 14;
+  doom.fontSize.big = 16;
 
 }

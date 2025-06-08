@@ -1,0 +1,169 @@
+{ config, lib, pkgs, split-monitor-workspaces, hyprland, ... }:
+
+{
+  config = lib.mkIf config.hyprland.enable {
+    rofi.enable = true;
+    xdg.configFile."hyprpaper.conf".text = ''
+      preload = ${../files/background.png}
+      wallpaper = ,${../files/background.png} 
+    '';
+
+    wayland.windowManager.hyprland = {
+      package = hyprland.packages.${pkgs.system}.hyprland;
+      enable = true;
+      plugins = [
+        split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
+      ];
+      settings = {
+        plugin = {
+          split-monitor-workspaces = {
+            count = 9;
+            keep_focused = 0;
+            enable_notifications = 0;
+            enable_persistent_workspaces = 1;
+          };
+        };
+
+        # Monitor configuration
+        monitor = lib.mkDefault config.hyprland.monitorConfig;
+        # Startup applications
+        exec-once =
+          [ "waybar" "hyprpaper -c /home/gibi/.config/hyprpaper.conf" ];
+
+        # Environment variables
+        env = [
+          "XCURSOR_SIZE,24"
+          "QT_QPA_PLATFORMTHEME,gtk"
+          "GTK_THEME,Adwaita-dark"
+        ];
+
+        # Input configuration
+        input = {
+          kb_layout = "us";
+          follow_mouse = 1;
+          touchpad = { natural_scroll = false; };
+          sensitivity = 0;
+        };
+
+        # General settings
+        general = {
+          gaps_in = 2;
+          gaps_out = 5;
+          border_size = 1;
+          "col.active_border" = "rgba(585858ff)";
+          "col.inactive_border" = "rgba(212121ff)";
+          layout = "master";
+          allow_tearing = false;
+        };
+
+        # Decoration
+        decoration = {
+          rounding = 10;
+          blur = { enabled = false; };
+        };
+
+        # Animations
+        animations = { enabled = false; };
+
+        # Layout
+        dwindle = {
+          pseudotile = true;
+          preserve_split = true;
+        };
+
+        # Gestures
+        gestures = { workspace_swipe = true; };
+
+        # Keybindings (DWM style)
+        "$mod" = "SUPER";
+        "$nomod" = "CTRL ALT";
+
+        bind = [
+          # DWM-style basic bindings
+          "$mod SHIFT, Return, exec, alacritty" # spawn terminal
+          "$mod, Return, exec, alacritty" # spawn terminal (alternative)
+          "$mod, Q, killactive," # close window
+          "$mod SHIFT, E, exit," # quit dwm/hyprland
+          "$mod, P, exec, rofi -show drun" # dmenu equivalent
+          "$mod, D, exec, rofi -show drun" # alternative launcher
+
+          "$nomod, SPACE, exec, rofi -show drun" # alternative launcher
+          "$nomod, Return, exec, emacsclient -c" # alternative launcher
+          "$nomod, T, exec, alacritty" # alternative launcher
+          "$nomod, equal, exec, ${../files/volumes.sh} up" # alternative launcher
+          "$nomod, minus, exec, ${../files/volumes.sh} down" # alternative launcher
+
+          # DWM-style focus management
+          "$mod, J, cyclenext," # focus next window
+          "$mod, K, cyclenext, prev" # focus previous window
+          "$mod SHIFT, J, swapnext," # swap with next window
+          "$mod SHIFT, K, swapnext, prev" # swap with previous window
+
+          # DWM-style layout management  
+          "$mod, I, splitratio, +0.05" # increase master size
+          "$mod, D, splitratio, -0.05" # decrease master size
+          "$mod, Return, layoutmsg, swapwithmaster" # zoom (swap with master)
+          "$mod, T, togglefloating," # toggle floating
+          "$mod, F, fullscreen, 0" # toggle fullscreen
+
+          # DWM-style layout switching
+          "$mod, Space, layoutmsg, togglesplit" # toggle layout
+          "$mod SHIFT, Space, togglefloating," # toggle floating mode
+
+          # DWM-style monitor management
+          "$mod, comma, focusmonitor, l" # focus left monitor
+          "$mod, period, focusmonitor, r" # focus right monitor
+          "$mod SHIFT, comma, movewindow, mon:l" # move window to left monitor
+          "$mod SHIFT, period, movewindow, mon:r" # move window to right monitor
+
+          # Workspace management
+          "$mod, 1, split-workspace, 1"
+          "$mod, 2, split-workspace, 2"
+          "$mod, 3, split-workspace, 3"
+          "$mod, 4, split-workspace, 4"
+          "$mod, 5, split-workspace, 5"
+          "$mod, 6, split-workspace, 6"
+          "$mod, 7, split-workspace, 7"
+          "$mod, 8, split-workspace, 8"
+          "$mod, 9, split-workspace, 9"
+
+          # Move windows to workspaces silently
+          "$mod SHIFT, 1, split-movetoworkspacesilent, 1"
+          "$mod SHIFT, 2, split-movetoworkspacesilent, 2"
+          "$mod SHIFT, 3, split-movetoworkspacesilent, 3"
+          "$mod SHIFT, 4, split-movetoworkspacesilent, 4"
+          "$mod SHIFT, 5, split-movetoworkspacesilent, 5"
+          "$mod SHIFT, 6, split-movetoworkspacesilent, 6"
+          "$mod SHIFT, 7, split-movetoworkspacesilent, 7"
+          "$mod SHIFT, 8, split-movetoworkspacesilent, 8"
+          "$mod SHIFT, 9, split-movetoworkspacesilent, 9"
+
+          # DWM-style view all tags
+          "$mod, 0, workspace, special" # view special workspace
+          "$mod SHIFT, 0, movetoworkspace, special" # move to special workspace
+
+          # Additional useful bindings
+          "$mod, B, exec, firefox" # browser
+          "$mod, E, exec, nautilus" # file manager
+          "$mod SHIFT, R, exec, hyprctl reload" # reload config
+
+          # Volume and brightness (common additions)
+          ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ +5%"
+          ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ -5%"
+          ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+          ", XF86MonBrightnessUp, exec, brightnessctl set +10%"
+          ", XF86MonBrightnessDown, exec, brightnessctl set 10%-"
+
+          # Screenshot bindings
+          ", Print, exec, grim"
+          ''$mod, Print, exec, grim -g "$(slurp)"''
+        ];
+
+        # Mouse bindings
+        bindm =
+          [ "$mod, mouse:272, movewindow" "$mod, mouse:273, resizewindow" ];
+
+      };
+    };
+  };
+}
