@@ -18,9 +18,15 @@
       url = "github:kambi-ng/evdev-keymapper";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland.url = "github:hyprwm/Hyprland";
+    split-monitor-workspaces = {
+      url = "github:Duckonaut/split-monitor-workspaces";
+      inputs.hyprland.follows = "hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs =
-    { self, nixpkgs, home-manager, nixpkgs-unstable, nixarr, nixpkgs-prev ,... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, nixarr
+    , nixpkgs-prev, split-monitor-workspaces, hyprland, ... }@inputs:
     let
       # Host generator function (thanks deepseek)
       mkHost = { hostName, system ? "x86_64-linux", hmEnabled ? true }:
@@ -43,7 +49,9 @@
           host = { inherit hostName; };
         in nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit inputs host nixarr upkgs prevpkgs; };
+          specialArgs = {
+            inherit inputs host nixarr upkgs prevpkgs split-monitor-workspaces;
+          };
           modules = [
             ./sys
             (./hosts + "/${hostName}/hardware-configuration.nix")
@@ -54,7 +62,9 @@
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
-              home-manager.extraSpecialArgs = { inherit inputs host; };
+              home-manager.extraSpecialArgs = {
+                inherit inputs host split-monitor-workspaces hyprland;
+              };
               home-manager.users.gibi = import ./home.nix;
             }
           ] else
