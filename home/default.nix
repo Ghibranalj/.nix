@@ -14,6 +14,7 @@ with lib;
     ./gtk.nix
     ./neovim.nix
     ./rofi.nix
+    ./hyprland.nix
     ./xbindkeys.nix
     ./gnome.nix
     ./gns3.nix

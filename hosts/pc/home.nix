@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 {
   gnome.enable = true;
+  hyprland.enable = true;
   alacritty.enable = true;
   
   gtk-theme.enable = true;

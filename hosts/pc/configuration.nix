@@ -16,6 +16,18 @@
   gui.enable = true;
   grub.enable = true;
   gnome.enable = true;
+  programs.hyprland.enable = true;
+  
+  # Enable XDG desktop portal (needed for proper integration)
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-hyprland
+    ];
+  };
+  # Optional: Set Hyprland as default session
+  services.displayManager.defaultSession = "hyprland";
+
   dev.enable =true;
   winbox.enable =true;
   evdev-keymapper = {
