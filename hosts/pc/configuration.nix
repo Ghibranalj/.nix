@@ -86,13 +86,6 @@
     };
   };
 
-  # Ensure proper GPU initialization for R9 380
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
-
   # Use amdgpu driver for R9 380
   services.xserver.videoDrivers = [ "amdgpu" ];
   
