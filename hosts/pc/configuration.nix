@@ -57,6 +57,7 @@
     "amd_iommu=on"
     "iommu=pt"
     "resume=/dev/disk/by-uuid/6c8134b5-42d1-4259-bc3f-47bb585ad9f4"
+    "amdgpu.gpu_recovery=1"     # Enable GPU recovery
   ];
 
   boot.kernelModules = [
@@ -85,7 +86,14 @@
     };
   };
 
-  # DO NOT blacklist amdgpu — you still need it for the RX580
-  # services.xserver.videoDrivers = [ "amdgpu" ]; # Optional: use this to ensure host gets GPU driver
+  # Enable AMD GPU driver for RX580
+  services.xserver.videoDrivers = [ "amdgpu" ];
+  
+  # Additional display configuration
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
 
 }
