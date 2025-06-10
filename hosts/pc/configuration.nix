@@ -68,8 +68,8 @@
   ];
 
   boot.extraModprobeConfig = ''
-    softdep drm pre: vfio vfio_pci
-    options vfio-pci ids=1002:73df,1002:ab28
+    # Bind only the RX 6700 XT to VFIO
+    options vfio-pci ids=1002:73df,1002:ab28 disable_vga=1
   '';
 
   services.persistent-evdev = {
@@ -86,14 +86,14 @@
     };
   };
 
-  # Enable AMD GPU driver for RX580
-  services.xserver.videoDrivers = [ "amdgpu" ];
-  
-  # Additional display configuration
+  # Ensure proper GPU initialization for R9 380
   hardware.opengl = {
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
   };
 
+  # Use amdgpu driver for R9 380
+  services.xserver.videoDrivers = [ "amdgpu" ];
+  
 }
