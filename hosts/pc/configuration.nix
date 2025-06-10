@@ -10,12 +10,14 @@
 
   environment.systemPackages = with pkgs; [
     vlc
+    discord-canary
   ];
 
   networking.hostName = "CreeprPC"; # Define your hostname.
   gui.enable = true;
   grub.enable = true;
-  gnome.enable = true;
+  gnome.enable = false;
+  lightdm.enable = true;
   programs.hyprland.enable = true;
   
   # Enable XDG desktop portal (needed for proper integration)

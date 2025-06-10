@@ -17,6 +17,7 @@ with lib; {
     ./libvirt.nix
     ./gaming.nix
     ./advcpmv.nix
+    ./lightdm.nix
   ];
 
   environment.systemPackages = with pkgs; [

@@ -42,19 +42,17 @@ if [ "$selected_option" == "$lock" ]; then
 	sleep 1
 	xset dpms force off
 elif [ "$selected_option" == "$logout" ]; then
-	$HOME/.bin/restartdwm
+	hyprctl exit
 elif [ "$selected_option" == "$shutdown" ]; then
 	systemctl poweroff
 elif [ "$selected_option" == "$reboot" ]; then
 	systemctl reboot
 elif [ "$selected_option" == "$sleep" ]; then
-	XSECURELOCK_PASSWORD_PROMPT='asterisks' xsecurelock &
 	sleep 1
 	systemctl suspend
 elif [ "$selected_option" == "$hibernate" ]; then
 	systemctl reboot --firmware-setup
 elif [ "$selected_option" == "$hibernateFR" ]; then
-	XSECURELOCK_PASSWORD_PROMPT='asterisks' xsecurelock &
     systemctl hibernate
 else
 	echo "No match"

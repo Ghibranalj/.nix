@@ -42,7 +42,7 @@
           kb_layout = "us";
           follow_mouse = 1;
           touchpad = { natural_scroll = false; };
-          sensitivity = 0;
+          sensitivity = -0.9;
         };
 
         # General settings
@@ -81,33 +81,32 @@
         bind = [
           # DWM-style basic bindings
           "$mod SHIFT, Return, exec, alacritty" # spawn terminal
-          "$mod, Return, exec, alacritty" # spawn terminal (alternative)
           "$mod, Q, killactive," # close window
           "$mod SHIFT, E, exit," # quit dwm/hyprland
-          "$mod, P, exec, rofi -show drun" # dmenu equivalent
-          "$mod, D, exec, rofi -show drun" # alternative launcher
 
           "$nomod, SPACE, exec, rofi -show drun" # alternative launcher
           "$nomod, Return, exec, emacsclient -c" # alternative launcher
           "$nomod, T, exec, alacritty" # alternative launcher
-          "$nomod, equal, exec, ${../files/volumes.sh} up" # alternative launcher
-          "$nomod, minus, exec, ${../files/volumes.sh} down" # alternative launcher
+          "$nomod, equal, exec, ${
+            ../files/volumes.sh
+          } up" # alternative launcher
+          "$nomod, minus, exec, ${
+            ../files/volumes.sh
+          } down" # alternative launcher
 
-          # DWM-style focus management
-          "$mod, J, cyclenext," # focus next window
-          "$mod, K, cyclenext, prev" # focus previous window
-          "$mod SHIFT, J, swapnext," # swap with next window
-          "$mod SHIFT, K, swapnext, prev" # swap with previous window
+          "$mod, H, splitratio, -0.05" # increase master size
+          "$mod, L, splitratio, +0.05" # decrease master size
 
-          # DWM-style layout management  
-          "$mod, I, splitratio, +0.05" # increase master size
-          "$mod, D, splitratio, -0.05" # decrease master size
+          "$mod, N, cyclenext, , 1" 
+          "$mod, P, cyclenext, prev, 1" 
+
+          "$mod, I, layoutmsg, addmaster" # add a window to master area
+          "$mod, D, layoutmsg, removemaster" # remove a window from master area
           "$mod, Return, layoutmsg, swapwithmaster" # zoom (swap with master)
           "$mod, T, togglefloating," # toggle floating
           "$mod, F, fullscreen, 0" # toggle fullscreen
 
           # DWM-style layout switching
-          "$mod, Space, layoutmsg, togglesplit" # toggle layout
           "$mod SHIFT, Space, togglefloating," # toggle floating mode
 
           # DWM-style monitor management
@@ -143,7 +142,6 @@
           "$mod SHIFT, 0, movetoworkspace, special" # move to special workspace
 
           # Additional useful bindings
-          "$mod, B, exec, firefox" # browser
           "$mod, E, exec, nautilus" # file manager
           "$mod SHIFT, R, exec, hyprctl reload" # reload config
 

@@ -21,6 +21,9 @@
             gtkThemeFromScheme;
         in gtkThemeFromScheme { scheme = config.colorScheme; });
       };
+      gtk3.extraConfig = { gtk-application-prefer-dark-theme = 1; };
+
+      gtk4.extraConfig = { gtk-application-prefer-dark-theme = 1; };
     };
 
     # Cursor Theme
@@ -39,6 +42,10 @@
         name = "adwaita-dark";
         package = pkgs.adwaita-qt;
       };
+    };
+    # Handle GTK theme preferences through dconf
+    dconf.settings = {
+      "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
     };
   };
 }

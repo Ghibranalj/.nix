@@ -1,9 +1,13 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, prevpkgs, ... }: {
   options = with lib; { gui.enable = mkEnableOption "enables gnome"; };
 
   config = lib.mkIf config.gui.enable {
-    # Enable sound with pipewire.
-    #
+
+    hardware.bluetooth.enable = true;
+    services.blueman.enable = true;
+    services.udisks2.enable = true;
+
+    hardware.graphics.enable = true;
 
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
@@ -20,6 +24,7 @@
       vesktop
       pavucontrol
       spotify
+      prevpkgs.vesktop
     ];
 
     fonts.packages = with pkgs;

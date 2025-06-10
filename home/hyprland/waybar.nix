@@ -17,6 +17,7 @@
             "custom/screenshot"
             "bluetooth"
             "pulseaudio"
+            # "custom/caffeine"
             "custom/shutdown"
           ];
           modules-center = [ "clock" ];
@@ -108,6 +109,20 @@
             "tooltip-format" = "{desc} {volume}%";
             "escape" = true;
           };
+          # "custom/caffeine" = {
+          #   "format" = "{icon}";
+          #   "format-icons" = {
+          #     "activated" = "󰅶";
+          #     "deactivated" = "󰶐";
+          #   };
+          #   "tooltip-format" = "Caffeine: {status}";
+          #   "on-click" = "hyprctl dispatch dpms on";
+          #   "on-click-right" = "hyprctl dispatch dpms off";
+          #   "return-type" = "json";
+          #   "exec" = "hyprctl monitors | grep -q 'dpmsStatus: on' && echo '{\"text\":\"activated\",\"alt\":\"activated\",\"tooltip\":\"Caffeine: activated\"}' || echo '{\"text\":\"deactivated\",\"alt\":\"deactivated\",\"tooltip\":\"Caffeine: deactivated\"}'";
+          #   "interval" = 1;
+          #   "escape" = true;
+          # };
           "custom/shutdown" = {
             "format" = "⏻";
             "on-click" = "${../files/shutdown.sh}";

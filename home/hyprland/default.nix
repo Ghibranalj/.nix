@@ -20,6 +20,11 @@
 
   config = lib.mkIf config.hyprland.enable {
 
+    services = {
+      caffeine = { enable = true; };
+      udiskie = { enable = true; };
+    };
+
     home.packages = with pkgs; [
       # Core Wayland components
       waybar
@@ -45,7 +50,6 @@
       pamixer
       libnotify
       jq
-
 
       # Bluetooth
       bluez
