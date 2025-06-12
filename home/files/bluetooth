@@ -4,6 +4,7 @@ TIMEOUT_SECONDS=4
 
 divider="============"
 exit="Exit"
+blueman="Open Bluetooth Manager"
 back="Back"
 refresh="Refresh"
 scan="Scanning...."
@@ -169,11 +170,21 @@ function toggle_pairable() {
     fi
 }
 
+function blueman () {
+    blueman-manager >> /dev/null &
+    sleep 0.3 # give it some time to start
+    disown
+}
+
 function menu_state() {
 
     action=$(echo $ROFI_INFO | cut -d ';' -f2)
 
     case "$action" in
+        "blueman")
+            blueman
+            exit 0
+            ;;
         "exit")
             exit 0
             ;;
@@ -207,6 +218,7 @@ function menu_state() {
     echoinfo "    Toggle Scan" "menu;scan"
     echoinfo "    Toggle pairable" "menu;pair"
     echoinfo "$exit" "menu;exit"
+    echoinfo "$blueman" "menu;blueman"
 }
 
 function main() {

@@ -14,6 +14,7 @@
         rofi.enable = false;
         hyprland.enable = false;
         neovim.enable = false;
+        swaync.enable = false;
       };
       fonts = {
         serif = {

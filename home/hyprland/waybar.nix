@@ -2,7 +2,6 @@
 
 {
   config = lib.mkIf config.hyprland.enable {
-    services.swaync.enable = true;
     programs.waybar = {
       enable = true;
       settings = {
@@ -14,11 +13,10 @@
           modules-left = [ "hyprland/workspaces" ];
           modules-right = [
             "custom/notification"
-            "custom/screenshot"
+            "custom/caffeine"
             "bluetooth"
             "pulseaudio"
-            # "custom/caffeine"
-            "custom/shutdown"
+            "custom/network"
           ];
           modules-center = [ "clock" ];
           "hyprland/workspaces" = {
@@ -33,20 +31,15 @@
             };
             "all-outputs" = false;
           };
-          "custom/screenshot" = {
-            "format" = "⛶";
-            "on-click" = "${../files/screenshot.sh}";
-          };
           "custom/notification" = {
-            "tooltip-format" = "{body}";
             "format" = "{icon}";
             "format-icons" = {
               "notification" = "";
-              "none" = "";
+              "none" = "";
               "dnd-notification" = "";
               "dnd-none" = "";
               "inhibited-notification" = "";
-              "inhibited-none" = "";
+              "inhibited-none" = "☰";
               "dnd-inhibited-notification" = "";
               "dnd-inhibited-none" = "";
             };
@@ -59,35 +52,26 @@
           };
           "bluetooth" = {
             "format" = "󰂯";
-            "format-disabled" = "󰂲";
-            "format-connected" = "󰂱";
-            "tooltip-format" = ''
-              {controller_alias}	{controller_address}
-
-              {num_connections} connected'';
-            "tooltip-format-connected" = ''
-              {controller_alias}	
-              {num_connections} connected
-
-              {device_enumerate}'';
-            "tooltip-format-enumerate-connected" =
-              "{device_alias}	{device_address}";
-            "on-click" = ''
-              export YOFF=27px
-              export HEIGHT=50%
-              export INPUT=false
-              rofi -click-to-exit -location 3 -show b -modi "b:${
-                ../files/bluetooth
-              }"
-            '';
+            "format-disabled" = "";
+            "format-connected" = "󰂱 {num_connections}";
+            "on-click" = "swaync-client -t -sw";
             "on-click-right" = "blueman-manager";
+            "escape" = true;
+          };
+          "custom/network" = {
+            "exec" = "${../files/network.sh}";
+            "return-type" = "json";
+            "interval" = 5;
+            "format" = "{}";
+            "on-click" = "swaync-client -t -sw";
+            "on-click-right" = "nm-connection-editor";
             "escape" = true;
           };
           "pulseaudio" = {
             "scroll-step" = 5;
-            "format" = ''{icon} <span size="68%">{volume}%</span>'';
-            "format-bluetooth" = ''{icon} <span size="68%">{volume}%</span>'';
-            "format-muted" = "󰝟";
+            "format" = "<span size='110%'>{icon}</span> {volume}%";
+            "format-bluetooth" = "<span size='110%'>{icon}</span> {volume}%";
+            "format-muted" = "󰝟"; # Muted icon
             "format-icons" = {
               "headphone" = "󰋋";
               "hands-free" = "󰋋";
@@ -95,38 +79,26 @@
               "phone" = "󰏲";
               "portable" = "󰏲";
               "car" = "󰏲";
-              "default" = [ "󰕿" "󰖀" "󰕾" ];
+              "default" = [ "󰕿" "󰖀" "󰕾" ]; # Low, medium, high volume icons
             };
-            "on-click" = ''
-              export YOFF=27px
-              export HEIGHT=50%
-              export INPUT=false
-              rofi -click-to-exit -location 3 -show b -modi "b:${
-                ../files/pulseaudio
-              }"
-            '';
+            "on-click" = "swaync-client -t -sw";
             "on-click-right" = "pavucontrol";
             "tooltip-format" = "{desc} {volume}%";
             "escape" = true;
           };
-          # "custom/caffeine" = {
-          #   "format" = "{icon}";
-          #   "format-icons" = {
-          #     "activated" = "󰅶";
-          #     "deactivated" = "󰶐";
-          #   };
-          #   "tooltip-format" = "Caffeine: {status}";
-          #   "on-click" = "hyprctl dispatch dpms on";
-          #   "on-click-right" = "hyprctl dispatch dpms off";
-          #   "return-type" = "json";
-          #   "exec" = "hyprctl monitors | grep -q 'dpmsStatus: on' && echo '{\"text\":\"activated\",\"alt\":\"activated\",\"tooltip\":\"Caffeine: activated\"}' || echo '{\"text\":\"deactivated\",\"alt\":\"deactivated\",\"tooltip\":\"Caffeine: deactivated\"}'";
-          #   "interval" = 1;
-          #   "escape" = true;
-          # };
-          "custom/shutdown" = {
-            "format" = "⏻";
-            "on-click" = "${../files/shutdown.sh}";
-            "tooltip" = false;
+          "custom/caffeine" = {
+            "format" = "{icon}";
+            "format-icons" = {
+              "activated" = "󰅶";
+              "deactivated" = "";
+            };
+            "on-click" = "swaync-client -t -sw";
+            "on-click-right" = "${../files/caffeine.sh}";
+            "return-type" = "json";
+            "exec" = "${
+                ../files/caffeine.sh
+              } status | grep -q 'true' && echo '{\"text\":\"activated\",\"alt\":\"activated\",\"tooltip\":\"Caffeine: activated\"}' || echo '{\"text\":\"deactivated\",\"alt\":\"deactivated\",\"tooltip\":\"Caffeine: deactivated\"}'";
+            "interval" = 1;
             "escape" = true;
           };
           "clock" = {
@@ -178,18 +150,33 @@
             color: #666666;
         }
 
+        #bluetooth.disabled,
+        #bluetooth.off {
+            opacity: 0.3;
+        }
+
         #bluetooth,
-        #custom-screenshot,
-        #pulseaudio {
+        #custom-caffeine {
             font-size: 16px;
         }
 
         #bluetooth,
         #custom-notification,
-        #custom-screenshot,
-        #pulseaudio,
-        #custom-shutdown {
-            margin: 0 15px 0 0;
+        #custom-network,
+        #custom-caffeine {
+            margin: 0 8px 0 8px;
+        }
+
+        #pulseaudio {
+            margin: 0 4px 0 4px;
+        }
+
+        .modules-right {
+            background-color: #353535;
+            border-color: #4a4a4a;
+            border-radius: 20px;
+            padding: 4px 8px;
+            margin: 4px 8px 4px 0;
         }
 
       '';

@@ -17,7 +17,7 @@ export COL=3
 export LINES=2
 export INPUT=false
 
-if [[ $PARENT == ".waybar-wrapped" ]]; then
+if [[ $PARENT == ".waybar-wrapped" || $PARENT == ".swaync-wrapped" ]]; then
 	ROFI_CMD="rofi -location 3 -no-fixed-num-lines"
 	export COL=1
 	unset LINES
