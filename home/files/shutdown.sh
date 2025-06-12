@@ -42,7 +42,7 @@ if [ "$selected_option" == "$lock" ]; then
 	sleep 1
 	xset dpms force off
 elif [ "$selected_option" == "$logout" ]; then
-	hyprctl exit
+	hyprctl dispatch exit
 elif [ "$selected_option" == "$shutdown" ]; then
 	systemctl poweroff
 elif [ "$selected_option" == "$reboot" ]; then
