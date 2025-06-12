@@ -1,9 +1,9 @@
-{ config, lib, pkgs, ... }:
-{
+{ config, lib, pkgs, ... }: {
   gnome.enable = true;
   hyprland.enable = true;
+  hyprland.mouseSensitivity = -0.9;
   alacritty.enable = true;
-  
+
   gtk-theme.enable = true;
   doom.mode = "gui";
   doom.fontSize.normal = 14;
