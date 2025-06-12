@@ -1,11 +1,8 @@
-{ config, lib, pkgs, inputs,host,... }:
+{ config, lib, pkgs, inputs, host, ... }:
 
-with lib;
-{
-  _module.args = {
-    inherit inputs host;
-  };
-  
+with lib; {
+  _module.args = { inherit inputs host; };
+
   imports = [
     ./alacritty.nix
     ./bash.nix
@@ -24,11 +21,8 @@ with lib;
     username = "gibi";
     homeDirectory = "/home/gibi";
     stateVersion = "25.05";
-    sessionVariables = {
-    }; 
+    sessionVariables = { };
   };
-
-  colorScheme = inputs.nix-colors.colorSchemes.material-darker;
 
   bash.enable = mkDefault true;
   git.enable = mkDefault true;
@@ -36,4 +30,5 @@ with lib;
   doom.enable = mkDefault true;
 
   gns3-handlers.enable = mkDefault true;
+
 }

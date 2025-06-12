@@ -12,4 +12,9 @@
       "\\\${HOME}/.steam/root/compatibilitytools.d";
   };
 
+  hyprland.enable = true;
+  hyprland.monitorConfig = [
+    ", preferred, auto, 1"
+  ];
+
 }

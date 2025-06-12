@@ -41,8 +41,12 @@
         input = {
           kb_layout = "us";
           follow_mouse = 1;
-          touchpad = { natural_scroll = false; };
-          sensitivity = -0.9;
+          touchpad = {
+            disable_while_typing = true;
+            natural_scroll = true;
+            middle_button_emulation = true;
+          };
+          sensitivity = config.hyprland.mouseSensitivity;
         };
 
         # General settings
@@ -93,12 +97,15 @@
           "$nomod, minus, exec, ${
             ../files/volumes.sh
           } down" # alternative launcher
+          "$nomod, 0, exec, ${
+            ../files/volumes.sh
+          } mute" 
 
           "$mod, H, splitratio, -0.05" # increase master size
           "$mod, L, splitratio, +0.05" # decrease master size
 
-          "$mod, N, cyclenext, , 1" 
-          "$mod, P, cyclenext, prev, 1" 
+          "$mod, N, cyclenext, , 1"
+          "$mod, P, cyclenext, prev, 1"
 
           "$mod, I, layoutmsg, addmaster" # add a window to master area
           "$mod, D, layoutmsg, removemaster" # remove a window from master area

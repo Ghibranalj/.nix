@@ -3,6 +3,7 @@
   gui.enable = true;
   grub.enable = true;
   gnome.enable = true;
+  programs.hyprland.enable = true;
   powerconf.enable = true;
   powerconf.saver.enable = true;
   evdev-keymapper.enable = true;
@@ -46,5 +47,4 @@
   services.xserver.videoDrivers = [ "nvidia" ];
 
   networking.firewall.enable = false;
-
 }

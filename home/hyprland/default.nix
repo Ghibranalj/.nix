@@ -3,6 +3,11 @@
 {
   options = with lib; {
     hyprland.enable = mkEnableOption "enable hyprland";
+    hyprland.mouseSensitivity = mkOption {
+      type = types.float;
+      default = 0.0;
+      description = "Mouse sensitivity for Hyprland.";
+    };
     hyprland.monitorConfig = mkOption {
       type = types.listOf types.str;
       default = [

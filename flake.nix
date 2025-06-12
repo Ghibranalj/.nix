@@ -12,7 +12,6 @@
     nix-doom-emacs-unstraightened.url =
       "github:marienz/nix-doom-emacs-unstraightened";
     grub2-themes = { url = "github:vinceliuice/grub2-themes"; };
-    nix-colors.url = "github:misterio77/nix-colors";
     nixarr.url = "github:rasmus-kirk/nixarr";
     evdev-keymapper = {
       url = "github:kambi-ng/evdev-keymapper";
@@ -24,9 +23,13 @@
       inputs.hyprland.follows = "hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    stylix = {
+      url = "github:danth/stylix/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, nixarr
-    , nixpkgs-prev, split-monitor-workspaces, hyprland, ... }@inputs:
+    , nixpkgs-prev, split-monitor-workspaces, hyprland, stylix, ... }@inputs:
     let
       # Host generator function (thanks deepseek)
       mkHost = { hostName, system ? "x86_64-linux", hmEnabled ? true }:
@@ -61,6 +64,7 @@
           ] ++ (if hmEnabled then [
             home-manager.nixosModules.home-manager
             {
+              home-manager.sharedModules = [ stylix.homeModules.stylix ];
               home-manager.useGlobalPkgs = true;
               home-manager.extraSpecialArgs = {
                 inherit inputs host split-monitor-workspaces hyprland;
