@@ -19,12 +19,12 @@
     };
     environment.variables = { GUI = "TRUE"; };
 
-
     environment.systemPackages = with pkgs; [
       google-chrome
       vesktop
       pavucontrol
       spotify
+      networkmanagerapplet
       prevpkgs.vesktop
     ];
 

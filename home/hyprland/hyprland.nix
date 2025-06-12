@@ -33,8 +33,6 @@
         # Environment variables
         env = [
           "XCURSOR_SIZE,24"
-          "QT_QPA_PLATFORMTHEME,gtk"
-          "GTK_THEME,Adwaita-dark"
         ];
 
         # Input configuration
@@ -91,15 +89,14 @@
           "$nomod, SPACE, exec, rofi -show drun" # alternative launcher
           "$nomod, Return, exec, emacsclient -c" # alternative launcher
           "$nomod, T, exec, alacritty" # alternative launcher
-          "$nomod, equal, exec, ${
-            ../files/volumes.sh
-          } up" # alternative launcher
-          "$nomod, minus, exec, ${
-            ../files/volumes.sh
-          } down" # alternative launcher
-          "$nomod, 0, exec, ${
-            ../files/volumes.sh
-          } mute" 
+          "$nomod, equal, exec, ${../files/volumes.sh} up"
+          "$nomod, minus, exec, ${../files/volumes.sh} down"
+
+          "$nomod, 0, exec, ${../files/volumes.sh} mute"
+
+          "$nomod, P, exec, ${../files/brightness.sh} up"
+
+          "$nomod, O, exec, ${../files/brightness.sh} down"
 
           "$mod, H, splitratio, -0.05" # increase master size
           "$mod, L, splitratio, +0.05" # decrease master size
