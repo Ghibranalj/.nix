@@ -48,13 +48,17 @@
           };
           listener = [
             {
-              timeout = 900;
+              timeout = 180;
+              on-timeout = "brightnessctl set 10%";
+            }
+            {
+              timeout = 300;
               on-timeout = "hyprlock";
             }
             {
-              timeout = 1200;
+              timeout = 330;
               on-timeout = "hyprctl dispatch dpms off";
-              on-resume = "hyprctl dispatch dpms on";
+              on-resume = "hyprctl dispatch dpms on && brightnessctl -r";
             }
           ];
         };
@@ -88,6 +92,7 @@
       jq
       wirelesstools
       wf-recorder
+      swayidle
 
       # Bluetooth
       bluez
@@ -96,7 +101,6 @@
 
       #networking
       networkmanager_dmenu
-
       kdePackages.kdeconnect-kde
 
       #lock

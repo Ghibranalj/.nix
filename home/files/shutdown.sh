@@ -2,14 +2,45 @@
 
 PARENT=`cat /proc/$PPID/comm`
 
+
+function lock_screen() {
+	hyprlock &
+	LOCK_PID=$!
+
+	# Start initial short-timeout swayidle
+	swayidle -w \
+	timeout 1 'hyprctl dispatch dpms off' \
+	resume '
+		hyprctl dispatch dpms on
+
+		# Start long-timeout swayidle
+		swayidle -w \
+		timeout 30 "hyprctl dispatch dpms off" \
+		resume "hyprctl dispatch dpms on" &
+
+		# Kill short-timeout swayidle (this one)
+		pkill -f "swayidle -w.*timeout 1"
+	'
+
+	# Wait for lock to finish
+	wait $LOCK_PID
+
+	# Kill all swayidle instances
+	pkill -f "swayidle -w.*timeout"
+
+	# Make sure screen is on
+	hyprctl dispatch dpms on
+}
+
+
 # Options for powermenu
 lock="    Lock"
-logout="⍈    Logout"
+logout="󰍃    Logout"
 shutdown="    Poweroff"
-reboot="🔃    Reboot"
-sleep="   Sleep"
-hibernate="⚙  UEFI setup"
-hibernateFR="💤  Hibernate"
+reboot="    Reboot"
+sleep="󰤄   Sleep"
+hibernate="  UEFI setup"
+hibernateFR="󰒲  Hibernate"
 
 ROFI_CMD="rofi"
 # Get answer from user via rofi
@@ -27,20 +58,20 @@ fi
 selected_option=$(
 	echo "$lock
 $logout
-$sleep
 $reboot
 $shutdown
 $hibernate
-$hibernateFR" | $ROFI_CMD -dmenu -i -p "Power" \
+$hibernateFR
+$sleep" | $ROFI_CMD -dmenu -i -p "Power" \
 		-font "Symbols Nerd Font 12" \
 		-width "15" \
 		-lines 4 -line-margin 3 -line-padding 10 -scrollbar-width "0"
 )
 
+
+
 if [ "$selected_option" == "$lock" ]; then
-	XSECURELOCK_PASSWORD_PROMPT='asterisks' xsecurelock &
-	sleep 1
-	xset dpms force off
+	lock_screen
 elif [ "$selected_option" == "$logout" ]; then
 	hyprctl dispatch exit
 elif [ "$selected_option" == "$shutdown" ]; then
@@ -48,12 +79,14 @@ elif [ "$selected_option" == "$shutdown" ]; then
 elif [ "$selected_option" == "$reboot" ]; then
 	systemctl reboot
 elif [ "$selected_option" == "$sleep" ]; then
-	sleep 1
+	lock_screen
+	sleep 2
 	systemctl suspend
 elif [ "$selected_option" == "$hibernate" ]; then
 	systemctl reboot --firmware-setup
 elif [ "$selected_option" == "$hibernateFR" ]; then
-    systemctl hibernate
+	systemctl hibernate --force &
+	lock_screen
 else
 	echo "No match"
 fi
