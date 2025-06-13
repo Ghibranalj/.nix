@@ -11,7 +11,7 @@ get_network_info() {
     if [[ -n "$ethernet_device" ]]; then
         # Ethernet connection active
         cat << EOF
-{"text": "모", "class": "ethernet", "tooltip": "Ethernet Connected. IP: $ipaddr"}
+{"text": "󰛳", "class": "ethernet", "tooltip": "Ethernet Connected. IP: $ipaddr"}
 EOF
         return
     fi
@@ -69,7 +69,7 @@ EOF
     fi
     
     # Format output
-    text="${wifi_icon} ${ssid}"
+    text="${wifi_icon}"
     tooltip="WiFi: ${ssid}"
     if [[ -n "$signal_level" ]]; then
         tooltip="${tooltip} (${signal_level} dBm)"

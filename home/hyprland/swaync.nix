@@ -9,24 +9,31 @@
       control-center-margin-bottom = 15;
       control-center-margin-right = 15;
       control-center-margin-left = 15;
-      notification-icon-size = 32;
+      notification-icon-size = 24;
       notification-body-image-height = 100;
-      notification-body-image-width = 200;
+      notification-body-image-width = 300;
       timeout = 1;
       timeout-low = 5;
       timeout-critical = 5;
       fit-to-screen = false;
-      control-center-width = 370;
-      control-center-height = 700;
-      notification-window-width = 370;
+      control-center-width = 360;
+      control-center-height = 800;
+      notification-window-width = 360;
       keyboard-shortcuts = true;
       image-visibility = "when-available";
       transition-time = 200;
       hide-on-clear = false;
       hide-on-action = true;
       script-fail-notify = true;
-      widgets =
-        [ "buttons-grid" "mpris" "volume" "dnd" "title" "notifications" ];
+      widgets = [
+        "buttons-grid"
+        "mpris"
+        "backlight"
+        "volume"
+        "dnd"
+        "title"
+        "notifications"
+      ];
       widget-config = {
         title = {
           text = "Notifications";
@@ -43,10 +50,14 @@
           image-radius = 12;
         };
         volume = { label = " 󰕾 "; };
+        backlight = lib.mkIf (config.hyprland.brightnessDevice != null) {
+          device = config.hyprland.brightnessDevice;
+          label = "󰃟";
+        };
         buttons-grid = {
           actions = [
             {
-              label = "🔇";
+              label = "󰝟";
               command = "pamixer -t";
               update-command = "pamixer --get-mute";
               type = "toggle";
@@ -57,26 +68,32 @@
               command = "${../files/rofi-modi.sh} ${../files/pulseaudio}";
             }
             {
-              label = "☕︎";
+              label = "";
+              command = "${pkgs.kdePackages.kdeconnect-kde}/bin/kdeconnect-app";
+            }
+            {
+              label = "󰅶";
               type = "toggle";
               active = true;
               command = "${../files/caffeine.sh}";
               update-command = "${../files/caffeine.sh} status";
             }
             {
-              label = "모";
-              command = "${pkgs.bash}/bin/bash -c 'HEIGHT=80% ${pkgs.networkmanager_dmenu}/bin/networkmanager_dmenu'";
+              label = "󰛳";
+              command =
+                "${pkgs.bash}/bin/bash -c 'HEIGHT=80% ${pkgs.networkmanager_dmenu}/bin/networkmanager_dmenu'";
               update-command =
                 "nmcli -t -f STATE general | grep -q 'connected' && echo 'true' || echo 'false'";
               type = "toggle";
               active = true;
             }
             {
-              label = "⛶";
+              # label = "⛶";
+              label = "󰹑";
               command = "swaync-client -cp && ${../files/screenshot.sh}";
             }
             {
-              label = "🖥️";
+              label = "";
               command = "${../files/rofi-modi.sh} ${../files/vm.sh}";
             }
             {
@@ -88,7 +105,7 @@
               command = "${../files/rofi-modi.sh} ${../files/bluetooth}";
             }
             {
-              label = "⬛";
+              label = "";
               command = "alacritty";
             }
             {

@@ -17,6 +17,7 @@
             "bluetooth"
             "pulseaudio"
             "custom/network"
+            "custom/battery"
           ];
           modules-center = [ "clock" ];
           "hyprland/workspaces" = {
@@ -50,9 +51,19 @@
             "on-click-right" = "swaync-client -d -sw";
             "escape" = true;
           };
+          "custom/battery" = {
+            "exec" = "${../files/battery.sh}";
+            "return-type" = "json";
+            "interval" = 10;
+            "format" = "{}";
+            "tooltip" = true;
+            "on-click" = "swaync-client -t -sw";
+            "on-right-click" = "gnome-power-statistics";
+          };
           "bluetooth" = {
             "format" = "󰂯";
             "format-disabled" = "";
+            "format-off" = "";
             "format-connected" = "󰂱 {num_connections}";
             "on-click" = "swaync-client -t -sw";
             "on-click-right" = "blueman-manager";
@@ -69,8 +80,8 @@
           };
           "pulseaudio" = {
             "scroll-step" = 5;
-            "format" = "<span size='110%'>{icon}</span> {volume}%";
-            "format-bluetooth" = "<span size='110%'>{icon}</span> {volume}%";
+            "format" = "<span size='110%'>{icon}</span>";
+            "format-bluetooth" = "<span size='110%'>{icon}</span>";
             "format-muted" = "󰝟"; # Muted icon
             "format-icons" = {
               "headphone" = "󰋋";
@@ -163,7 +174,8 @@
         #bluetooth,
         #custom-notification,
         #custom-network,
-        #custom-caffeine {
+        #custom-caffeine,
+        #custom-battery {
             margin: 0 8px 0 8px;
         }
 

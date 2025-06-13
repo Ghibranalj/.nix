@@ -13,8 +13,7 @@
   };
 
   hyprland.enable = true;
-  hyprland.monitorConfig = [
-    ", preferred, auto, 1"
-  ];
+  hyprland.monitorConfig = [ ", preferred, auto, 1" ];
+  hyprland.brightnessDevice = "amdgpu_bl2";
 
 }

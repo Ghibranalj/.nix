@@ -16,6 +16,14 @@
       ];
       description = "List of monitor configurations for Hyprland.";
     };
+
+    # string or null
+    hyprland.brightnessDevice = mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      description = "Device to control brightness, e.g., 'amdgpu_bl0'.";
+      example = "amdgpu_bl0";
+    };
   };
 
   imports = [
@@ -29,6 +37,7 @@
     services = {
       caffeine = { enable = true; };
       udiskie = { enable = true; };
+      kdeconnect = { enable = true; };
       hypridle = {
         enable = true;
         settings = {
@@ -87,6 +96,8 @@
 
       #networking
       networkmanager_dmenu
+
+      kdePackages.kdeconnect-kde
 
       #lock
       xsecurelock
