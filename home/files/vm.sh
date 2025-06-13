@@ -22,7 +22,7 @@ run_virsh() {
 }
 
 vm_man() {
-    virt-manager -c "$SESSION" $@
+    nohup virt-manager -c "$SESSION" "$@" > /dev/null 2>&1 &
 }
 
 log() {
@@ -108,9 +108,11 @@ function main(){
     case "$action" in
         "open")
             vm_man --show-domain-console $vm &
+            exit 0
             ;;
         "config")
             vm_man --show-domain-editor $vm &
+            exit 0
             ;;
         "start")
             log vmstate: $vmstate
