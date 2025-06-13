@@ -85,8 +85,8 @@ elif [ "$selected_option" == "$sleep" ]; then
 elif [ "$selected_option" == "$hibernate" ]; then
 	systemctl reboot --firmware-setup
 elif [ "$selected_option" == "$hibernateFR" ]; then
-	systemctl hibernate --force &
 	lock_screen
+	systemctl hibernate --force &
 else
 	echo "No match"
 fi
