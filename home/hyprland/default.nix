@@ -49,7 +49,7 @@
           listener = [
             {
               timeout = 180;
-              on-timeout = "brightnessctl set 10%";
+              on-timeout = "brightnessctl -s && brightnessctl set 0%";
               on-resume = "brightnessctl -r";
             }
             {
@@ -60,6 +60,11 @@
               timeout = 330;
               on-timeout = "hyprctl dispatch dpms off";
               on-resume = "hyprctl dispatch dpms on && brightnessctl -r";
+            }
+            {
+              timeout = 1200;
+              on-timeout =
+                "upower -i $(upower -e | grep 'BAT') | grep -q 'state:s*discharging' && systemctl hibernate --force";
             }
           ];
         };
