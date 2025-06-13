@@ -1,0 +1,120 @@
+#!/usr/bin/env bash
+
+# caffeine-inhibit.sh - D-Bus inhibit script for hypridle
+# Usage: ./caffeine-inhibit.sh [start|stop|toggle|status]
+
+INHIBIT_DIR="$HOME/.config/caffeine-inhibit"
+INHIBIT_FILE="${INHIBIT_DIR}/caffeine-inhibit-id"
+
+mkdir -p "$INHIBIT_DIR"
+
+# Function to send inhibit signal
+start_inhibit() {
+    if [[ -f "$INHIBIT_FILE" ]]; then
+        echo "Caffeine is already active (ID: $(cat "$INHIBIT_FILE"))"
+        return 1
+    fi
+
+    echo "Activating caffeine inhibit..."
+    
+    # Send D-Bus inhibit signal and capture the ID
+    INHIBIT_RES=$(busctl --user call org.freedesktop.ScreenSaver /org/freedesktop/ScreenSaver org.freedesktop.ScreenSaver Inhibit ss "caffeine" "User activated caffeine mode" 2>/dev/null)
+    if [ $? -eq 0 ]; then
+        echo "Successfully send inhibit"
+    else
+        echo "Failed to send inhibit"
+    fi
+
+    ID=$(echo $INHIBIT_RES | cut -d' ' -f2)
+
+    touch $INHIBIT_FILE
+    echo $ID > $INHIBIT_FILE
+}
+
+# Function to remove inhibit signal
+stop_inhibit() {
+    if [[ ! -f "$INHIBIT_FILE" ]]; then
+        echo "Caffeine is not active"
+        return 1
+    fi
+
+    INHIBIT_ID=$(cat "$INHIBIT_FILE")
+    echo "Deactivating caffeine inhibit (ID: $INHIBIT_ID)..."
+    
+    # Send D-Bus uninhibit signal
+    if busctl --user call org.freedesktop.ScreenSaver /org/freedesktop/ScreenSaver org.freedesktop.ScreenSaver UnInhibit u "$INHIBIT_ID" &>/dev/null; then
+        rm -f "$INHIBIT_FILE"
+        echo "Caffeine deactivated"
+        notify-send "Caffeine" "Screen idle restored" -i caffeine-cup-empty -t 3000 2>/dev/null || true
+        return 0
+    else
+        echo "Failed to deactivate caffeine inhibit"
+        return 1
+    fi
+}
+
+# Function to toggle inhibit
+toggle_inhibit() {
+    if [[ -f "$INHIBIT_FILE" ]]; then
+        stop_inhibit
+    else
+        start_inhibit
+    fi
+}
+
+# Function to show status
+show_status() {
+    if [[ -f "$INHIBIT_FILE" ]]; then
+        INHIBIT_ID=$(cat "$INHIBIT_FILE")
+        echo "Caffeine is ACTIVE (ID: $INHIBIT_ID)"
+        return 0
+    else
+        echo "Caffeine is INACTIVE"
+        return 1
+    fi
+}
+status_swaync() {
+    if [[ -f "$INHIBIT_FILE" ]]; then
+        echo "true"
+        return 0
+    else
+        echo "false"
+        return 0
+    fi
+}
+
+# Main script logic
+case "${1:-toggle}" in
+    start|on|enable)
+        start_inhibit
+        ;;
+    stop|off|disable)
+        stop_inhibit
+        ;;
+    toggle)
+        toggle_inhibit
+        ;;
+    status)
+        show_status
+        ;;
+    swaync)
+        status_swaync
+        ;;
+    help|--help|-h)
+        echo "Usage: $0 [start|stop|toggle|status|help]"
+        echo ""
+        echo "Commands:"
+        echo "  start, on, enable   - Activate caffeine inhibit"
+        echo "  stop, off, disable  - Deactivate caffeine inhibit"
+        echo "  toggle              - Toggle caffeine state (default)"
+        echo "  status              - Show current caffeine status"
+        echo "  swaync              - Show current caffeine status for swaync"
+        echo "  help                - Show this help message"
+        ;;
+    *)
+        echo "Unknown command: $1"
+        echo "Use '$0 help' for usage information"
+        exit 1
+        ;;
+esac
+

@@ -26,14 +26,14 @@
 
         # Monitor configuration
         monitor = lib.mkDefault config.hyprland.monitorConfig;
-        # Startup applications
-        exec-once =
-          [ "waybar" "hyprpaper -c /home/gibi/.config/hyprpaper.conf" ];
+        exec-once = [
+          "hyprpaper -c /home/gibi/.config/hyprpaper.conf"
+          "waybar"
+          "rm -rf ~.config/caffeine-inhibit"
+        ];
 
         # Environment variables
-        env = [
-          "XCURSOR_SIZE,24"
-        ];
+        env = [ "XCURSOR_SIZE,24" ];
 
         # Input configuration
         input = {
@@ -86,7 +86,7 @@
           "$mod, Q, killactive," # close window
           "$mod SHIFT, E, exit," # quit dwm/hyprland
 
-          "$nomod, SPACE, exec, rofi -show drun" # alternative launcher
+          "$nomod, SPACE, exec,YOFF=120px rofi -location 2  -show drun" # alternative launcher
           "$nomod, Return, exec, emacsclient -c" # alternative launcher
           "$nomod, T, exec, alacritty" # alternative launcher
           "$nomod, equal, exec, ${../files/volumes.sh} up"

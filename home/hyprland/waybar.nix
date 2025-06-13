@@ -69,6 +69,11 @@
             "on-click-right" = "blueman-manager";
             "escape" = true;
           };
+          "custom/kdeconnect" = {
+            "exec" = "${../files/kde-connect.sh}";
+            "interval" = 10;
+            "return-type" = "json";
+          };
           "custom/network" = {
             "exec" = "${../files/network.sh}";
             "return-type" = "json";
@@ -104,11 +109,11 @@
               "deactivated" = "";
             };
             "on-click" = "swaync-client -t -sw";
-            "on-click-right" = "${../files/caffeine.sh}";
+            "on-click-right" = "${../files/caffeine-inhibit}";
             "return-type" = "json";
             "exec" = "${
-                ../files/caffeine.sh
-              } status | grep -q 'true' && echo '{\"text\":\"activated\",\"alt\":\"activated\",\"tooltip\":\"Caffeine: activated\"}' || echo '{\"text\":\"deactivated\",\"alt\":\"deactivated\",\"tooltip\":\"Caffeine: deactivated\"}'";
+                ../files/caffeine-inhibit
+              } swaync | grep -q 'true' && echo '{\"text\":\"activated\",\"alt\":\"activated\",\"tooltip\":\"Caffeine: activated\"}' || echo '{\"text\":\"deactivated\",\"alt\":\"deactivated\",\"tooltip\":\"Caffeine: deactivated\"}'";
             "interval" = 1;
             "escape" = true;
           };
@@ -171,7 +176,6 @@
             font-size: 16px;
         }
 
-        #bluetooth,
         #custom-notification,
         #custom-network,
         #custom-caffeine,
@@ -179,6 +183,7 @@
             margin: 0 8px 0 8px;
         }
 
+        #bluetooth,
         #pulseaudio {
             margin: 0 4px 0 4px;
         }
