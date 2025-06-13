@@ -29,6 +29,7 @@ trough {
 trough {
   background: @base01;
 }
+
 .notification.low,
 .notification.normal {
   border: 1px solid @base03;
@@ -180,4 +181,22 @@ trough {
 
 .widget-buttons-grid > flowbox > flowboxchild > button:hover {
   border: 1px solid @base0A;
+}
+
+.widget-backlight,
+.widget-volume{
+  padding: 4px 10px;
+}
+
+.widget-backlight > label,
+.widget-volume > label{
+  padding: 4px 10px;
+}
+
+trough {
+  margin: 0px 8px;
+}
+
+.widget-baclight > trough {
+  margin: 0px 10px 0px 8px;
 }
