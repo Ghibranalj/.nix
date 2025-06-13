@@ -28,7 +28,7 @@
       widgets = [
         "buttons-grid"
         "mpris"
-        "backlight"
+        (lib.mkIf (config.hyprland.brightnessDevice != null) "backlight")
         "volume"
         "dnd"
         "title"
@@ -75,8 +75,8 @@
               label = "󰅶";
               type = "toggle";
               active = true;
-              command = "${../files/caffeine.sh}";
-              update-command = "${../files/caffeine.sh} status";
+              command = "${../files/caffeine-inhibit}";
+              update-command = "${../files/caffeine-inhibit} swaync";
             }
             {
               label = "󰛳";

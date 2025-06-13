@@ -35,7 +35,7 @@
   config = lib.mkIf config.hyprland.enable {
     programs.hyprlock.enable = true;
     services = {
-      caffeine = { enable = true; };
+      caffeine = { enable = false; };
       udiskie = { enable = true; };
       kdeconnect = { enable = true; };
       hypridle = {
@@ -50,6 +50,7 @@
             {
               timeout = 180;
               on-timeout = "brightnessctl set 10%";
+              on-resume = "brightnessctl -r";
             }
             {
               timeout = 300;
@@ -103,8 +104,9 @@
       networkmanager_dmenu
       kdePackages.kdeconnect-kde
 
-      #lock
-      xsecurelock
+      #caffein
+      (writeScriptBin "caffeine-inhibit"
+        (builtins.readFile ../files/caffeine-inhibit))
     ];
 
     xdg.configFile."networkmanager-dmenu/config.ini".text = ''

@@ -3,6 +3,9 @@
   gui.enable = true;
   grub.enable = true;
   gnome.enable = true;
+
+  lightdm.enable = true;
+
   programs.hyprland.enable = true;
   powerconf.enable = true;
   powerconf.saver.enable = true;
