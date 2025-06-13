@@ -88,12 +88,11 @@
               active = true;
             }
             {
-              # label = "⛶";
-              label = "󰹑";
+              label = "󰹗";
               command = "swaync-client -cp && ${../files/screenshot.sh}";
             }
             {
-              label = "";
+              label = "";
               command = "${../files/rofi-modi.sh} ${../files/vm.sh}";
             }
             {
