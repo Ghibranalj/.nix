@@ -4,6 +4,13 @@
 # Shows WiFi strength + SSID or Ethernet icon
 
 get_network_info() {
+
+    if ! ip route | grep -q "^default"; then
+        echo '{"text": "󰌙", "class": "no-internet", "tooltip": "No Network Connection"}'
+        return
+    fi
+
+
     ipaddr=$(ip route  | grep default | awk '{ print $9}')
     # Check for active ethernet connection
     ethernet_device=$(ip route | grep default | grep -E 'eth|enp|eno' | head -n1 | awk '{print $5}')
