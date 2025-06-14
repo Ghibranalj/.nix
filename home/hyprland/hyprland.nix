@@ -29,7 +29,7 @@
         exec-once = [
           "hyprpaper -c /home/gibi/.config/hyprpaper.conf"
           "waybar"
-          "caffeine-inhibit enable"
+          (lib.mkIf (config.hyprland.caffeineOnStartup) "caffine-inhibit enable")
         ];
 
         # Environment variables
