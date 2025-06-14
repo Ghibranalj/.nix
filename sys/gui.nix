@@ -21,11 +21,10 @@
 
     environment.systemPackages = with pkgs; [
       google-chrome
-      vesktop
       pavucontrol
       spotify
       networkmanagerapplet
-      prevpkgs.vesktop
+      discord
       emacs-all-the-icons-fonts
     ];
 
@@ -34,7 +33,6 @@
         noto-fonts-emoji
         fira-code-symbols
         source-code-pro
-        #
       ] ++ builtins.filter lib.attrsets.isDerivation
       (builtins.attrValues pkgs.nerd-fonts);
   };
