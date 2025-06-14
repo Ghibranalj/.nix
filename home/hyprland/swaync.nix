@@ -64,7 +64,7 @@
               active = true;
             }
             {
-              label = "󰕾";
+              label = "󰓃";
               command = "${../files/rofi-modi.sh} ${../files/pulseaudio}";
             }
             {
@@ -79,7 +79,7 @@
               update-command = "${../files/caffeine-inhibit} swaync";
             }
             {
-              label = "󰛳";
+              label = "󰌘";
               command =
                 "${pkgs.bash}/bin/bash -c 'HEIGHT=80% ${pkgs.networkmanager_dmenu}/bin/networkmanager_dmenu'";
               update-command =
@@ -106,6 +106,10 @@
             {
               label = "";
               command = "alacritty";
+            }
+            {
+              label = "";
+              command = "emacsclient -c";
             }
             {
               label = "⏻";
