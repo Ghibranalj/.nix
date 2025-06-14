@@ -80,7 +80,7 @@ with lib; {
     nix-rebuild =
       "sudo nixos-rebuild switch --flake /home/gibi/.nix#${host.hostName}";
     nix-update = "sudo nix-channel --update && nix-rebuild";
-    nix-cleanup = "sudo nix-collect-garbage -d";
+    nix-cleanup = "sudo nix-collect-garbage -d && nix-collect-garbage -d";
   };
 
   services.openssh = {

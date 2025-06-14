@@ -14,6 +14,12 @@
       description = "List of monitor configurations for Hyprland.";
     };
 
+    hyprland.caffeineOnStartup = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Enable or disable caffeine on startup.";
+    };
+
     # string or null
     hyprland.brightnessDevice = mkOption {
       type = types.nullOr types.str;

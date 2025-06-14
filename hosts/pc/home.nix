@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }: {
   gnome.enable = true;
   hyprland.enable = true;
+  hyprland.caffeineOnStartup = true;
   hyprland.mouseSensitivity = -0.9;
   alacritty.enable = true;
 
