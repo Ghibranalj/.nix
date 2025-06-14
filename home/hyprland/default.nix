@@ -54,28 +54,28 @@
               timeout = 180;
               on-timeout = "${
                   ../files/caffeine-inhibit
-                } status && brightnessctl -s && brightnessctl set 0%";
+                } isoff && brightnessctl -s && brightnessctl set 0%";
               on-resume =
-                "${../files/caffeine-inhibit} status && brightnessctl -r";
+                "${../files/caffeine-inhibit} isoff && brightnessctl -r";
             }
             {
               timeout = 300;
-              on-timeout = "${../files/caffeine-inhibit} status && hyprlock";
+              on-timeout = "${../files/caffeine-inhibit} isoff && hyprlock";
             }
             {
               timeout = 330;
               on-timeout = "${
                   ../files/caffeine-inhibit
-                } status && hyprctl dispatch dpms off";
+                } isoff && hyprctl dispatch dpms off";
               on-resume = "${
                   ../files/caffeine-inhibit
-                } status && hyprctl dispatch dpms on && brightnessctl -r";
+                } isoff && hyprctl dispatch dpms on && brightnessctl -r";
             }
             {
               timeout = 1200;
               on-timeout = "${
                   ../files/caffeine-inhibit
-                } status && upower -i $(upower -e | grep 'BAT') | grep -q 'state:s*discharging' && systemctl hibernate --force";
+                } isoff && upower -i $(upower -e | grep 'BAT') | grep 'state' | grep -q discharging && systemctl hibernate --force";
             }
           ];
         };
@@ -89,10 +89,7 @@
       hyprpaper
       swaynotificationcenter
 
-      # Terminal and basic apps
-      alacritty
       nautilus
-      firefox
 
       # Utilities
       wl-clipboard
