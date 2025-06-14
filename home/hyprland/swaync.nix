@@ -88,7 +88,7 @@
               active = true;
             }
             {
-              label = "󰹗";
+              label = "󰹑";
               command = "swaync-client -cp && ${../files/screenshot.sh}";
             }
             {

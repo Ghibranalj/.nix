@@ -10,10 +10,7 @@
     };
     hyprland.monitorConfig = mkOption {
       type = types.listOf types.str;
-      default = [
-        "HDMI-A-1,1920x1080@100,0x0,1" # mon 1
-        "DP1,1920x1080@100,1920x0,1"
-      ];
+      default = [ "HDMI-A-1,1920x1080@100,0x0,1" "DP1,1920x1080@100,1920x0,1" ];
       description = "List of monitor configurations for Hyprland.";
     };
 
@@ -49,22 +46,30 @@
           listener = [
             {
               timeout = 180;
-              on-timeout = "brightnessctl -s && brightnessctl set 0%";
-              on-resume = "brightnessctl -r";
+              on-timeout = "${
+                  ../files/caffeine-inhibit
+                } status && brightnessctl -s && brightnessctl set 0%";
+              on-resume =
+                "${../files/caffeine-inhibit} status && brightnessctl -r";
             }
             {
               timeout = 300;
-              on-timeout = "hyprlock";
+              on-timeout = "${../files/caffeine-inhibit} status && hyprlock";
             }
             {
               timeout = 330;
-              on-timeout = "hyprctl dispatch dpms off";
-              on-resume = "hyprctl dispatch dpms on && brightnessctl -r";
+              on-timeout = "${
+                  ../files/caffeine-inhibit
+                } status && hyprctl dispatch dpms off";
+              on-resume = "${
+                  ../files/caffeine-inhibit
+                } status && hyprctl dispatch dpms on && brightnessctl -r";
             }
             {
               timeout = 1200;
-              on-timeout =
-                "upower -i $(upower -e | grep 'BAT') | grep -q 'state:s*discharging' && systemctl hibernate --force";
+              on-timeout = "${
+                  ../files/caffeine-inhibit
+                } status && upower -i $(upower -e | grep 'BAT') | grep -q 'state:s*discharging' && systemctl hibernate --force";
             }
           ];
         };

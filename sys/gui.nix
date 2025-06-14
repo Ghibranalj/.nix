@@ -26,6 +26,7 @@
       spotify
       networkmanagerapplet
       prevpkgs.vesktop
+      emacs-all-the-icons-fonts
     ];
 
     fonts.packages = with pkgs;

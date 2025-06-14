@@ -29,8 +29,7 @@
         exec-once = [
           "hyprpaper -c /home/gibi/.config/hyprpaper.conf"
           "waybar"
-          "rm -rf ~.config/caffeine-inhibit"
-          "caffeine-inhibit"
+          "caffeine-inhibit enable"
         ];
 
         # Environment variables
