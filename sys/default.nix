@@ -127,4 +127,6 @@ with lib; {
     };
   };
   advcpmv.enable = lib.mkDefault true;
+
+  boot.tmp.cleanOnBoot = lib.mkDefault true;
 }

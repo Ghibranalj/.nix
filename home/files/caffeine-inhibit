@@ -39,6 +39,16 @@ show_status() {
     fi
 }
 
+isoff() {
+    if [[ -f "$INHIBIT_FILE" ]]; then
+        echo "Caffeine: ON"
+        return 1
+    else
+        echo "Caffeine: OFF"
+        return 0
+    fi
+}
+
 status_swaync() {
     if [[ -f "$INHIBIT_FILE" ]]; then
         echo "true"
@@ -63,18 +73,25 @@ case "${1:-toggle}" in
     status)
         show_status
         ;;
+    isoff)
+        isoff
+        ;;
+    status)
+        show_status
+        ;;
     swaync)
         status_swaync
         ;;
     help|--help|-h)
-        echo "Usage: $0 [start|stop|toggle|status|help]"
+        echo "Usage: $0 [start|stop|toggle|status|swaync|isoff|help]"
         echo ""
         echo "Commands:"
         echo "  start, on, enable   - Activate caffeine inhibit"
         echo "  stop, off, disable  - Deactivate caffeine inhibit"
         echo "  toggle              - Toggle caffeine state (default)"
-        echo "  status              - Show current caffeine status"
+        echo "  status              - Show current caffeine status -- will return status 0 when on 1 when off"
         echo "  swaync              - Show current caffeine status for swaync"
+        echo "  isoff               - Like status but return code is swapped"
         echo "  help                - Show this help message"
         ;;
     *)
