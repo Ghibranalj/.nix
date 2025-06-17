@@ -41,6 +41,19 @@
       caffeine = { enable = false; };
       udiskie = { enable = true; };
       kdeconnect = { enable = true; };
+      hyprsunset = {
+        enable = true;
+        transitions = {
+          sunrise = {
+            calendar = "*-*-* 06:00:00";
+            requests = [[ "temperature" "6500" ]];
+          };
+          sunset = {
+            calendar = "*-*-* 19:00:00";
+            requests = [[ "temperature" "4900" ]];
+          };
+        };
+      };
       hypridle = {
         enable = true;
         settings = {

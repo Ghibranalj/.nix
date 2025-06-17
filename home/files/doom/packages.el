@@ -156,3 +156,4 @@
 
 (package! polymode :pin "44265e35161d77f6eaa09388ea2256b89bd5dcc8")
 
+(package! astro-ts-mode :pin "886d692378d0da2071e710c1e6db02e5b2e0dd30")

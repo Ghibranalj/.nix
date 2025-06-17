@@ -35,6 +35,7 @@
       rustywind
       upkgs.copilot-language-server-fhs
       typescript-language-server
+      astro-language-server
 
       ## DB stuff
       beekeeper-studio

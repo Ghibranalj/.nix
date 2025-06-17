@@ -247,13 +247,8 @@
     :server-id 'sqls
     :priority 1))
 
-
-  (define-derived-mode astro-mode web-mode "astro")
-  (setq auto-mode-alist
-        (append '((".*\\.astro\\'" . astro-mode))
-                auto-mode-alist))
   (add-to-list 'lsp-language-id-configuration
-               '(astro-mode . "astro"))
+               '(astro-ts-mode . "astro"))
   (lsp-register-client
    (make-lsp-client :new-connection (lsp-stdio-connection '("astro-ls" "--stdio"))
                     :activation-fn (lsp-activate-on "astro")
@@ -765,5 +760,18 @@ Shows terminal and dired in seperate section."
   :config
   (add-to-list 'projectile-globally-ignored-file-suffixes "_templ.go")
   (add-to-list 'projectile-globally-ignored-file-suffixes "_templ.txt"))
+
+(use-package! treesit
+  :config
+  (setq treesit-language-source-alist
+        '((astro "https://github.com/virchau13/tree-sitter-astro")
+          (css "https://github.com/tree-sitter/tree-sitter-css")
+          (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src"))))
+
+(use-package! astro-ts-mode
+  :hook
+  (astro-ts-mode . lsp-mode)
+  :config
+  (add-to-list 'auto-mode-alist '("\\.astro\\'" . astro-ts-mode)))
 
 (message "=== Done Loading Config ===")
