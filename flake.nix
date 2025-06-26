@@ -66,6 +66,7 @@
             {
               home-manager.sharedModules = [ stylix.homeModules.stylix ];
               home-manager.useGlobalPkgs = true;
+              home-manager.backupFileExtension = "bak";
               home-manager.extraSpecialArgs = {
                 inherit inputs host split-monitor-workspaces hyprland;
               };

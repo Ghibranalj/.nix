@@ -64,7 +64,7 @@
             "format" = "󰂯";
             "format-disabled" = "";
             "format-off" = "";
-            "format-connected" = "󰂱 {num_connections}";
+            "format-connected" = "󰂱 <small>{num_connections}</small>";
             "on-click" = "swaync-client -t -sw";
             "on-click-right" = "blueman-manager";
             "escape" = true;

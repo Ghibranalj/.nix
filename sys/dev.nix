@@ -1,4 +1,4 @@
-{ config, lib, pkgs, upkgs, ... }:
+{ config, lib, pkgs, upkgs, prevpkgs, ... }:
 
 {
   options = with lib; { dev.enable = mkEnableOption "enables gnome"; };
@@ -54,7 +54,7 @@
       upkgs.code-cursor
 
       #devenv
-      devenv
+      prevpkgs.devenv
     ];
   };
 }
