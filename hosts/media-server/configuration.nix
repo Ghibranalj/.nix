@@ -34,7 +34,7 @@
     # else you want
     # WARNING: Do _not_ set them to `/home/user/whatever`, it will not work!
     mediaDir = "/media";
-    stateDir = "/var/media/.state/nixarr";
+    stateDir = "/var/media/state/";
 
     vpn = { enable = false; };
 
@@ -83,7 +83,7 @@
       image = "hurlenko/filebrowser";
       ports = [ "8889:8080" ];
       volumes = [
-        "/var/media/.state/filebrowser/config:/config"
+        "/var/media/state/filebrowser:/config"
         "/media:/data"
       ];
       environment = { FB_BASEURL = "/media"; };
