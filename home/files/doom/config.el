@@ -44,7 +44,7 @@
 
 
 (setq
- display-line-numbers-type 'relative
+ ;; display-line-numbers-type 'relative
  org-directory "~/org/"
  scroll-margin 16
  scroll-conservatively 101

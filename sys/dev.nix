@@ -54,7 +54,7 @@
       upkgs.code-cursor
 
       #devenv
-      prevpkgs.devenv
+      upkgs.devenv
     ];
   };
 }

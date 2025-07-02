@@ -8,6 +8,7 @@
     services.udisks2.enable = true;
 
     hardware.graphics.enable = true;
+    programs.noisetorch.enable = true;
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
