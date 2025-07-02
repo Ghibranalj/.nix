@@ -120,6 +120,7 @@
       wirelesstools
       wf-recorder
       swayidle
+      gromit-mpx
 
       # Bluetooth
       bluez
@@ -130,7 +131,7 @@
       networkmanager_dmenu
       kdePackages.kdeconnect-kde
 
-      #caffein
+      #caffeine
       (writeScriptBin "caffeine-inhibit"
         (builtins.readFile ../files/caffeine-inhibit))
     ];

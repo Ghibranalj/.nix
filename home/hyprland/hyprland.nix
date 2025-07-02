@@ -67,6 +67,14 @@
 
         # Animations
         animations = { enabled = false; };
+        workspace = [
+          "special:gromit, gapsin:0, gapsout:0, on-created-empty: gromit-mpx -a"
+          # Your other workspace rules...
+        ];
+
+        windowrule = [
+          # Your other window rules...
+        ];
 
         # Layout
         dwindle = {
@@ -99,6 +107,10 @@
 
           "$nomod, O, exec, ${../files/brightness.sh} down"
 
+          "$mod, Z, exec, ${../files/hyprland-zoom.sh}"
+          "$mod SHIFT, Z, exec, ${../files/hyprland-zoom.sh} rigid"
+          "$mod, G, exec, gromit-mpx -t ; hyprctl dispatch togglespecialworkspace gromit "
+
           "$mod, H, splitratio, -0.05" # increase master size
           "$mod, L, splitratio, +0.05" # decrease master size
 
@@ -119,6 +131,10 @@
           "$mod, period, focusmonitor, r" # focus right monitor
           "$mod SHIFT, comma, movewindow, mon:l" # move window to left monitor
           "$mod SHIFT, period, movewindow, mon:r" # move window to right monitor
+
+          "CTRL, R, pass, class:^(com\.obsproject\.Studio)$"
+          "CTRL, 1, pass, class:^(com\.obsproject\.Studio)$"
+          "CTRL, 2, pass, class:^(com\.obsproject\.Studio)$"
 
           # Workspace management
           "$mod, 1, split-workspace, 1"

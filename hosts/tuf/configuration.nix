@@ -50,4 +50,6 @@
   services.xserver.videoDrivers = [ "nvidia" ];
 
   networking.firewall.enable = false;
+
+  environment.systemPackages = with pkgs; [ vlc obs-studio ];
 }
