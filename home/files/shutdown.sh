@@ -20,6 +20,33 @@ function lock_screen() {
 
 		# Kill short-timeout swayidle (this one)
 		pkill -f "swayidle -w.*timeout 1"
+	' &
+
+	# Give hyprlock a moment to start up
+	sleep 0.5
+	
+	# Return without waiting for lock to finish
+	# hyprlock will continue running in the background
+}
+
+
+function lock_screen_and_wait() {
+	hyprlock &
+	LOCK_PID=$!
+
+	# Start initial short-timeout swayidle
+	swayidle -w \
+	timeout 1 'hyprctl dispatch dpms off' \
+	resume '
+		hyprctl dispatch dpms on
+
+		# Start long-timeout swayidle
+		swayidle -w \
+		timeout 30 "hyprctl dispatch dpms off" \
+		resume "hyprctl dispatch dpms on" &
+
+		# Kill short-timeout swayidle (this one)
+		pkill -f "swayidle -w.*timeout 1"
 	'
 
 	# Wait for lock to finish
@@ -34,12 +61,12 @@ function lock_screen() {
 
 
 # Options for powermenu
-lock="    Lock"
+lock="    Lock"
 logout="󰍃    Logout"
-shutdown="    Poweroff"
-reboot="    Reboot"
+shutdown="    Poweroff"
+reboot="    Reboot"
 sleep="󰤄   Sleep"
-hibernate="  UEFI setup"
+hibernate="  UEFI setup"
 hibernateFR="󰒲  Hibernate"
 
 ROFI_CMD="rofi"
@@ -71,7 +98,7 @@ $sleep" | $ROFI_CMD -dmenu -i -p "Power" \
 
 
 if [ "$selected_option" == "$lock" ]; then
-	lock_screen
+	lock_screen_and_wait
 elif [ "$selected_option" == "$logout" ]; then
 	hyprctl dispatch exit
 elif [ "$selected_option" == "$shutdown" ]; then
@@ -86,7 +113,8 @@ elif [ "$selected_option" == "$hibernate" ]; then
 	systemctl reboot --firmware-setup
 elif [ "$selected_option" == "$hibernateFR" ]; then
 	lock_screen
-	systemctl hibernate --force &
+	sleep 2
+	systemctl hibernate --force
 else
 	echo "No match"
 fi
