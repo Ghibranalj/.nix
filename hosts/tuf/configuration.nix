@@ -51,5 +51,16 @@
 
   networking.firewall.enable = false;
 
-  environment.systemPackages = with pkgs; [ vlc obs-studio ];
+  environment.systemPackages = with pkgs; [ vlc ];
+
+  programs.obs-studio = {
+    enable = true;
+    enableVirtualCamera = true;
+    plugins = with pkgs.obs-studio-plugins; [
+      wlrobs
+      obs-source-clone
+      droidcam-obs
+      ##
+    ];
+  };
 }
