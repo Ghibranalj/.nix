@@ -36,7 +36,7 @@
 
   services.udev.extraRules = ''
     # Keyboard
-    KERNEL=="event*", SUBSYSTEM=="input", ATTRS{name}=="AJAZZ K680T Keyboard", ACTION=="add", SYMLINK+="input/by-id/btkeyboard"
+    KERNEL=="event*", SUBSYSTEM=="input", ATTRS{name}=="AK680 MAX-1 Keyboard", ACTION=="add", SYMLINK+="input/by-id/btkeyboard"
 
     KERNEL=="event*", SUBSYSTEM=="input", ATTRS{name}=="BT5.0 Mouse", ACTION=="add", SYMLINK+="input/by-id/btmouse"
   '';
