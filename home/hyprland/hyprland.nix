@@ -19,7 +19,7 @@
           split-monitor-workspaces = {
             count = 9;
             keep_focused = 0;
-            enable_notifications = 0;
+            enable_notifications = 1;
             enable_persistent_workspaces = 1;
           };
         };
@@ -106,6 +106,7 @@
           "$nomod, P, exec, ${../files/brightness.sh} up"
 
           "$nomod, O, exec, ${../files/brightness.sh} down"
+          "$nomod, Delete, exec, ${../files/shutdown.sh} down"
 
           "$mod, Z, exec, ${../files/hyprland-zoom.sh}"
           "$mod SHIFT, Z, exec, ${../files/hyprland-zoom.sh} rigid"
@@ -135,6 +136,8 @@
           "CTRL, R, pass, class:^(com\.obsproject\.Studio)$"
           "CTRL, 1, pass, class:^(com\.obsproject\.Studio)$"
           "CTRL, 2, pass, class:^(com\.obsproject\.Studio)$"
+          "CTRL, 3, pass, class:^(com\.obsproject\.Studio)$"
+          "CTRL, 4, pass, class:^(com\.obsproject\.Studio)$"
 
           # Workspace management
           "$mod, 1, split-workspace, 1"

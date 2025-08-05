@@ -257,9 +257,9 @@ if command -v lvim >/dev/null; then
     MANPAGER='lvim +Man!'
 fi
 
-if command -v rmtrash >/dev/null; then
-    alias rm='rmtrash'
-    alias rmdir='rmdirtrash'
+if command -v trash-rm >/dev/null; then
+    alias rm='trash-rm'
+    alias rmdir='rm -d'
     alias sudo='sudo '
 fi
 

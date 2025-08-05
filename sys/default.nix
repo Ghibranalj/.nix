@@ -41,6 +41,8 @@ with lib; {
     termshark
     pavucontrol
     bash-completion
+    trash-cli
+    comma
   ];
 
   sysUsers.enable = mkDefault true;
@@ -53,7 +55,6 @@ with lib; {
   };
 
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "id_ID.utf8";
     LC_IDENTIFICATION = "id_ID.utf8";
@@ -71,16 +72,17 @@ with lib; {
   networking.networkmanager.enable = mkDefault true;
 
   nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
-  environment.variables = {
-    NIX_HOSTNAME = host.hostName;
-    NIXPKGS_ALLOW_UNFREE = 1;
-  };
-
-  environment.shellAliases = {
-    nix-rebuild =
-      "sudo nixos-rebuild switch --flake /home/gibi/.nix#${host.hostName}";
-    nix-update = "sudo nix-channel --update && nix-rebuild";
-    nix-cleanup = "sudo nix-collect-garbage -d && nix-collect-garbage -d";
+  environment = {
+    variables = {
+      NIX_HOSTNAME = host.hostName;
+      NIXPKGS_ALLOW_UNFREE = 1;
+    };
+    shellAliases = {
+      nix-rebuild =
+        "sudo nixos-rebuild switch --flake /home/gibi/.nix#${host.hostName}";
+      nix-update = "sudo nix-channel --update && nix-rebuild";
+      nix-cleanup = "sudo nix-collect-garbage -d && nix-collect-garbage -d";
+    };
   };
 
   services.openssh = {
@@ -96,7 +98,6 @@ with lib; {
         "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
     };
   };
-
 
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "25.05"; # Did you read the comment?

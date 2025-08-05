@@ -95,6 +95,7 @@
       };
     };
 
+    services.hyprpolkitagent.enable = true;
     home.packages = with pkgs; [
       # Core Wayland components
       waybar

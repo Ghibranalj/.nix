@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }: {
+{ config, pkgs, lib, inputs, upkgs, ... }: {
 
   gui.enable = true;
   grub.enable = true;
@@ -49,9 +49,16 @@
 
   services.xserver.videoDrivers = [ "nvidia" ];
 
+  services.teamviewer = {
+    enable = true;
+    package = upkgs.teamviewer;
+  };
+
   networking.firewall.enable = false;
 
-  environment.systemPackages = with pkgs; [ vlc ];
+  environment.systemPackages = with pkgs; [ vlc upkgs.teamviewer ];
+
+  programs.zoom-us.enable = true;
 
   programs.obs-studio = {
     enable = true;
@@ -60,6 +67,7 @@
       wlrobs
       obs-source-clone
       droidcam-obs
+      obs-websocket
       ##
     ];
   };

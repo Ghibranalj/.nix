@@ -5,7 +5,7 @@
     powerconf.saver = {
       enable = mkEnableOption "enable power saver";
       batteryGovernor = mkOption {
-        type = types.string;
+        type = types.str;
         default = "schedutil";
       };
       chargerGovernor = mkOption {
