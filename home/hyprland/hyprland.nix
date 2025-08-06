@@ -31,7 +31,7 @@
           "waybar"
           (lib.mkIf (config.hyprland.caffeineOnStartup)
             "caffeine-inhibit enable")
-        ];
+        ] ++ config.hyprland.startupCmds;
 
         # Environment variables
         env = [ "XCURSOR_SIZE,24" ];

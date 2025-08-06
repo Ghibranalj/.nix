@@ -27,6 +27,12 @@
       description = "Device to control brightness, e.g., 'amdgpu_bl0'.";
       example = "amdgpu_bl0";
     };
+
+    hyprland.startupCmds = mkOption {
+      type = types.listOf types.str;
+      default = [ "" ];
+      description = "List of command to run when hyprland starts";
+    };
   };
 
   imports = [
