@@ -14,7 +14,7 @@
   winbox.enable = true;
   libvirt.enable = true;
 
-  networking.hostName = "CreeprTUF"; # Define your hostname.
+  networking.hostName = "CreeprTUF"; 
 
   hardware.nvidia = {
     modesetting.enable = true;
@@ -56,7 +56,14 @@
 
   networking.firewall.enable = false;
 
-  environment.systemPackages = with pkgs; [ vlc upkgs.teamviewer ];
+  environment.systemPackages = with pkgs; [
+    vlc
+    upkgs.teamviewer
+    kdePackages.kdenlive
+    wine-wayland
+    wine
+    ffmpeg
+  ];
 
   programs.zoom-us.enable = true;
 

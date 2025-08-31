@@ -39,10 +39,14 @@ let
 in {
   options = with lib; {
     advcpmv.enable = mkEnableOption "enables advcpmv";
-    #
+    advcpmv.package = mkOption {
+      type = types.package;
+      default = advcpmv_pkg;
+      description = "The advcpmv package to use.";
+    };
   };
 
   config = lib.mkIf config.advcpmv.enable {
-    environment.systemPackages = [ advcpmv_pkg ];
+    environment.systemPackages = [ config.advcpmv.package ];
   };
 }

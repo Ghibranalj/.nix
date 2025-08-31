@@ -83,7 +83,7 @@
         };
 
         # Gestures
-        gestures = { workspace_swipe = true; };
+        # gestures = { workspace_swipe = true; };
 
         # Keybindings (DWM style)
         "$mod" = "SUPER";

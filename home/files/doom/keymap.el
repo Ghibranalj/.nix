@@ -21,10 +21,9 @@
  :n "C-<right>" #'evil-window-increase-width
  ;; split window
  :leader
- :desc "Switch buffer in workspace" "," #'my-consult-workspace
  :desc "Yank from kill ring" "y" #'yank-from-kill-ring
 
- :desc "Open scratch buffer" "x" #'my-open-scratch
+ ;; :desc "Open scratch buffer" "x" #'my-open-scratch
  (:prefix ("b" . "buffer")
   :desc "Format buffer" "f" #'+format/buffer
   :desc "Switch to terminal in workspace" "t" #'my-consult-terminal

@@ -9,8 +9,11 @@
         "github:nix-community/home-manager/release-25.05"; # Match Nixpkgs version
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-doom-emacs-unstraightened.url =
-      "github:marienz/nix-doom-emacs-unstraightened";
+    nix-doom-emacs-unstraightened = {
+      url = "github:marienz/nix-doom-emacs-unstraightened";
+      # inputs.doomemacs.url =
+      #   "github:doomemacs/doomemacs/09c01e04e68d2ccaaced3aa77d6bd4b07ea40598";
+    };
     grub2-themes = { url = "github:vinceliuice/grub2-themes"; };
     nixarr.url = "github:rasmus-kirk/nixarr";
     evdev-keymapper = {

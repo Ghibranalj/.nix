@@ -49,7 +49,7 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (package! evil :pin "6bed0e58dbafd75755c223a5c07aacd479386568")
 (package! copilot
-  :pin "784edd550508c88582f04013b1d5ea5b3824746c"
+  :pin "4f51b3c21c42756d09ee17011201ea7d6e18ff69"
   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
 (package! company-box
   :pin "c4f2e243fba03c11e46b1600b124e036f2be7691"
@@ -72,14 +72,14 @@
 ;           :type git :host github :repo "VernonGrant/sidekick.el"
 ;           :files ("*.el")
 ;           :branch "main"))
-(package! verb :pin "bfffe206d5413de338ed3f03450efb49315c89b0")
+(package! verb :pin "e818377f2ceddf5670dcd9a32d3de0e8bf82a8f1")
 (package! all-the-icons-completion
   :pin "4c8bcad8033f5d0868ce82ea3807c6cd46c4a198"
   :recipe (:host github
            :repo "iyefrat/all-the-icons-completion"))
-(package! helm-swoop :pin "df90efd4476dec61186d80cace69276a95b834d2")
+;; (package! helm-swoop :pin "df90efd4476dec61186d80cace69276a95b834d2")
 (package! systemd :pin "8742607120fbc440821acbc351fda1e8e68a8806")
-(package! lsp-ui :pin "09d40806429fadc01a12d9a1841b49430f58adb5")
+(package! lsp-ui :pin "9e92f75147599d447f569f20e5bb1b9c8b771181")
 (package! vertico-posframe :pin "047474764c6bf9f6296f8e4f959d483de6b5baf7")
 (package! ivy :pin "db61f55bc281c28beb723ef17cfe74f59580d2f4" )
 (package! ivy-posframe :pin "660c773f559ac37f29ccf626af0103817c8d5e30")
@@ -94,7 +94,7 @@
            :files ("*.el")
            :branch "master"))
 (package! lsp-tailwindcss
-	  :pin "294121ada4feb4f4ad4d1a8b2dc69de89d518d31"
+	  :pin "8574cb3ad2e669eebb34b4d57c3cdef5a424a9b5"
 	  :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
 ; (package! smudge :pin "")
 (package! pcap-mode
@@ -143,7 +143,6 @@
                 :files ("*.el") :branch "master"))
 
 (package! highlight-indent-guides :pin "3205abe2721053416e354a1ff53947dd122a6941")
-(package! evil-collection :pin "cb850ff0d11f644dbd133428cff57e82e655ecd7")
 
 (package! templ-ts-mode
   :pin "020976f0cf2cf27a1a6e1b59e92c443c52b03a52"
@@ -158,3 +157,4 @@
 
 (package! astro-ts-mode :pin "886d692378d0da2071e710c1e6db02e5b2e0dd30")
 (package! rainbow-delimiters :pin "7919681b0d883502155d5b26e791fec15da6aeca")
+;; (package! persp-mode :pin "124f4430008859a75b25521c474f37aa9f75afeb")
