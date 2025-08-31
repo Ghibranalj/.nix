@@ -205,8 +205,13 @@
   )
 
 (use-package! dired
+  :after evil-collection
   :hook
-  (dired-mode . dired-hide-dotfiles-mode))
+  (dired-mode . dired-hide-dotfiles-mode)
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "." 'dired-hide-dotfiles-mode
+    "M" 'my-create-directory))
 
 (use-package! dired-x
   :hook
@@ -282,11 +287,11 @@
 (use-package! nix-mode
   :custom
   (lsp-nix-nixd-nixos-options-expr
-    (format "(builtins.getFlake (\"git+file://\" + toString ./.)).nixosConfigurations.%s.options"
-                            (getenv "NIX_HOSTNAME")))
+   (format "(builtins.getFlake (\"git+file://\" + toString ./.)).nixosConfigurations.%s.options"
+           (getenv "NIX_HOSTNAME")))
   (lsp-nix-nixd-home-manager-options-expr
-    (format "(builtins.getFlake (\"git+file://\" + toString ./.)).nixosConfigurations.%s.options.home-manager.users.type.getSubOptions []"
-                            (getenv "NIX_HOSTNAME"))))
+   (format "(builtins.getFlake (\"git+file://\" + toString ./.)).nixosConfigurations.%s.options.home-manager.users.type.getSubOptions []"
+           (getenv "NIX_HOSTNAME"))))
 
 (use-package! templ-ts-mode
   :mode "\\.templ\\'"

@@ -117,5 +117,8 @@
  ;;  :desc "Restart" "r" #'dap-hydra
  ;  )
  )
+(map! :map dired-mode-map
+      ;; Dired-specific bindings
+      "." #'dired-hide-dotfiles-mode)
 
 (message "==== Keymap loaded ====")
