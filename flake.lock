@@ -113,6 +113,7 @@
       "original": {
         "owner": "doomemacs",
         "repo": "doomemacs",
+        "rev": "2e508c299d1d6dac9c05d224353bce7fbb57e966",
         "type": "github"
       }
     },

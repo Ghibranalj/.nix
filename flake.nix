@@ -11,8 +11,8 @@
     };
     nix-doom-emacs-unstraightened = {
       url = "github:marienz/nix-doom-emacs-unstraightened";
-      # inputs.doomemacs.url =
-      #   "github:doomemacs/doomemacs/09c01e04e68d2ccaaced3aa77d6bd4b07ea40598";
+      inputs.doomemacs.url =
+        "github:doomemacs/doomemacs/2e508c299d1d6dac9c05d224353bce7fbb57e966"; # 1 Sept 2025
     };
     grub2-themes = { url = "github:vinceliuice/grub2-themes"; };
     nixarr.url = "github:rasmus-kirk/nixarr";
