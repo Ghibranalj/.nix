@@ -3,6 +3,7 @@ let
   winbox4_override = pkgs.winbox4.overrideAttrs (old: {
     postInstall = ''
       install -Dm644 "assets/img/winbox.png" "$out/share/pixmaps/winbox4.png"
+      ln -s $out/bin/WinBox $out/bin/winbox-4
     '';
     desktopItems = old.desktopItems or [ ] ++ [
       (pkgs.makeDesktopItem {
