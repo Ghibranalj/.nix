@@ -105,16 +105,22 @@
             }
             {
               label = "";
-              command = "alacritty";
+              command = "swaync-client -cp && alacritty";
             }
             {
               label = "";
-              command = "emacsclient -c";
+              command = "swaync-client -cp && emacsclient -c";
+            }
+            {
+              label = "";
+              command =
+                "swaync-client -cp && ${pkgs.localsend}/bin/localsend_app";
             }
             {
               label = "⏻";
               command = "swaync-client -cp && ${../files/shutdown.sh}";
             }
+
           ];
         };
       };

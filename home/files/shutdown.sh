@@ -61,12 +61,12 @@ function lock_screen_and_wait() {
 
 
 # Options for powermenu
-lock="    Lock"
-logout="󰍃    Logout"
-shutdown="    Poweroff"
-reboot="    Reboot"
-sleep="󰤄   Sleep"
-hibernate="  UEFI setup"
+lock="  Lock"
+logout="󰍃  Logout"
+shutdown="⏻  Poweroff"
+reboot="󰜉  Reboot"
+sleep="󰤄  Sleep"
+hibernate="  UEFI setup"
 hibernateFR="󰒲  Hibernate"
 
 ROFI_CMD="rofi"

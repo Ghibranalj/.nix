@@ -43,6 +43,9 @@ with lib; {
     bash-completion
     trash-cli
     comma
+
+    # For kursusjaringan management
+    webkitgtk_4_0
   ];
 
   sysUsers.enable = mkDefault true;
