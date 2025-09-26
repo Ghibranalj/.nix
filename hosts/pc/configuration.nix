@@ -4,7 +4,12 @@
     ./hardware-configuration.nix
   ];
 
-  environment.systemPackages = with pkgs; [ vlc discord-canary ];
+  environment.systemPackages = with pkgs; [
+    vlc
+    discord-canary
+    handbrake
+    #
+  ];
 
   networking.hostName = "CreeprPC"; # Define your hostname.
   gui.enable = true;
