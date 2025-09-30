@@ -68,5 +68,10 @@
     dconf.settings = {
       "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
     };
+    xdg.mimeApps = {
+      enable = true;
+
+      defaultApplications = { "text/plain" = [ "gedit.desktop" ]; };
+    };
   };
 }

@@ -36,6 +36,7 @@
       networkmanagerapplet
       discord
       emacs-all-the-icons-fonts
+      gedit
     ];
 
     fonts.packages = with pkgs;
