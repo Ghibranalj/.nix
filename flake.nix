@@ -10,9 +10,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-doom-emacs-unstraightened = {
-      url = "github:marienz/nix-doom-emacs-unstraightened";
+      url =
+        "github:marienz/nix-doom-emacs-unstraightened";
       inputs.doomemacs.url =
-        "github:doomemacs/doomemacs/2e508c299d1d6dac9c05d224353bce7fbb57e966"; # 1 Sept 2025
+        "github:doomemacs/doomemacs/5e7e93beb9f2b5a81768aaf4950203ceea21c4f6"; # 8 October 2025
     };
     grub2-themes = { url = "github:vinceliuice/grub2-themes"; };
     nixarr.url = "github:rasmus-kirk/nixarr";

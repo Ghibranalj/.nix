@@ -66,12 +66,12 @@
            :files ("*.el")))
 (package! inheritenv :pin "b9e67cc20c069539698a9ac54d0e6cc11e616c6f")
 (package! language-id :pin "dbfbc4903ffb042552b458fac76ee9f67a022036")
-;(package! sidekick
-;  :pin "73f514efaa0c118adfc1bd375064aceaf81009e7"
-;  :recipe (
-;           :type git :host github :repo "VernonGrant/sidekick.el"
-;           :files ("*.el")
-;           :branch "main"))
+                                        ;(package! sidekick
+                                        ;  :pin "73f514efaa0c118adfc1bd375064aceaf81009e7"
+                                        ;  :recipe (
+                                        ;           :type git :host github :repo "VernonGrant/sidekick.el"
+                                        ;           :files ("*.el")
+                                        ;           :branch "main"))
 (package! verb :pin "e818377f2ceddf5670dcd9a32d3de0e8bf82a8f1")
 (package! all-the-icons-completion
   :pin "4c8bcad8033f5d0868ce82ea3807c6cd46c4a198"
@@ -94,9 +94,9 @@
            :files ("*.el")
            :branch "master"))
 (package! lsp-tailwindcss
-	  :pin "8574cb3ad2e669eebb34b4d57c3cdef5a424a9b5"
-	  :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
-; (package! smudge :pin "")
+  :pin "8574cb3ad2e669eebb34b4d57c3cdef5a424a9b5"
+  :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
+                                        ; (package! smudge :pin "")
 (package! pcap-mode
   :pin "52780669af0ade136f84d73f21b4dbb7ab655416"
   :recipe (
@@ -138,16 +138,16 @@
                   :files ("*.el") :branch "master"))
 
 (package! vterm-posframe
-:pin "ec0ac6474630c543348c9481c21a1606739ef046"
-:recipe ( :type git :host github :repo "Ghibranalj/vterm-posframe"
-                :files ("*.el") :branch "master"))
+  :pin "ec0ac6474630c543348c9481c21a1606739ef046"
+  :recipe ( :type git :host github :repo "Ghibranalj/vterm-posframe"
+                  :files ("*.el") :branch "master"))
 
 (package! highlight-indent-guides :pin "3205abe2721053416e354a1ff53947dd122a6941")
 
 (package! templ-ts-mode
   :pin "020976f0cf2cf27a1a6e1b59e92c443c52b03a52"
   :recipe ( :type git :host github :repo "danderson/templ-ts-mode"
-                 :files ("*.el") :branch "main"))
+                  :files ("*.el") :branch "main"))
 
 (package! mmm-mode :pin "b1f5c7dbdc405e6e10d9ddd99a43a6b2ad61b176"
   :recipe ( :type git :host gitub :repo "dgutov/mmm-mode"
@@ -158,3 +158,15 @@
 (package! astro-ts-mode :pin "886d692378d0da2071e710c1e6db02e5b2e0dd30")
 (package! rainbow-delimiters :pin "7919681b0d883502155d5b26e791fec15da6aeca")
 ;; (package! persp-mode :pin "124f4430008859a75b25521c474f37aa9f75afeb")
+
+(package! inheritenv :pin "b9e67cc20c069539698a9ac54d0e6cc11e616c6f"
+  :recipe (:type git :host github :repo "purcell/inheritenv" :branch "main"))
+
+(package! claude-code-ide :pin "32d853e20b9d245a6ee89c4a153a4e568250c62c"
+  :recipe (:type git :host github :repo "manzaltu/claude-code-ide.el"
+           :branch "main"))
+
+;; (package! monet :pin "72a18d372fef4b0971267bf13f127dcce681859a"
+;;   :recipe (:type git :host github :repo "stevemolitor/monet" :branch "main"))
+
+

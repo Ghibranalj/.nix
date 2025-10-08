@@ -136,6 +136,7 @@
 
 ;; ;; Coplilot
 (use-package! copilot
+  :disable
   :after company
   :config
   (defun +copilot/tab ()
@@ -409,4 +410,32 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.astro\\'" . astro-ts-mode)))
 
+
+;; AI assistants
+(use-package claude-code
+  :config 
+  ;; optional IDE integration with Monet
+  (add-hook 'claude-code-process-environment-functions #'monet-start-server-function)
+  (monet-mode 1)
+  (claude-code-mode)
+  ;; :bind-keymap ("C-c c" . claude-code-command-map)
+  ;; Optionally define a repeat map so that "M" will cycle thru Claude auto-accept/plan/confirm modes after invoking claude-code-cycle-mode / C-c M.
+  ;; :bind
+  )
+
+(use-package! claude-code-ide
+  ;; :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
+  :bind ("m" . claude-code-ide-menu)
+  :config
+  (claude-code-ide-send-escape)
+  (defun my--open-or-toggle-claude-code ()
+    "Open or toggle Claude Code IDE interface."
+    (interactive)
+    (condition-case nil
+        (claude-code-ide-toggle)
+      (error (claude-code-ide))))
+  (claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools
+
 (message "=== Done Loading Config ===")
+
+

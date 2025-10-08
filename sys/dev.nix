@@ -57,7 +57,7 @@
       #devenv
       upkgs.devenv
 
-      
+      claude-code
     ];
   };
 }

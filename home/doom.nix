@@ -24,8 +24,8 @@
       enable = true;
       doomDir = ./files/doom;
       provideEmacs = true;
-      extraPackages = epkgs: [ epkgs.treesit-grammars.with-all-grammars ];
-      experimentalFetchTree = true;
+      extraPackages = epkgs: [ epkgs.treesit-grammars.with-all-grammars epkgs.inheritenv ];
+      experimentalFetchTree = false;
     };
 
     xdg.configFile."doomfont/font.el".text = ''

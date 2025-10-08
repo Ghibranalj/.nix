@@ -75,30 +75,34 @@
   :desc "Git Blame" "b" #'blamer-show-posframe-commit-info
   )
 
- (:prefix-map ("v" . "Verb")
-  :desc "Send request at point" "v" #'verb-send-request-on-point
-  :desc "Send request on new window" "r" #'verb-send-request-on-point-other-window
-  :desc "Kill reponse window and buffer" "k" #'verb-kill-all-response-buffers
-  :desc "Send request ignore reponse" "R" #'verb-send-request-on-point-no-window
-  :desc "Show headers" "h" #'verb-toggle-show-headers)
+ ;; (:prefix-map ("v" . "Verb")
+ ;;  :desc "Send request at point" "v" #'verb-send-request-on-point
+ ;;  :desc "Send request on new window" "r" #'verb-send-request-on-point-other-window
+ ;;  :desc "Kill reponse window and buffer" "k" #'verb-kill-all-response-buffers
+ ;;  :desc "Send request ignore reponse" "R" #'verb-send-request-on-point-no-window
+ ;;  :desc "Show headers" "h" #'verb-toggle-show-headers)
 
- (:prefix-map ("m" . "Music")
-  :desc "Start music" "m" #'my-start-smudge
-  :desc "Search music" "s" #'smudge-track-search
-  :desc "Toggle music and retoggle" "T" #'my-pause-music-start-again
-  :desc "Toggle music" "t" #'smudge-controller-toggle-play
-  :desc "Select device" "d" #'smudge-select-device
-  :desc "Volume up" "=" #'smudge-controller-volume-up
-  :desc "Volume down" "-" #'smudge-controller-volume-down
-  :desc "Volume mute" "0" #'smudge-controller-volume-mute-unmute
-  :desc "My playlist" "P" #'smudge-my-playlists
-  :desc "Reload daemon" "r" #'my-reload-spotifyd
-  :desc "Next track"  "]" #'smudge-controller-next-track
-  :desc "Next track"  "n" #'smudge-controller-next-track
-  :desc "Previous track" "[" #'smudge-controller-previous-track
-  :desc "Previous track" "p" #'smudge-controller-previous-track
-  :desc "Set volume" "v" #'my-smudge-set-volume
+ (:prefix-map ("v" . "Vibe code")
+  :desc "Open claude code ide" "c" #'my--open-or-toggle-claude-code
   )
+
+ ;; (:prefix-map ("m" . "Music")
+ ;;  :desc "Start music" "m" #'my-start-smudge
+ ;;  :desc "Search music" "s" #'smudge-track-search
+ ;;  :desc "Toggle music and retoggle" "T" #'my-pause-music-start-again
+ ;;  :desc "Toggle music" "t" #'smudge-controller-toggle-play
+ ;;  :desc "Select device" "d" #'smudge-select-device
+ ;;  :desc "Volume up" "=" #'smudge-controller-volume-up
+ ;;  :desc "Volume down" "-" #'smudge-controller-volume-down
+ ;;  :desc "Volume mute" "0" #'smudge-controller-volume-mute-unmute
+ ;;  :desc "My playlist" "P" #'smudge-my-playlists
+ ;;  :desc "Reload daemon" "r" #'my-reload-spotifyd
+ ;;  :desc "Next track"  "]" #'smudge-controller-next-track
+ ;;  :desc "Next track"  "n" #'smudge-controller-next-track
+ ;;  :desc "Previous track" "[" #'smudge-controller-previous-track
+ ;;  :desc "Previous track" "p" #'smudge-controller-previous-track
+ ;;  :desc "Set volume" "v" #'my-smudge-set-volume
+ ;;  )
  (:prefix-map ("r" . "Run")
   :desc "Run Make" "m" #'+make/run
   :desc "Run Last Make" "r" #'+make/run-last

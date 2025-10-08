@@ -44,6 +44,9 @@ with lib; {
     trash-cli
     comma
 
+    # for secrets
+    sops
+    age
     # For kursusjaringan management
     webkitgtk_4_0
   ];

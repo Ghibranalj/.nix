@@ -66,7 +66,7 @@ logout="󰍃  Logout"
 shutdown="⏻  Poweroff"
 reboot="󰜉  Reboot"
 sleep="󰤄  Sleep"
-hibernate="  UEFI setup"
+uefi="  UEFI setup"
 hibernateFR="󰒲  Hibernate"
 
 ROFI_CMD="rofi"
@@ -85,11 +85,11 @@ fi
 selected_option=$(
 	echo "$lock
 $logout
-$reboot
-$shutdown
-$hibernate
+$sleep
 $hibernateFR
-$sleep" | $ROFI_CMD -dmenu -i -p "Power" \
+$reboot
+$uefi
+$shutdown" | $ROFI_CMD -dmenu -i -p "Power" \
 		-font "Symbols Nerd Font 12" \
 		-width "15" \
 		-lines 4 -line-margin 3 -line-padding 10 -scrollbar-width "0"
@@ -109,7 +109,7 @@ elif [ "$selected_option" == "$sleep" ]; then
 	lock_screen
 	sleep 2
 	systemctl suspend
-elif [ "$selected_option" == "$hibernate" ]; then
+elif [ "$selected_option" == "$uefi" ]; then
 	systemctl reboot --firmware-setup
 elif [ "$selected_option" == "$hibernateFR" ]; then
 	lock_screen

@@ -362,4 +362,42 @@ function gitignore() {
     curl -sL https://www.toptal.com/developers/gitignore/api/$args > .gitignore
 }
 
+function setup-claude() {
+    local key_file="$HOME/.config/claude/glm.key"
+    local key_dir=$(dirname "$key_file")
+    
+    # Create directory if it doesn't exist
+    mkdir -p "$key_dir"
+    
+    # Prompt for API key
+    echo -n "Enter GLM API key: "
+    read -rs key
+    echo
+    
+    if [[ -n "$key" ]]; then
+        # Store the key in the file
+        echo "$key" > "$key_file"
+        chmod 600 "$key_file"  # Set restrictive permissions
+        echo "GLM API key stored in $key_file"
+    else
+        echo "No API key provided"
+        return 1
+    fi
+}
+
+function get-claude-key() {
+    local key_file="$HOME/.config/claude/glm.key"
+    
+    if [[ -f "$key_file" ]]; then
+        cat "$key_file"
+    else
+        echo "GLM API key file not found. Run 'setup-claude' to set it." >&2
+        return 1
+    fi
+}
+
+# Claude code
+export ANTHROPIC_BASE_URL=https://api.z.ai/api/anthropic
+export ANTHROPIC_AUTH_TOKEN=$(get-claude-key 2>/dev/null || echo "")
+
 eval "$(direnv hook bash)"
