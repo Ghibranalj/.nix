@@ -52,6 +52,8 @@
         # Source bashrc if it exists
         if [ -f "$HOME/.bashrc" ]; then
             source "$HOME/.bashrc"
+            else
+            echo "No bashrc"
         fi
 
         # Execute emacs with the passed arguments

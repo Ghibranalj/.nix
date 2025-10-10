@@ -142,26 +142,27 @@
   (add-to-list 'company-backends 'company-yasnippet))
 
 ;; ;; Coplilot
-(use-package! copilot
-  :after company
-  :config
-  (defun +copilot/tab ()
-    "Copilot completion."
-    (interactive)
-    (or
-     (copilot-accept-completion)
-     (if (bound-and-true-p emmet-mode)
-         (emmet-expand-line nil))
-     (indent-relative)))
-  :hook (prog-mode . copilot-mode)
-  :bind (("<backtab>" . 'copilot-accept-completion-by-word)
-         ("<backtab>" . 'copilot-accept-completion-by-word)
-         :map company-active-map
-         ("<tab>" . '+copilot/tab)
-         ("TAB" . '+copilot/tab)
-         :map company-mode-map
-         ("<tab>" . '+copilot/tab)
-         ("TAB" . '+copilot/tab)))
+;; (use-package! copilot
+;;   :after company
+;;   :config
+;;   (setq copilot-network-proxy '(:host "127.0.0.1" :port 7890))
+;;   (defun +copilot/tab ()
+;;     "Copilot completion."
+;;     (interactive)
+;;     (or
+;;      (copilot-accept-completion)
+;;      (if (bound-and-true-p emmet-mode)
+;;          (emmet-expand-line nil))
+;;      (indent-relative)))
+;;   :hook (prog-mode . copilot-mode)
+;;   :bind (("<backtab>" . 'copilot-accept-completion-by-word)
+;;          ("<backtab>" . 'copilot-accept-completion-by-word)
+;;          :map company-active-map
+;;          ("<tab>" . '+copilot/tab)
+;;          ("TAB" . '+copilot/tab)
+;;          :map company-mode-map
+;;          ("<tab>" . '+copilot/tab)
+;;          ("TAB" . '+copilot/tab)))
 
 (use-package! company-box
   :disabled
@@ -416,27 +417,44 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.astro\\'" . astro-ts-mode)))
 
-
-;; AI assistants
-(use-package claude-code
-  :config 
-  ;; optional IDE integration with Monet
-  (add-hook 'claude-code-process-environment-functions #'monet-start-server-function)
-  (monet-mode 1)
-  (claude-code-mode)
-  ;; :bind-keymap ("C-c c" . claude-code-command-map)
-  ;; Optionally define a repeat map so that "M" will cycle thru Claude auto-accept/plan/confirm modes after invoking claude-code-cycle-mode / C-c M.
-  ;; :bind
-  )
-
 (use-package! claude-code-ide
-  ;; :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
-  :bind
-  ("m" . claude-code-ide-menu)
-  ("<escape>" . claude-code-ide-send-escape)
   :config
-  (claude-code-ide-send-escape)
+  (setq claude-code-ide-window-side 'bottom
+        claude-code-ide-window-height 20
+        claude-code-ide-show-claude-window-in-ediff t
+        claude-code-ide-focus-on-open t
+        )
   (claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools
+
+(use-package minuet
+  :hook (prog-mode . minuet-auto-suggestion-mode)
+  :bind ( :map company-active-map
+               ("<tab>" . '+minuet/tab)
+               ("TAB" . '+minuet/tab)
+               :map company-mode-map
+               ("<tab>" . '+minuet/tab)
+               ("TAB" . '+minuet/tab))
+  :config
+  (defun +minuet/tab ()
+    "minuet completion."
+    (interactive)
+    (or
+     (minuet-accept-suggestion)
+     (if (bound-and-true-p emmet-mode)
+         (emmet-expand-line nil))
+     (indent-relative)))
+
+  (setq minuet-provider 'openai-compatible
+        minuet-auto-suggestion-debounce-delay 0
+        minuet-auto-suggestion-throttle-delay 0.5
+        minuet-context-window 4000
+        minuet-n-completions 1)
+
+  (plist-put minuet-openai-compatible-options :model "glm-4.6")
+  (plist-put minuet-openai-compatible-options :end-point "https://api.z.ai/api/coding/paas/v4/chat/completions")
+  (plist-put minuet-openai-compatible-options :api-key "ANTHROPIC_AUTH_TOKEN")
+  (minuet-set-optional-options minuet-openai-compatible-options :max_tokens 64)
+  (minuet-set-optional-options minuet-openai-compatible-options :temperature 0.3))
 
 (message "=== Done Loading Config ===")
 

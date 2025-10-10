@@ -47,10 +47,13 @@
 ;; ...or multiple packages
                                         ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
+
 ;; (package! evil :pin "6bed0e58dbafd75755c223a5c07aacd479386568")
-(package! copilot
-  :pin "4f51b3c21c42756d09ee17011201ea7d6e18ff69"
-  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
+
+;; (package! copilot
+;;   :pin "4f51b3c21c42756d09ee17011201ea7d6e18ff69"
+;;   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
+
 (package! company-box
   :pin "c4f2e243fba03c11e46b1600b124e036f2be7691"
   :recipe (
@@ -165,6 +168,14 @@
 (package! claude-code-ide :pin "32d853e20b9d245a6ee89c4a153a4e568250c62c"
   :recipe (:type git :host github :repo "manzaltu/claude-code-ide.el"
            :branch "main"))
+
+(package! minuet :pin "2d9d2ad7768adf26fa54a8fdd8f6d78197a259f1"
+  :recipe (:type git :host github :repo "milanglacier/minuet-ai.el"
+           :branch "main"))
+
+;; (package! aidermacs
+;;   :pin "c6cb54d58aa5434ee39db77fde3945e078559f00"
+;;   :recipe (:type git :host github :repo "MatthewZMD/aidermacs"))
 
 ;; (package! monet :pin "72a18d372fef4b0971267bf13f127dcce681859a"
 ;;   :recipe (:type git :host github :repo "stevemolitor/monet" :branch "main"))
