@@ -106,6 +106,13 @@
                           (expand-file-name directory default-directory))))
     (shell-command (concat "mkdir -p " full-directory))
     (message (concat "Created directory: " full-directory))))
+
+(defun my--open-or-toggle-claude-code ()
+  "Open or toggle Claude Code IDE interface."
+  (interactive)
+  (condition-case nil
+      (claude-code-ide-toggle)
+    (error (claude-code-ide))))
 ;; ;;;
 ;; ;;; random shit
 ;; ;;;
@@ -136,7 +143,6 @@
 
 ;; ;; Coplilot
 (use-package! copilot
-  :disable
   :after company
   :config
   (defun +copilot/tab ()
@@ -425,15 +431,11 @@
 
 (use-package! claude-code-ide
   ;; :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
-  :bind ("m" . claude-code-ide-menu)
+  :bind
+  ("m" . claude-code-ide-menu)
+  ("<escape>" . claude-code-ide-send-escape)
   :config
   (claude-code-ide-send-escape)
-  (defun my--open-or-toggle-claude-code ()
-    "Open or toggle Claude Code IDE interface."
-    (interactive)
-    (condition-case nil
-        (claude-code-ide-toggle)
-      (error (claude-code-ide))))
   (claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools
 
 (message "=== Done Loading Config ===")
