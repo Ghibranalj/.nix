@@ -3,10 +3,7 @@
 PARENT=`cat /proc/$PPID/comm`
 
 
-function lock_screen() {
-	hyprlock &
-	LOCK_PID=$!
-
+function dimmer(){
 	# Start initial short-timeout swayidle
 	swayidle -w \
 	timeout 1 'hyprctl dispatch dpms off' \
@@ -21,40 +18,25 @@ function lock_screen() {
 		# Kill short-timeout swayidle (this one)
 		pkill -f "swayidle -w.*timeout 1"
 	' &
+    
+}
 
-	# Give hyprlock a moment to start up
+
+function lock_screen() {
+	hyprlock &
+    dimmer
 	sleep 0.5
-	
-	# Return without waiting for lock to finish
-	# hyprlock will continue running in the background
 }
 
 
 function lock_screen_and_wait() {
 	hyprlock &
 	LOCK_PID=$!
-
-	# Start initial short-timeout swayidle
-	swayidle -w \
-	timeout 1 'hyprctl dispatch dpms off' \
-	resume '
-		hyprctl dispatch dpms on
-
-		# Start long-timeout swayidle
-		swayidle -w \
-		timeout 30 "hyprctl dispatch dpms off" \
-		resume "hyprctl dispatch dpms on" &
-
-		# Kill short-timeout swayidle (this one)
-		pkill -f "swayidle -w.*timeout 1"
-	'
-
+    dimmer
 	# Wait for lock to finish
 	wait $LOCK_PID
-
 	# Kill all swayidle instances
 	pkill -f "swayidle -w.*timeout"
-
 	# Make sure screen is on
 	hyprctl dispatch dpms on
 }
@@ -67,7 +49,7 @@ shutdown="⏻  Poweroff"
 reboot="󰜉  Reboot"
 sleep="󰤄  Sleep"
 uefi="  UEFI setup"
-hibernateFR="󰒲  Hibernate"
+hibernate="󰒲  Hibernate"
 
 ROFI_CMD="rofi"
 # Get answer from user via rofi
@@ -86,7 +68,7 @@ selected_option=$(
 	echo "$lock
 $logout
 $sleep
-$hibernateFR
+$hibernate
 $reboot
 $uefi
 $shutdown" | $ROFI_CMD -dmenu -i -p "Power" \
@@ -94,8 +76,6 @@ $shutdown" | $ROFI_CMD -dmenu -i -p "Power" \
 		-width "15" \
 		-lines 4 -line-margin 3 -line-padding 10 -scrollbar-width "0"
 )
-
-
 
 if [ "$selected_option" == "$lock" ]; then
 	lock_screen_and_wait
@@ -111,10 +91,8 @@ elif [ "$selected_option" == "$sleep" ]; then
 	systemctl suspend
 elif [ "$selected_option" == "$uefi" ]; then
 	systemctl reboot --firmware-setup
-elif [ "$selected_option" == "$hibernateFR" ]; then
-	lock_screen
-	sleep 2
-	systemctl hibernate --force
+elif [ "$selected_option" == "$hibernate" ]; then
+    systemd-inhibit --what=sleep --who=powermenu --why="Lock after hibernate" --mode=delay  sh -c 'systemctl hibernate; hyprlock' &
 else
 	echo "No match"
 fi

@@ -51,6 +51,7 @@
   :desc "Toggle minimap" "m" #'minimap-switch-mode
   :desc "Toggle zen-mode" "z" #'+zen/toggle
   :desc "Toggle popup terminal" "t" #'vterm-posframe-toggle
+  :desc "Send esc to Vterm" "<escape>" #'vterm-send-escape
   )
 
  (:prefix ("e" . "eval")

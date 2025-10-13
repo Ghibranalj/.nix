@@ -24,7 +24,10 @@
       enable = true;
       doomDir = ./files/doom;
       provideEmacs = true;
-      extraPackages = epkgs: [ epkgs.treesit-grammars.with-all-grammars epkgs.inheritenv ];
+      extraPackages = epkgs: [
+        epkgs.treesit-grammars.with-all-grammars
+        epkgs.inheritenv
+      ];
       experimentalFetchTree = false;
     };
 
@@ -47,15 +50,13 @@
       wantedBy = if isGui then "graphical-session" else "default";
       # Create a wrapper script
       emacs-wrapper = pkgs.writeShellScriptBin "emacs-wrapper" ''
-        #!/bin/bash
-
+        #!/usr/bin/env bash
         # Source bashrc if it exists
         if [ -f "$HOME/.bashrc" ]; then
             source "$HOME/.bashrc"
-            else
+        else
             echo "No bashrc"
         fi
-
         # Execute emacs with the passed arguments
         exec ${config.home.profileDirectory}/bin/emacs "$@"
       '';

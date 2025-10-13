@@ -419,11 +419,6 @@
 
 (use-package! claude-code-ide
   :config
-  (setq claude-code-ide-window-side 'bottom
-        claude-code-ide-window-height 20
-        claude-code-ide-show-claude-window-in-ediff t
-        claude-code-ide-focus-on-open t
-        )
   (claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools
 
 (use-package minuet
