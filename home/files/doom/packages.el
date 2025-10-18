@@ -162,12 +162,12 @@
 (package! rainbow-delimiters :pin "7919681b0d883502155d5b26e791fec15da6aeca")
 ;; (package! persp-mode :pin "124f4430008859a75b25521c474f37aa9f75afeb")
 
-(package! inheritenv :pin "b9e67cc20c069539698a9ac54d0e6cc11e616c6f"
-  :recipe (:type git :host github :repo "purcell/inheritenv" :branch "main"))
+;; (package! claude-code-ide :pin "32d853e20b9d245a6ee89c4a153a4e568250c62c"
+;;   :recipe (:type git :host github :repo "manzaltu/claude-code-ide.el"
+;;            :branch "main"))
 
-(package! claude-code-ide :pin "32d853e20b9d245a6ee89c4a153a4e568250c62c"
-  :recipe (:type git :host github :repo "manzaltu/claude-code-ide.el"
-           :branch "main"))
+(package! claudemacs :pin "0231c3ea4d497db29262bbbfd221ec26d25d8f23"
+  :recipe (:host github :repo "cpoile/claudemacs"))
 
 (package! minuet :pin "2d9d2ad7768adf26fa54a8fdd8f6d78197a259f1"
   :recipe (:type git :host github :repo "milanglacier/minuet-ai.el"
@@ -177,7 +177,7 @@
 ;;   :pin "c6cb54d58aa5434ee39db77fde3945e078559f00"
 ;;   :recipe (:type git :host github :repo "MatthewZMD/aidermacs"))
 
-;; (package! monet :pin "72a18d372fef4b0971267bf13f127dcce681859a"
-;;   :recipe (:type git :host github :repo "stevemolitor/monet" :branch "main"))
+(package! monet :pin "72a18d372fef4b0971267bf13f127dcce681859a"
+  :recipe (:type git :host github :repo "stevemolitor/monet" :branch "main"))
 
 

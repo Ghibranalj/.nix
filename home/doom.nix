@@ -27,6 +27,7 @@
       extraPackages = epkgs: [
         epkgs.treesit-grammars.with-all-grammars
         epkgs.inheritenv
+        epkgs.eat
       ];
       experimentalFetchTree = false;
     };

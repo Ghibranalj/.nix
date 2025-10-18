@@ -111,8 +111,28 @@
   "Open or toggle Claude Code IDE interface."
   (interactive)
   (condition-case nil
-      (claude-code-ide-toggle)
-    (error (claude-code-ide))))
+      (claudemacs-toggle-buffer)
+    (error (claudemacs-run))))
+
+(defun my--open-claude-code-in-current-window ()
+  "Open or create Claude Code session in the current window."
+  (interactive)
+  (let ((claudemacs-switch-to-buffer-on-create t)
+        (display-buffer-alist
+         (cons '("\\*claudemacs:.*\\*" . (display-buffer-same-window))
+               display-buffer-alist)))
+    (if-let ((buffer (claudemacs--get-buffer)))
+        ;; If buffer exists, display it in current window
+        (progn
+          (switch-to-buffer buffer)
+          (when (and (boundp 'eat-terminal) eat-terminal
+                     (not (eat-term-parameter eat-terminal 'eat--process)))
+            ;; Terminal not running, need to restart
+            (claudemacs-kill)
+            (claudemacs-run)))
+      ;; If no buffer exists, create new session
+      (claudemacs-run))))
+
 ;; ;;;
 ;; ;;; random shit
 ;; ;;;
@@ -417,9 +437,30 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.astro\\'" . astro-ts-mode)))
 
-(use-package! claude-code-ide
+;; (use-package! claude-code-ide
+;;   :config
+;;   (setq claude-code-ide-terminal-backend 'eat)
+;;   (claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools
+
+(use-package! claudemacs
   :config
-  (claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools
+  (add-to-list 'display-buffer-alist
+               '("^\\*claudemacs"
+                 (display-buffer-in-side-window)
+                 (side . right)
+                 (window-width . 0.33)
+                 (window-parameters . ((no-other-window . nil)
+                                       (no-delete-other-windows . nil)))))
+
+  (advice-add 'claudemacs-run :before (lambda ()
+                                        (monet-mode)
+                                        (monet-start-server)))
+  (advice-add 'claudemacs-run :after (lambda ()
+                                       (persp-add-buffer (claudemacs--get-buffer))))) 
+
+
+
+(use-package! monet)
 
 (use-package minuet
   :hook (prog-mode . minuet-auto-suggestion-mode)
@@ -442,14 +483,16 @@
   (setq minuet-provider 'openai-compatible
         minuet-auto-suggestion-debounce-delay 0
         minuet-auto-suggestion-throttle-delay 0.5
-        minuet-context-window 4000
+        minuet-context-window 1500
         minuet-n-completions 1)
 
   (plist-put minuet-openai-compatible-options :model "glm-4.6")
   (plist-put minuet-openai-compatible-options :end-point "https://api.z.ai/api/coding/paas/v4/chat/completions")
   (plist-put minuet-openai-compatible-options :api-key "ANTHROPIC_AUTH_TOKEN")
-  (minuet-set-optional-options minuet-openai-compatible-options :max_tokens 64)
-  (minuet-set-optional-options minuet-openai-compatible-options :temperature 0.3))
+  (minuet-set-optional-options minuet-openai-compatible-options :max_tokens 32)
+  (minuet-set-optional-options minuet-openai-compatible-options :temperature 0.3)
+  (minuet-set-optional-options minuet-openai-compatible-options :stream t))
+
 
 (message "=== Done Loading Config ===")
 

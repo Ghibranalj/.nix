@@ -18,6 +18,7 @@
       texliveSmall
       jdk
       nodejs
+      bun
       zig
 
       ## LSP

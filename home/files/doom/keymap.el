@@ -85,7 +85,7 @@
 
  (:prefix-map ("v" . "Vibe code")
   :desc "Open claude code ide" "c" #'my--open-or-toggle-claude-code
-  :desc "List claude code session" "s" #'claude-code-ide-list-sessions 
+  :desc "Open claude code ide" "C" #'my--open-claude-code-in-current-window
   :desc "Force show completion" "v" #'minuet-show-suggestion
   )
 
