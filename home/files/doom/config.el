@@ -444,21 +444,26 @@
 
 (use-package! claudemacs
   :config
-  (add-to-list 'display-buffer-alist
-               '("^\\*claudemacs"
-                 (display-buffer-in-side-window)
-                 (side . right)
-                 (window-width . 0.33)
-                 (window-parameters . ((no-other-window . nil)
-                                       (no-delete-other-windows . nil)))))
+  (setq claudemacs-prefer-projectile-root t)
+  (evil-define-key 'normal eat-mode-map
+    "p" 'term-paste)
+  (advice-add 'claudemacs-run :before
+              (lambda ()
+                (add-to-list 'display-buffer-alist
+                             '("^\\*claudemacs"
+                               (display-buffer-in-side-window)
+                               (side . right)
+                               (window-width . 0.33)
+                               (preserve-size . (t . nil))
+                               (window-parameters . ((no-other-window . nil)
+                                                     (no-delete-other-windows . nil)
+                                                     (mode-line-format . none)))))
 
-  (advice-add 'claudemacs-run :before (lambda ()
-                                        (monet-mode)
-                                        (monet-start-server)))
+
+                (monet-mode)
+                (monet-start-server)))
   (advice-add 'claudemacs-run :after (lambda ()
                                        (persp-add-buffer (claudemacs--get-buffer))))) 
-
-
 
 (use-package! monet)
 
@@ -493,6 +498,14 @@
   (minuet-set-optional-options minuet-openai-compatible-options :temperature 0.3)
   (minuet-set-optional-options minuet-openai-compatible-options :stream t))
 
+
+(use-package! go-ts-mode
+  :config
+  ;; Remove go-ts-mode from auto-mode-alist to prevent conflicts with go-mode
+  (setq auto-mode-alist
+        (delete '("\\.go\\'" . go-ts-mode) auto-mode-alist))
+  (setq auto-mode-alist
+        (delete '("/go\\.mod\\'" . go-mod-ts-mode) auto-mode-alist)))
 
 (message "=== Done Loading Config ===")
 

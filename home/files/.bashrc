@@ -257,11 +257,11 @@ if command -v lvim >/dev/null; then
     MANPAGER='lvim +Man!'
 fi
 
-if command -v trash-rm >/dev/null; then
-    alias rm='trash-rm'
-    alias rmdir='rm -d'
-    alias sudo='sudo '
-fi
+# if command -v trash-rm >/dev/null; then
+#     alias rm='trash-rm'
+#     alias rmdir='rm -d'
+#     alias sudo='sudo '
+# fi
 
 function see-docker() {
     docker create --name="tmp_$$" $1
