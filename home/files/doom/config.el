@@ -507,6 +507,16 @@
   (setq auto-mode-alist
         (delete '("/go\\.mod\\'" . go-mod-ts-mode) auto-mode-alist)))
 
+
+(use-package! magit
+  :config 
+  (advice-add 'magit-section-forward :around
+              (lambda (orig-fun &rest args)
+                (call-interactively 'evil-window-down)))
+  (advice-add 'magit-section-backward :around
+              (lambda (orig-fun &rest args)
+                (call-interactively 'evil-window-up))))
+
 (message "=== Done Loading Config ===")
 
 
