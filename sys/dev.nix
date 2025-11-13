@@ -59,6 +59,7 @@
       upkgs.devenv
 
       claude-code
+      upkgs.codex
     ];
   };
 }
