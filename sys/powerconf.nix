@@ -1,5 +1,4 @@
-{ config, lib, pkgs, ... }:
-{
+{ config, lib, pkgs, ... }: {
   options = with lib; {
     powerconf.enable = mkEnableOption "enables power configurations";
     powerconf.saver = {
@@ -7,6 +6,8 @@
       batteryGovernor = mkOption {
         type = types.str;
         default = "schedutil";
+        description =
+          "run cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors";
       };
       chargerGovernor = mkOption {
         type = types.str;

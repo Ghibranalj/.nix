@@ -35,7 +35,7 @@
       emmet-ls
       sqls
       rustywind
-      upkgs.copilot-language-server-fhs
+      upkgs.copilot-language-server
       typescript-language-server
       astro-language-server
 

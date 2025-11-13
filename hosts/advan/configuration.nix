@@ -8,7 +8,11 @@
   lightdm.enable = true;
   programs.hyprland.enable = true;
   powerconf.enable = true;
-  powerconf.saver.enable = true;
+  powerconf.saver = {
+    enable = true;
+    batteryGovernor = "powersave";
+    chargerGovernor = "performance";
+  };
   evdev-keymapper.enable = true;
   dev.enable = true;
   winbox.enable = true;

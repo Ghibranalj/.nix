@@ -24,7 +24,7 @@
     hyprland.brightnessDevice = mkOption {
       type = types.nullOr types.str;
       default = null;
-      description = "Device to control brightness, e.g., 'amdgpu_bl0'.";
+      description = "Device to control brightness, e.g., 'amdgpu_bl0'. Run ls /sys/class/backlight";
       example = "amdgpu_bl0";
     };
 
