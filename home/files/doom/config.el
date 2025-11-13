@@ -67,6 +67,13 @@
 ;;; Free floating functions
 ;;;
 
+(defun my-vterm-with-command (command)
+  "Open a new vterm buffer and run COMMAND."
+  (interactive "sCommand to run: ")
+  (vterm command)
+  (vterm-send-string command)
+  (vterm-send-return))
+
 ;; (defmacro time! (name &rest body)
 ;;   "Measure and report the time it takes to evaluate BODY."
 ;;   `(let ((time (current-time)))
@@ -107,31 +114,24 @@
     (shell-command (concat "mkdir -p " full-directory))
     (message (concat "Created directory: " full-directory))))
 
+(defvar my--monet-servers (make-hash-table :test 'equal)
+  "Track running monet servers per project.")
+
 (defun my--open-or-toggle-claude-code ()
   "Open or toggle Claude Code IDE interface."
   (interactive)
-  (condition-case nil
-      (claudemacs-toggle-buffer)
-    (error (claudemacs-run))))
-
-(defun my--open-claude-code-in-current-window ()
-  "Open or create Claude Code session in the current window."
-  (interactive)
-  (let ((claudemacs-switch-to-buffer-on-create t)
-        (display-buffer-alist
-         (cons '("\\*claudemacs:.*\\*" . (display-buffer-same-window))
-               display-buffer-alist)))
-    (if-let ((buffer (claudemacs--get-buffer)))
-        ;; If buffer exists, display it in current window
-        (progn
-          (switch-to-buffer buffer)
-          (when (and (boundp 'eat-terminal) eat-terminal
-                     (not (eat-term-parameter eat-terminal 'eat--process)))
-            ;; Terminal not running, need to restart
-            (claudemacs-kill)
-            (claudemacs-run)))
-      ;; If no buffer exists, create new session
-      (claudemacs-run))))
+  (monet-mode 1)
+  (let* ((project-root (projectile-project-root))
+         (buf (get-buffer "claude")))
+    (unless (gethash project-root my--monet-servers)
+      (monet-start-server)
+      (puthash project-root t my--monet-servers))
+    (if buf
+        (switch-to-buffer buf)
+      (progn
+        (vterm "claude")
+        (vterm-send-string "exec claude")
+        (vterm-send-return)))))
 
 ;; ;;;
 ;; ;;; random shit
@@ -437,34 +437,6 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.astro\\'" . astro-ts-mode)))
 
-;; (use-package! claude-code-ide
-;;   :config
-;;   (setq claude-code-ide-terminal-backend 'eat)
-;;   (claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools
-
-(use-package! claudemacs
-  :config
-  (setq claudemacs-prefer-projectile-root t)
-  (evil-define-key 'normal eat-mode-map
-    "p" 'term-paste)
-  (advice-add 'claudemacs-run :before
-              (lambda ()
-                (add-to-list 'display-buffer-alist
-                             '("^\\*claudemacs"
-                               (display-buffer-in-side-window)
-                               (side . right)
-                               (window-width . 0.33)
-                               (preserve-size . (t . nil))
-                               (window-parameters . ((no-other-window . nil)
-                                                     (no-delete-other-windows . nil)
-                                                     (mode-line-format . none)))))
-
-
-                (monet-mode)
-                (monet-start-server)))
-  (advice-add 'claudemacs-run :after (lambda ()
-                                       (persp-add-buffer (claudemacs--get-buffer))))) 
-
 (use-package! monet)
 
 (use-package minuet
@@ -507,7 +479,6 @@
   (setq auto-mode-alist
         (delete '("/go\\.mod\\'" . go-mod-ts-mode) auto-mode-alist)))
 
-
 (use-package! magit
   :config 
   (advice-add 'magit-section-forward :around
@@ -518,5 +489,6 @@
                 (call-interactively 'evil-window-up))))
 
 (message "=== Done Loading Config ===")
+
 
 

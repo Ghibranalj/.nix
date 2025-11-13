@@ -166,9 +166,6 @@
 ;;   :recipe (:type git :host github :repo "manzaltu/claude-code-ide.el"
 ;;            :branch "main"))
 
-(package! claudemacs :pin "0231c3ea4d497db29262bbbfd221ec26d25d8f23"
-  :recipe (:host github :repo "cpoile/claudemacs"))
-
 (package! minuet :pin "2d9d2ad7768adf26fa54a8fdd8f6d78197a259f1"
   :recipe (:type git :host github :repo "milanglacier/minuet-ai.el"
            :branch "main"))
