@@ -4,7 +4,7 @@
   hyprland.enable = true;
   hyprland.monitorConfig = [ ", preferred, auto, 1" ];
 
-  hyprland.brightnessDevice = "intel_backlight";
+  hyprland.brightnessDevice = "amdgpu_bl1";
 
   alacritty.enable = true;
   

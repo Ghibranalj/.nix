@@ -13,7 +13,7 @@
   dev.enable = true;
   winbox.enable = true;
 
-  networking.hostName = "CreepRair"; # Define your hostname.
+  networking.hostName = "CreepRAdvan"; # Define your hostname.
 
   environment.systemPackages = with pkgs; [ qemu ];
 

@@ -82,7 +82,7 @@
       hosts = {
         server = mkHost { hostName = "server"; };
         vivo = mkHost { hostName = "vivo"; };
-        air = mkHost { hostName = "air"; };
+        advan = mkHost { hostName = "advan"; };
         pc = mkHost { hostName = "pc"; };
         tuf = mkHost { hostName = "tuf"; };
         media-server = mkHost {
