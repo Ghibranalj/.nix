@@ -26,6 +26,7 @@ fi
 # Read battery information
 CAPACITY=$(cat "$BATTERY_DIR/capacity" 2>/dev/null || echo "0")
 STATUS=$(cat "$BATTERY_DIR/status" 2>/dev/null || echo "Unknown")
+VOLTAGE=$(cat $BATTERY_IDR/)
 
 # Validate capacity is a number
 if ! [[ "$CAPACITY" =~ ^[0-9]+$ ]]; then
@@ -75,26 +76,24 @@ get_battery_tooltip() {
     local cap=$1
     local stat=$2
     local name=$3
-    
-    local tooltip="$name: $cap% ($stat)"
-    
-    # Add time remaining if available
-    if [[ -f "$BATTERY_DIR/time_to_empty_now" ]] && [[ "$stat" == "Discharging" ]]; then
-        local time_minutes=$(cat "$BATTERY_DIR/time_to_empty_now" 2>/dev/null)
-        if [[ -n "$time_minutes" ]] && [[ "$time_minutes" -gt 0 ]]; then
-            local hours=$((time_minutes / 60))
-            local mins=$((time_minutes % 60))
-            tooltip="$tooltip\nTime remaining: ${hours}h ${mins}m"
-        fi
-    elif [[ -f "$BATTERY_DIR/time_to_full_now" ]] && [[ "$stat" == "Charging" ]]; then
-        local time_minutes=$(cat "$BATTERY_DIR/time_to_full_now" 2>/dev/null)
-        if [[ -n "$time_minutes" ]] && [[ "$time_minutes" -gt 0 ]]; then
-            local hours=$((time_minutes / 60))
-            local mins=$((time_minutes % 60))
-            tooltip="$tooltip\nTime to full: ${hours}h ${mins}m"
-        fi
+
+    local tooltip="$cap% ($stat)"
+
+    local charge=$(cat $BATTERY_DIR/charge_now)
+    local current=$(cat $BATTERY_DIR/current_now)
+
+    if [[ "$charge" -eq 0 || "$current" -eq 0 ]]; then
+        echo "$tooltip"
     fi
-    
+
+    local remaining_time_hours=$(echo "scale=2; $charge / $current" | bc)
+    local hours=$(echo "scale=2; $charge / $current" | bc)
+    hours=$(echo "$remaining_time_hours / 1" | bc)
+    local minutes=$(echo "($remaining_time_hours - $hours) * 60" | bc)
+
+    minutes=$(echo "$minutes / 1" | bc)
+
+    tooltip="$tooltip Est. $hours H $minutes Min"
     echo "$tooltip"
 }
 

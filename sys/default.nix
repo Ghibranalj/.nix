@@ -121,6 +121,10 @@ with lib; {
   advcpmv.enable = lib.mkDefault true;
 
   boot.tmp.cleanOnBoot = lib.mkDefault true;
-
   services.flatpak.enable = true;
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-hyprland ];
+  };
 }

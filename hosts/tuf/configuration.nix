@@ -6,7 +6,6 @@
 
   lightdm.enable = true;
 
-  programs.hyprland.enable = true;
   powerconf.enable = true;
   powerconf.saver.enable = true;
   evdev-keymapper.enable = true;

@@ -35,7 +35,8 @@ in {
       wayland.enable = true;
       theme = "materia-dark";
     };
-    programs.hyprland.enable = true;
+
+    programs.hyprland.enable = lib.mkDefault (!config.gnome.enable);
 
     environment.systemPackages = with pkgs; [
       sddm-materia-dark

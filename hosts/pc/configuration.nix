@@ -16,7 +16,6 @@
   grub.enable = true;
   gnome.enable = false;
   lightdm.enable = true;
-  programs.hyprland.enable = true;
 
   # Enable XDG desktop portal (needed for proper integration)
   xdg.portal = {
