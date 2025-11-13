@@ -10,8 +10,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-doom-emacs-unstraightened = {
-      url =
-        "github:marienz/nix-doom-emacs-unstraightened";
+      url = "github:marienz/nix-doom-emacs-unstraightened";
       inputs.doomemacs.url =
         "github:doomemacs/doomemacs/5e7e93beb9f2b5a81768aaf4950203ceea21c4f6"; # 8 October 2025
     };
@@ -83,6 +82,7 @@
       hosts = {
         server = mkHost { hostName = "server"; };
         vivo = mkHost { hostName = "vivo"; };
+        air = mkHost { hostName = "air"; };
         pc = mkHost { hostName = "pc"; };
         tuf = mkHost { hostName = "tuf"; };
         media-server = mkHost {
