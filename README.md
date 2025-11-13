@@ -12,6 +12,7 @@ This repository uses **Nix flakes** for reproducible system configurations and *
 - `vivo` - Vivo laptop configuration  
 - `pc` - Desktop PC configuration
 - `tuf` - TUF laptop configuration
+- `` - TUF laptop configuration
 - `media-server` - Media server configuration (without Home Manager)
 
 ## Directory Structure

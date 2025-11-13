@@ -83,7 +83,13 @@
         };
 
         # Gestures
-        # gestures = { workspace_swipe = true; };
+        gestures = {
+          gesture = [
+            "3, horizontal, workspace"
+            #
+          ];
+          # 
+        };
 
         # Keybindings (DWM style)
         "$mod" = "SUPER";
@@ -133,11 +139,11 @@
           "$mod SHIFT, comma, movewindow, mon:l" # move window to left monitor
           "$mod SHIFT, period, movewindow, mon:r" # move window to right monitor
 
-          "CTRL, R, pass, class:^(com\.obsproject\.Studio)$"
-          "CTRL, 1, pass, class:^(com\.obsproject\.Studio)$"
-          "CTRL, 2, pass, class:^(com\.obsproject\.Studio)$"
-          "CTRL, 3, pass, class:^(com\.obsproject\.Studio)$"
-          "CTRL, 4, pass, class:^(com\.obsproject\.Studio)$"
+          "CTRL, R, pass, class:^(com.obsproject.Studio)$"
+          "CTRL, 1, pass, class:^(com.obsproject.Studio)$"
+          "CTRL, 2, pass, class:^(com.obsproject.Studio)$"
+          "CTRL, 3, pass, class:^(com.obsproject.Studio)$"
+          "CTRL, 4, pass, class:^(com.obsproject.Studio)$"
 
           # Workspace management
           "$mod, 1, split-workspace, 1"

@@ -30,6 +30,8 @@
       url = "github:danth/stylix/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, nixarr
     , nixpkgs-prev, split-monitor-workspaces, hyprland, stylix, ... }@inputs:
@@ -64,10 +66,14 @@
             (./hosts + "/${hostName}/configuration.nix")
             inputs.grub2-themes.nixosModules.default
             inputs.evdev-keymapper.nixosModules.default
+            inputs.nix-index-database.nixosModules.nix-index
           ] ++ (if hmEnabled then [
             home-manager.nixosModules.home-manager
             {
-              home-manager.sharedModules = [ stylix.homeModules.stylix ];
+              home-manager.sharedModules = [
+                stylix.homeModules.stylix
+                inputs.nix-index-database.homeModules.nix-index
+              ];
               home-manager.useGlobalPkgs = true;
               home-manager.backupFileExtension = "bak";
               home-manager.extraSpecialArgs = {
