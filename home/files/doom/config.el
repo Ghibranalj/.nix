@@ -119,6 +119,7 @@
   (interactive)
   (monet-mode 1)
   (let* ((project-root (projectile-project-root))
+         (default-directory project-root)
          (buf-name (format "claude (%s)" project-root))
          (buf (get-buffer buf-name)))
     (if buf
@@ -127,7 +128,7 @@
         (monet-start-server)
         (vterm buf-name)
         (persp-add-buffer buf-name)
-        (vterm-send-string "exec claude")
+        (vterm-send-string "exec claude --continue")
         (vterm-send-return)))))
 
 ;; ;;;

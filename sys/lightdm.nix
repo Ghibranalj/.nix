@@ -1,12 +1,12 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 let
   sddm-materia-dark = pkgs.stdenv.mkDerivation {
     name = "sddm-materia-dark";
     src = pkgs.fetchFromGitHub {
-      owner = "Ghibranlj";
+      owner = "Ghibranalj";
       repo = "materia-kde";
       rev = "d544aeb52e0ddf764c58763ed7d6b19176575b7e";
-      sha256 = "sha256-tZWEVq2VYIvsQyFyMp7VVU1INbO7qikpQs4mYwghAVM=";
+      sha256 = "1s0hyjs4wi8f2h193dvz4nyi0z4xykhh5a7klsdq5if9d7d5qivs";
     };
     installPhase = ''
       mkdir -p $out/share/sddm/themes
@@ -36,7 +36,13 @@ in {
       theme = "materia-dark";
     };
 
-    programs.hyprland.enable = lib.mkDefault (!config.gnome.enable);
+    programs.hyprland = {
+      enable = lib.mkDefault (!config.gnome.enable);
+      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    };
+
+    services.displayManager.defaultSession =
+      lib.mkIf (!config.gnome.enable) "hyprland";
 
     environment.systemPackages = with pkgs; [
       sddm-materia-dark

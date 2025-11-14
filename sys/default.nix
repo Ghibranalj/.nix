@@ -125,6 +125,7 @@ with lib; {
 
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-hyprland ];
+    # Don't add hyprland portal here since programs.hyprland.enable adds it automatically
+    extraPortals = with pkgs; [];
   };
 }
