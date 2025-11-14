@@ -2,7 +2,7 @@
   gui.enable = true;
 
   gnome.enable = false;
-  lightdm.enable = true;
+  gdm.enable = true;
   powerconf.enable = true;
   powerconf.saver = {
     enable = true;

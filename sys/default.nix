@@ -18,6 +18,7 @@ with lib; {
     ./gaming.nix
     ./advcpmv.nix
     ./lightdm.nix
+    ./gdm.nix
   ];
 
   environment.systemPackages = with pkgs; [
