@@ -238,6 +238,15 @@
     "." 'dired-hide-dotfiles-mode
     "M" 'my-create-directory))
 
+
+(use-package! vterm
+  :after evil-collection
+  :config
+  (evil-collection-define-key 'normal 'vterm-mode-map
+    "." (lambda ()
+          (interactive)
+          (vterm-send-key "j" nil nil t t))))
+
 (use-package! dired-x
   :hook
   (dired-mode . dired-omit-mode)
@@ -487,13 +496,3 @@
 
 (message "=== Done Loading Config ===")
 
-
-
-
-(make-process
-           :name "claude"
-           :buffer (get-buffer-create "claude-experiment")
-           :command
-           `("claude")
-           ;; :coding 'no-conversion
-           )

@@ -54,7 +54,7 @@ get_battery_icon() {
         echo "󰁺"  # Critical battery
     fi
 }
-
+ 
 # Determine CSS class based on capacity
 get_battery_class() {
     local cap=$1
@@ -73,27 +73,23 @@ get_battery_class() {
 
 # Get additional battery info for tooltip
 get_battery_tooltip() {
-    local cap=$1
-    local stat=$2
+    local cap=$1 # percentage
+    local stat=$2 # Charging vs Discharging
     local name=$3
-
+    
     local tooltip="$cap% ($stat)"
-
-    local charge=$(cat $BATTERY_DIR/charge_now)
-    local current=$(cat $BATTERY_DIR/current_now)
-
-    if [[ "$charge" -eq 0 || "$current" -eq 0 ]]; then
-        echo "$tooltip"
+    
+    # Get time estimate from acpi using awk
+    local time_estimate=$(acpi -b | head -n1 | awk -F', ' '{print $3}')
+    
+    if [[ -n "$time_estimate" && "$time_estimate" =~ [0-9]{2}:[0-9]{2}:[0-9]{2} ]]; then
+        local hours=$(echo "$time_estimate" | awk -F: '{print $1}' | sed 's/^0*//')
+        local minutes=$(echo "$time_estimate" | awk -F: '{print $2}' | sed 's/^0*//')
+        [[ -z "$hours" ]] && hours=0
+        [[ -z "$minutes" ]] && minutes=0
+        tooltip="$tooltip Est. $hours H $minutes Min"
     fi
-
-    local remaining_time_hours=$(echo "scale=2; $charge / $current" | bc)
-    local hours=$(echo "scale=2; $charge / $current" | bc)
-    hours=$(echo "$remaining_time_hours / 1" | bc)
-    local minutes=$(echo "($remaining_time_hours - $hours) * 60" | bc)
-
-    minutes=$(echo "$minutes / 1" | bc)
-
-    tooltip="$tooltip Est. $hours H $minutes Min"
+    
     echo "$tooltip"
 }
 
@@ -104,5 +100,5 @@ TOOLTIP=$(get_battery_tooltip "$CAPACITY" "$STATUS" "$BATTERY_NAME")
 
 # Output JSON for Waybar
 cat << EOF
-{ "text": "$ICON $CAPACITY%", "alt": "$ICON $CAPACITY%", "tooltip": "$TOOLTIP", "class": "$CLASS", "percentage": $CAPACITY }
+{ "text": "$ICON $CAPACITY%", "alt": "$ICON $CAPACITY%", "tooltip": "$TOOLTIP", "class": "$CLASS", "percentage": "$CAPACITY" }
 EOF

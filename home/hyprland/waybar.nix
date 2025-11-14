@@ -183,6 +183,18 @@
             margin: 0 8px 0 8px;
         }
 
+        #custom-battery.warning {
+            color: #ffaa00;
+        }
+
+        #custom-battery.critical {
+            color: #ff0000;
+        }
+
+        #custom-battery.charging {
+            color: #00ff00;
+        }
+
         #bluetooth,
         #pulseaudio {
             margin: 0 4px 0 4px;

@@ -3,9 +3,9 @@ let
   sddm-materia-dark = pkgs.stdenv.mkDerivation {
     name = "sddm-materia-dark";
     src = pkgs.fetchFromGitHub {
-      owner = "PapirusDevelopmentTeam";
+      owner = "Ghibranlj";
       repo = "materia-kde";
-      rev = "6cc4c1867c78b62f01254f6e369ee71dce167a15";
+      rev = "d544aeb52e0ddf764c58763ed7d6b19176575b7e";
       sha256 = "sha256-tZWEVq2VYIvsQyFyMp7VVU1INbO7qikpQs4mYwghAVM=";
     };
     installPhase = ''

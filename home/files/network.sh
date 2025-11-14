@@ -4,7 +4,6 @@
 # Shows WiFi strength + SSID or Ethernet icon
 
 get_network_info() {
-
     if ! ip route | grep -q "^default"; then
         echo '{"text": "󰌙", "class": "no-internet", "tooltip": "No Network Connection"}'
         return

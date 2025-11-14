@@ -138,6 +138,9 @@
       networkmanager_dmenu
       kdePackages.kdeconnect-kde
 
+      #power
+      acpi
+
       #caffeine
       (writeScriptBin "caffeine-inhibit"
         (builtins.readFile ../files/caffeine-inhibit))
