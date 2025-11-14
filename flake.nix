@@ -93,7 +93,7 @@
         tuf = mkHost { hostName = "tuf"; };
         media-server = mkHost {
           hostName = "media-server";
-          hmEnabled = false;
+         hmEnabled = false;
         };
       };
 

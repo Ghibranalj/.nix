@@ -114,22 +114,19 @@
     (shell-command (concat "mkdir -p " full-directory))
     (message (concat "Created directory: " full-directory))))
 
-(defvar my--monet-servers (make-hash-table :test 'equal)
-  "Track running monet servers per project.")
-
 (defun my--open-or-toggle-claude-code ()
   "Open or toggle Claude Code IDE interface."
   (interactive)
   (monet-mode 1)
   (let* ((project-root (projectile-project-root))
-         (buf (get-buffer "claude")))
-    (unless (gethash project-root my--monet-servers)
-      (monet-start-server)
-      (puthash project-root t my--monet-servers))
+         (buf-name (format "claude (%s)" project-root))
+         (buf (get-buffer buf-name)))
     (if buf
         (switch-to-buffer buf)
       (progn
-        (vterm "claude")
+        (monet-start-server)
+        (vterm buf-name)
+        (persp-add-buffer buf-name)
         (vterm-send-string "exec claude")
         (vterm-send-return)))))
 
@@ -492,3 +489,11 @@
 
 
 
+
+(make-process
+           :name "claude"
+           :buffer (get-buffer-create "claude-experiment")
+           :command
+           `("claude")
+           ;; :coding 'no-conversion
+           )
