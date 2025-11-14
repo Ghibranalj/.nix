@@ -398,8 +398,6 @@ function get-api-key() {
     fi
 }
 
-# Claude code
-export ANTHROPIC_BASE_URL=https://api.z.ai/api/anthropic
-export ANTHROPIC_AUTH_TOKEN=$(get-api-key glm 2>/dev/null || echo "")
+export GLM_AUTH_TOKEN=$(get-api-key glm 2>/dev/null || echo "") \
 
 eval "$(direnv hook bash)"

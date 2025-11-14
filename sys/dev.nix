@@ -59,6 +59,12 @@
       upkgs.devenv
 
       claude-code
+      (writeScriptBin "glm" ''
+        #!/usr/bin/env bash
+        ANTHROPIC_BASE_URL=https://api.z.ai/api/anthropic \
+        ANTHROPIC_AUTH_TOKEN="$GLM_AUTH_TOKEN" \
+        ${pkgs.claude-code}/bin/claude --model glm-4.6 "$@"
+      '')
       upkgs.codex
     ];
   };
