@@ -13,6 +13,8 @@
   dev.enable = true;
   winbox.enable = true;
 
+  programs.obs-studio.enable = true;
+
   networking.hostName = "CreeprAir"; # Define your hostname.
 
   environment.systemPackages = with pkgs; [ qemu ];
