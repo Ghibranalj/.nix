@@ -19,6 +19,19 @@
  :n "C-<down>" #'evil-window-decrease-height
  :n "C-<left>" #'evil-window-decrease-width
  :n "C-<right>" #'evil-window-increase-width
+
+ ;; Workspace switching with Alt+number
+ :g "M-1" #'+workspace/switch-to-0
+ :g "M-2" #'+workspace/switch-to-1
+ :g "M-3" #'+workspace/switch-to-2
+ :g "M-4" #'+workspace/switch-to-3
+ :g "M-5" #'+workspace/switch-to-4
+ :g "M-6" #'+workspace/switch-to-5
+ :g "M-7" #'+workspace/switch-to-6
+ :g "M-8" #'+workspace/switch-to-7
+ :g "M-9" #'+workspace/switch-to-8
+ :g "M-0" #'+workspace/switch-to-final
+
  ;; split window
  :leader
  :desc "Yank from kill ring" "y" #'yank-from-kill-ring
@@ -111,6 +124,7 @@
   :desc "Run Last Make" "r" #'+make/run-last
   :desc "Run Last debug" "d" #'my-dap-debug-last
   )
+
 
  ;; (:prefix-map ("d" . "Debug")
  ;;  :desc "Debug last" "d" #'my-dap-debug-last

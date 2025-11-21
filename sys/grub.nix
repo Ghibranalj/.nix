@@ -19,7 +19,7 @@
       };
       grub2-theme = {
         enable = true;
-        theme = "stylish";
+        theme = "tela";
         footer = true;
       };
       grub = lib.mkDefault {

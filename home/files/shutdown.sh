@@ -92,7 +92,9 @@ elif [ "$selected_option" == "$sleep" ]; then
 elif [ "$selected_option" == "$uefi" ]; then
 	systemctl reboot --firmware-setup
 elif [ "$selected_option" == "$hibernate" ]; then
-    systemd-inhibit --what=sleep --who=powermenu --why="Lock after hibernate" --mode=delay  sh -c 'systemctl hibernate; hyprlock' &
+    lock_screen
+    sleep 1
+    systemctl hibernate
 else
 	echo "No match"
 fi

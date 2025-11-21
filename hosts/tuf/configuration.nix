@@ -4,7 +4,8 @@
   grub.enable = true;
   gnome.enable = true;
 
-  lightdm.enable = true;
+  lightdm.enable = false;
+  gdm.enable = true;
 
   powerconf.enable = true;
   powerconf.saver.enable = true;

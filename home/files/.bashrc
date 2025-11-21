@@ -155,7 +155,7 @@ else
     alias ll='ls -alhF'
 fi
 alias la='ls -Ah'
-alias l='ls -Fh'
+alias l='ls'
 
 alias lso='/bin/ls'
 
@@ -399,5 +399,8 @@ function get-api-key() {
 }
 
 export GLM_AUTH_TOKEN=$(get-api-key glm 2>/dev/null || echo "") \
+
+
+alias gc="docker compose"
 
 eval "$(direnv hook bash)"
