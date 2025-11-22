@@ -37,10 +37,14 @@
         settings = {
           battery = {
             governor = config.powerconf.saver.batteryGovernor;
+            energy_performance_preference = "power";
+            platform_profile = "low-power";
             turbo = "never";
           };
           charger = {
             governor = config.powerconf.saver.chargerGovernor;
+            energy_performance_preference = "performance";
+            platform_profile = "performance";
             turbo = "auto";
           };
         };
