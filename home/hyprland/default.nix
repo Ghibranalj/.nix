@@ -52,7 +52,6 @@
         enable = true;
         settings = {
           max-gamma = 150;
-
           profile = [
             {
               time = "7:30";
