@@ -3,8 +3,7 @@
 {
   options = with lib; { dev.enable = mkEnableOption "enables gnome"; };
   config = lib.mkIf config.dev.enable {
-    nixpkgs.config.permittedInsecurePackages =
-      [ "beekeeper-studio-5.1.5" "libsoup-2.74.3" ];
+    nixpkgs.config.permittedInsecurePackages = [ "beekeeper-studio-5.3.4" ];
 
     services.lorri.enable = true; # speeds up direnv for emacs
     environment.systemPackages = with pkgs; [

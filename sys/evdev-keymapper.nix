@@ -4,7 +4,7 @@
   options = with lib; {
      evdev-keymapper.enable = mkEnableOption "enables evdev-keymapper";
      evdev-keymapper.device = mkOption {
-       type = types.string;
+       type = types.str;
        default = "/dev/input/event0";
      };
   };

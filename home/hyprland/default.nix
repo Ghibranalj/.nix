@@ -24,7 +24,8 @@
     hyprland.brightnessDevice = mkOption {
       type = types.nullOr types.str;
       default = null;
-      description = "Device to control brightness, e.g., 'amdgpu_bl0'. Run ls /sys/class/backlight";
+      description =
+        "Device to control brightness, e.g., 'amdgpu_bl0'. Run ls /sys/class/backlight";
       example = "amdgpu_bl0";
     };
 
@@ -49,16 +50,32 @@
       kdeconnect = { enable = true; };
       hyprsunset = {
         enable = true;
-        transitions = {
-          sunrise = {
-            calendar = "*-*-* 06:00:00";
-            requests = [[ "temperature" "6500" ]];
-          };
-          sunset = {
-            calendar = "*-*-* 19:00:00";
-            requests = [[ "temperature" "4900" ]];
-          };
+        settings = {
+          max-gamma = 150;
+
+          profile = [
+            {
+              time = "7:30";
+              identity = true;
+            }
+            {
+              time = "19:00";
+              temperature = 4700;
+              gamma = 0.8;
+            }
+          ];
         };
+
+        # transitions = {
+        #   sunrise = {
+        #     calendar = "*-*-* 06:00:00";
+        #     requests = [[ "temperature" "6500" ]];
+        #   };
+        #   sunset = {
+        #     calendar = "*-*-* 19:00:00";
+        #     requests = [[ "temperature" "4900" ]];
+        #   };
+        # };
       };
       hypridle = {
         enable = true;
@@ -105,7 +122,7 @@
     home.packages = with pkgs; [
       # Core Wayland components
       waybar
-      rofi-wayland-unwrapped
+      rofi-unwrapped
       hyprpaper
       swaynotificationcenter
 

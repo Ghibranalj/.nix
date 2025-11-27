@@ -4,7 +4,7 @@
   config = lib.mkIf config.gdm.enable {
     services.xserver.enable = true;
 
-    services.xserver.displayManager.gdm = {
+    services.displayManager.gdm = {
       enable = true;
       # 
     };
@@ -14,7 +14,7 @@
 
     programs.hyprland = {
       enable = lib.mkDefault (!config.gnome.enable);
-      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     };
   };
 }

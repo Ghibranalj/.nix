@@ -1,7 +1,7 @@
-{ config, lib, pkgs, prevpkgs, ... }:
+{ config, lib, pkgs, prevpkgs, pkgs-24-11, ... }:
 let
   advcpmv_pkg =
-    (prevpkgs.coreutils.override { singleBinary = false; }).overrideAttrs (old:
+    (pkgs-24-11.coreutils.override { singleBinary = false; }).overrideAttrs (old:
       let
         advcpmv-data = {
           pname = "advcpmv";
@@ -12,7 +12,7 @@ let
           src = pkgs.fetchFromGitHub {
             owner = "jarun";
             repo = "advcpmv";
-            rev = "1e2b1c6b74fa0974896bf94604279a3f74b37a63";
+            rev = "1635eb96e5dbf0dde06830db8aee0c840705d7ed";
             hash = "sha256-9YlGiYQZXnvA5SxMLDSFga7xJk7vc9Vy9WRrcK8NBS8=";
           };
           patch-file = advcpmv-data.src

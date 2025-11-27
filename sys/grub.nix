@@ -4,7 +4,7 @@
   options = with lib; {
     grub.enable = mkEnableOption "enables grub";
     grub.efiMountPoint = mkOption {
-      type = types.string;
+      type = types.str;
       default = "/boot";
     };
   };

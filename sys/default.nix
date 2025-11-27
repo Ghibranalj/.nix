@@ -48,8 +48,6 @@ with lib; {
     # for secrets
     sops
     age
-    # For kursusjaringan management
-    webkitgtk_4_0
   ];
 
   sysUsers.enable = mkDefault true;
@@ -107,7 +105,7 @@ with lib; {
   };
 
   nixpkgs.config.allowUnfree = true;
-  system.stateVersion = "25.05"; # Did you read the comment?
+  system.stateVersion = "25.11"; # Did you read the comment?
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   gaming.enable = mkDefault false;

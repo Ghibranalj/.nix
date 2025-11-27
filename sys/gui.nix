@@ -1,5 +1,5 @@
 { config, lib, pkgs, prevpkgs, ... }: {
-  options = with lib; { gui.enable = mkEnableOption "enables gnome"; };
+  options = with lib; { gui.enable = mkEnableOption "enables gui"; };
 
   config = lib.mkIf config.gui.enable {
 
@@ -37,10 +37,11 @@
       discord
       emacs-all-the-icons-fonts
       gedit
+      mission-center
     ];
 
     fonts.packages = with pkgs;
-      [ noto-fonts-emoji fira-code-symbols source-code-pro ]
+      [ noto-fonts-color-emoji fira-code-symbols source-code-pro ]
       ++ builtins.filter lib.attrsets.isDerivation
       (builtins.attrValues pkgs.nerd-fonts);
   };

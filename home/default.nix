@@ -20,7 +20,7 @@ with lib; {
   home = {
     username = "gibi";
     homeDirectory = "/home/gibi";
-    stateVersion = "25.05";
+    stateVersion = "25.11";
     sessionVariables = { };
   };
 

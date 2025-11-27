@@ -38,7 +38,7 @@ in {
 
     programs.hyprland = {
       enable = lib.mkDefault (!config.gnome.enable);
-      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     };
 
     services.displayManager.defaultSession =

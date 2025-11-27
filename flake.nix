@@ -1,18 +1,19 @@
 {
   description = "Ghibran Jaringan";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-prev.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs-prev.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs-24-11.url = "github:NixOS/nixpkgs/nixos-24.11";
     home-manager = {
       url =
-        "github:nix-community/home-manager/release-25.05"; # Match Nixpkgs version
+        "github:nix-community/home-manager/release-25.11"; # Match Nixpkgs version
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-doom-emacs-unstraightened = {
       url = "github:marienz/nix-doom-emacs-unstraightened";
       inputs.doomemacs.url =
-        "github:doomemacs/doomemacs/5e7e93beb9f2b5a81768aaf4950203ceea21c4f6"; # 8 October 2025
+        "github:doomemacs/doomemacs/ead254e15269bf8564625df4c8d2af6690a0df49"; # 27 november 2025
     };
     grub2-themes = { url = "github:vinceliuice/grub2-themes"; };
     nixarr.url = "github:rasmus-kirk/nixarr";
@@ -24,17 +25,16 @@
     split-monitor-workspaces = {
       url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix = {
-      url = "github:danth/stylix/release-25.05";
+      url = "github:danth/stylix/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, nixarr
-    , nixpkgs-prev, split-monitor-workspaces, hyprland, stylix, ... }@inputs:
+    , nixpkgs-prev, nixpkgs-24-11, split-monitor-workspaces, hyprland, stylix, ... }@inputs:
     let
       # Host generator function (thanks deepseek)
       mkHost = { hostName, system ? "x86_64-linux", hmEnabled ? true }:
@@ -53,12 +53,19 @@
               permittedInsecurePackages = [ "*" ];
             };
           };
+          pkgs-24-11 = import nixpkgs-24-11 {
+            inherit system;
+            config = {
+              allowUnfree = true;
+              permittedInsecurePackages = [ "*" ];
+            };
+          };
 
           host = { inherit hostName; };
         in nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit inputs host nixarr upkgs prevpkgs split-monitor-workspaces;
+            inherit inputs host nixarr upkgs prevpkgs pkgs-24-11 split-monitor-workspaces;
           };
           modules = [
             ./sys

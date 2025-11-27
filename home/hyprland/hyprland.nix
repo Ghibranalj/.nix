@@ -9,10 +9,10 @@
     '';
 
     wayland.windowManager.hyprland = {
-      package = hyprland.packages.${pkgs.system}.hyprland;
+      package = hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       enable = true;
       plugins = [
-        split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
+        split-monitor-workspaces.packages.${pkgs.stdenv.hostPlatform.system}.split-monitor-workspaces
       ];
       settings = {
         plugin = {
@@ -29,6 +29,7 @@
         exec-once = [
           "hyprpaper -c /home/gibi/.config/hyprpaper.conf"
           "waybar"
+          "noisetorch -i -t 85"
           (lib.mkIf (config.hyprland.caffeineOnStartup)
             "caffeine-inhibit enable")
         ] ++ config.hyprland.startupCmds;
