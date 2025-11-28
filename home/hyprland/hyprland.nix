@@ -87,9 +87,11 @@
         gestures = {
           gesture = [
             "3, horizontal, workspace"
-            #
+            "4, down, close"
+            "4, left, dispatcher, split-movetoworkspacesilent, -1"
+            "4, right, dispatcher, split-movetoworkspacesilent, +1"
+            "3, up, dispatcher, exec, YOFF=120px COL=3 ROW=10 WIDTH=1000px HEIGHT=500px rofi -location 0 -show drun -click-to-exit"
           ];
-          # 
         };
 
         # Keybindings (DWM style)
