@@ -20,14 +20,10 @@ in {
       enable = true;
       preset = if cfg.inputOnly then "noise-reduction" else cfg.preset;
       extraPresets = {
-        "${cfg.preset}" = lib.mkIf (!cfg.inputOnly) {
-          output =
-            builtins.fromJSON (builtins.readFile ./files/${cfg.preset}.json);
-        };
-        "noise-reduction" = {
-          input =
-            builtins.fromJSON (builtins.readFile ./files/noise-reduction.json);
-        };
+        "${cfg.preset}" = lib.mkIf (!cfg.inputOnly)
+          (builtins.fromJSON (builtins.readFile ./files/${cfg.preset}.json));
+        "noise-reduction" =
+          builtins.fromJSON (builtins.readFile ./files/noise-reduction.json);
       };
     };
   };
