@@ -8,7 +8,7 @@
             "output-gain": 0.0,
             "reference": "Geometric Mean (MSI)",
             "silence-threshold": -40.0,
-            "target": -12.0
+            "target": -13.0
         },
         "blocklist": [],
         "compressor#0": {
@@ -28,7 +28,7 @@
             "lpf-frequency": 20000.0,
             "lpf-mode": "Off",
             "makeup": 3.0,
-            "mode": "Downward",
+            "mode": "Upward",
             "output-gain": 0.0,
             "ratio": 3.0,
             "release": 200.0,
@@ -190,6 +190,17 @@
             },
             "split-channels": false
         },
+        "exciter#0": {
+            "amount": 0.68,
+            "blend": 0.0,
+            "bypass": false,
+            "ceil": 16000.0,
+            "ceil-active": false,
+            "harmonics": 8.5,
+            "input-gain": 0.0,
+            "output-gain": 0.0,
+            "scope": 7500.0
+        },
         "gate#0": {
             "attack": 5.0,
             "bypass": false,
@@ -259,6 +270,7 @@
             "compressor#0",
             "deesser#0",
             "autogain#0",
+            "exciter#0",
             "limiter#0"
         ],
         "rnnoise#0": {
