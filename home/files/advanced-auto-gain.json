@@ -1,0 +1,69 @@
+{
+    "output": {
+        "autogain#0": {
+            "bypass": false,
+            "force-silence": false,
+            "input-gain": 0.0,
+            "maximum-history": 15,
+            "output-gain": 0.0,
+            "reference": "Shortterm",
+            "silence-threshold": -70.0,
+            "target": -12.0
+        },
+        "bass_enhancer#0": {
+            "amount": 1.0,
+            "blend": 0.0,
+            "bypass": false,
+            "floor": 20.0,
+            "floor-active": false,
+            "harmonics": 8.5,
+            "input-gain": 0.0,
+            "output-gain": 0.0,
+            "scope": 100.0
+        },
+        "blocklist": [],
+        "exciter#0": {
+            "amount": 6.0,
+            "blend": 0.0,
+            "bypass": false,
+            "ceil": 16000.0,
+            "ceil-active": false,
+            "harmonics": 8.000000000000002,
+            "input-gain": -2.0,
+            "output-gain": 0.0,
+            "scope": 5500.0
+        },
+        "limiter#0": {
+            "alr": false,
+            "alr-attack": 5.0,
+            "alr-knee": 0.0,
+            "alr-release": 50.0,
+            "attack": 5.0,
+            "bypass": false,
+            "dithering": "None",
+            "gain-boost": true,
+            "input-gain": 0.0,
+            "input-to-link": 0.0,
+            "input-to-sidechain": 0.0,
+            "link-to-input": 0.0,
+            "link-to-sidechain": 0.0,
+            "lookahead": 10.0,
+            "mode": "Herm Thin",
+            "output-gain": 0.0,
+            "oversampling": "True Peak/16 bit",
+            "release": 5.0,
+            "sidechain-preamp": 0.0,
+            "sidechain-to-input": 0.0,
+            "sidechain-to-link": 0.0,
+            "sidechain-type": "Internal",
+            "stereo-link": 100.0,
+            "threshold": 0.0
+        },
+        "plugins_order": [
+            "bass_enhancer#0",
+            "exciter#0",
+            "autogain#0",
+            "limiter#0"
+        ]
+    }
+}

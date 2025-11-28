@@ -15,6 +15,7 @@ with lib; {
     ./xbindkeys.nix
     ./gnome.nix
     ./gns3.nix
+    ./easyeffect.nix
   ];
 
   home = {

@@ -10,6 +10,7 @@
           email = "24712554+Ghibranalj@users.noreply.github.com";
         };
         init.defaultBranch = "master";
+        push.autoSetupRemote = true;
       };
     };
   };

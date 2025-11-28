@@ -7,6 +7,8 @@
   hyprland.brightnessDevice = "amdgpu_bl1";
 
   alacritty.enable = true;
+
+  easyeffect.enable = true;
   
   gtk-theme.enable = true;
   doom.mode = "gui";

@@ -17,7 +17,11 @@
 
   networking.hostName = "CreeprAir"; # Define your hostname.
 
-  environment.systemPackages = with pkgs; [ qemu ];
+  environment.systemPackages = with pkgs; [
+    qemu
+    # easyeffects
+    #
+  ];
 
   networking.firewall.enable = false;
 }

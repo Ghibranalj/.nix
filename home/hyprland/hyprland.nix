@@ -29,7 +29,7 @@
         exec-once = [
           "hyprpaper -c /home/gibi/.config/hyprpaper.conf"
           "waybar"
-          "noisetorch -i -t 85"
+          # "noisetorch -i -t 85"
           (lib.mkIf (config.hyprland.caffeineOnStartup)
             "caffeine-inhibit enable")
         ] ++ config.hyprland.startupCmds;

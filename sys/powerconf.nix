@@ -59,7 +59,7 @@
           RUNTIME_PM_ON_AC = "on";
           RUNTIME_PM_ON_BAT = "auto";
           PCIE_ASPM_ON_AC = "default";
-          PCIE_ASPM_ON_BAT = "powersupersave";
+          PCIE_ASPM_ON_BAT = "powersave";
           RADEON_POWER_PROFILE_ON_AC = "high";
           RADEON_POWER_PROFILE_ON_BAT = "low";
           RADEON_DPM_STATE_ON_AC = "performance";
@@ -100,7 +100,7 @@
       
       boot.kernelParams = [
         "pcie_aspm=force"
-        "pcie_aspm.policy=powersupersave"
+        "pcie_aspm.policy=powersave"
         "i915.enable_psr=1"
         "i915.enable_fbc=1"
         "processor.max_cstate=5"
