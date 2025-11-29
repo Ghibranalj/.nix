@@ -44,5 +44,17 @@
       [ noto-fonts-color-emoji fira-code-symbols source-code-pro ]
       ++ builtins.filter lib.attrsets.isDerivation
       (builtins.attrValues pkgs.nerd-fonts);
+
+    stylix = {
+      enable = true;
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/material-darker.yaml";
+      image = ./files/background.png;
+      targets = {
+        grub.enable = false;
+        console.enable = false;
+        chromium.enable = false;
+      };
+    };
+
   };
 }

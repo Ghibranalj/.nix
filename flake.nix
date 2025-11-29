@@ -74,11 +74,12 @@
             inputs.grub2-themes.nixosModules.default
             inputs.evdev-keymapper.nixosModules.default
             inputs.nix-index-database.nixosModules.nix-index
+            stylix.nixosModules.stylix
           ] ++ (if hmEnabled then [
             home-manager.nixosModules.home-manager
             {
               home-manager.sharedModules = [
-                stylix.homeModules.stylix
+                # stylix.homeModules.stylix
                 inputs.nix-index-database.homeModules.nix-index
               ];
               home-manager.useGlobalPkgs = true;
