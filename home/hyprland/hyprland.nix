@@ -171,7 +171,7 @@
           "$mod SHIFT, 9, split-movetoworkspacesilent, 9"
 
           # DWM-style view all tags
-          "$mod, 0, workspace, special" # view special workspace
+          "$mod, 0, togglespecialworkspace" # toggle special workspace
           "$mod SHIFT, 0, movetoworkspace, special" # move to special workspace
 
           # Additional useful bindings
