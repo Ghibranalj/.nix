@@ -5,6 +5,14 @@
   config = lib.mkIf config.dev.enable {
     nixpkgs.config.permittedInsecurePackages = [ "beekeeper-studio-5.3.4" ];
 
+    # playwright
+    system.activationScripts.google-chrome-symlink = {
+      text = ''
+        mkdir -p /opt/google/chrome
+        ln -sf ${pkgs.google-chrome}/bin/google-chrome-stable /opt/google/chrome/chrome
+      '';
+    };
+
     services.lorri.enable = true; # speeds up direnv for emacs
     environment.systemPackages = with pkgs; [
       direnv
@@ -12,7 +20,7 @@
       go
       gcc
       gnumake
-      rustup
+      # rustup
       python3
       texliveSmall
       jdk
