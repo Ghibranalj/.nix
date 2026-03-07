@@ -175,10 +175,10 @@ if command -v ranger &>/dev/null; then
     alias f=ranger
 fi
 
-if command -v go &>/dev/null; then
-    export GOPATH="$HOME/.cache/go"
-    export PATH=$PATH:$(go env GOPATH)/bin
-fi
+# if command -v go &>/dev/null; then
+export GOPATH="$HOME/.cache/go"
+export PATH=$PATH:$GOPATH/bin
+# fi
 
 if command -v todo-cli &>/dev/null; then
     todo-cli check 2>/dev/null

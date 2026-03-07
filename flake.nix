@@ -32,9 +32,11 @@
     };
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+    witr.url = "github:pranshuparmar/witr";
   };
   outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, nixarr
-    , nixpkgs-prev, nixpkgs-24-11, split-monitor-workspaces, hyprland, stylix, ... }@inputs:
+    , nixpkgs-prev, nixpkgs-24-11, split-monitor-workspaces, hyprland, stylix
+    , ... }@inputs:
     let
       # Host generator function (thanks deepseek)
       mkHost = { hostName, system ? "x86_64-linux", hmEnabled ? true }:
@@ -65,7 +67,8 @@
         in nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit inputs host nixarr upkgs prevpkgs pkgs-24-11 split-monitor-workspaces;
+            inherit inputs host nixarr upkgs prevpkgs pkgs-24-11
+              split-monitor-workspaces;
           };
           modules = [
             ./sys
@@ -101,7 +104,7 @@
         tuf = mkHost { hostName = "tuf"; };
         media-server = mkHost {
           hostName = "media-server";
-         hmEnabled = false;
+          hmEnabled = false;
         };
       };
 

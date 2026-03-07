@@ -128,7 +128,7 @@
         (monet-start-server)
         (vterm buf-name)
         (persp-add-buffer buf-name)
-        (vterm-send-string "claude --continue 2>/dev/null || claude")
+        (vterm-send-string "glm --continue 2>/dev/null || glm")
         (vterm-send-return)))))
 
 ;; ;;;

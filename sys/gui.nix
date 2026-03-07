@@ -38,6 +38,7 @@
       emacs-all-the-icons-fonts
       gedit
       mission-center
+      gnome-disk-utility
     ];
 
     fonts.packages = with pkgs;

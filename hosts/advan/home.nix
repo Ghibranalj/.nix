@@ -8,7 +8,7 @@
 
   alacritty.enable = true;
 
-  easyeffect.enable = true;
+  easyeffect.enable = false;
   
   gtk-theme.enable = true;
   doom.mode = "gui";

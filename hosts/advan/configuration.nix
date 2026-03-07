@@ -12,6 +12,7 @@
   evdev-keymapper.enable = true;
   dev.enable = true;
   winbox.enable = true;
+  programs.nix-ld.enable = true;
 
   programs.obs-studio.enable = true;
 
@@ -19,9 +20,10 @@
 
   environment.systemPackages = with pkgs; [
     qemu
+    vlc
     # easyeffects
-    #
   ];
+  programs.zoom-us.enable = true;
 
   networking.firewall.enable = false;
 }

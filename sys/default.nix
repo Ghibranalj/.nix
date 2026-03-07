@@ -22,6 +22,7 @@ with lib; {
   ];
 
   environment.systemPackages = with pkgs; [
+    inputs.witr.packages.${stdenv.hostPlatform.system}.default
     neovim # Install Neovim
     git
     wget
@@ -44,10 +45,32 @@ with lib; {
     bash-completion
     trash-cli
     comma
+    strongswan
 
     # for secrets
     sops
     age
+
+    (writeScriptBin "nix-cleanup" ''
+      #!${pkgs.bash}/bin/bash
+      sudo nix-collect-garbage -d 
+      nix-collect-garbage -d
+    '')
+
+    (writeScriptBin "rm-ssh-host" ''
+      #!${pkgs.bash}/bin/bash
+      set -euo pipefail
+
+      LINE="''${1:?Usage: $0 <line-number>}"
+      FILE="$HOME/.ssh/known_hosts"
+
+      if [[ ! -f "$FILE" ]]; then
+        echo "known_hosts not found: $FILE" >&2
+        exit 1
+      fi
+
+      sed -i "''${LINE}d" "$FILE"
+    '')
   ];
 
   sysUsers.enable = mkDefault true;
@@ -75,6 +98,12 @@ with lib; {
   time.timeZone = mkDefault "Asia/Jakarta";
 
   networking.networkmanager.enable = mkDefault true;
+  networking.networkmanager.plugins = with pkgs; [
+    networkmanager-l2tp
+    networkmanager-sstp
+    networkmanager-strongswan
+    networkmanager-openvpn
+  ];
 
   nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
   environment = {
@@ -125,6 +154,6 @@ with lib; {
   xdg.portal = {
     enable = true;
     # Don't add hyprland portal here since programs.hyprland.enable adds it automatically
-    extraPortals = with pkgs; [];
+    extraPortals = with pkgs; [ ];
   };
 }
