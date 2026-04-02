@@ -5,6 +5,7 @@ with lib; {
 
   imports = [
     ./alacritty.nix
+    ./ai.nix
     ./bash.nix
     ./doom.nix
     ./git.nix
@@ -29,6 +30,7 @@ with lib; {
   git.enable = mkDefault true;
   neovim.enable = mkDefault true;
   doom.enable = mkDefault true;
+  ai.enable = mkDefault true;
 
   gns3-handlers.enable = mkDefault true;
 

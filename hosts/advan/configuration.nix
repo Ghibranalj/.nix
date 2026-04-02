@@ -21,8 +21,16 @@
   environment.systemPackages = with pkgs; [
     qemu
     vlc
+    jmtpfs
+    android-tools
+    ffmpeg
+    dnsutils
+    qemu
+    bottles
+    firefox
     # easyeffects
   ];
+  services.gvfs.enable = true;
   programs.zoom-us.enable = true;
 
   networking.firewall.enable = false;

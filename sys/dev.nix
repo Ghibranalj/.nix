@@ -66,11 +66,16 @@
       upkgs.devenv
 
       upkgs.claude-code
+      (pkgs.runCommand "gpt" { buildInputs = [ pkgs.makeWrapper ]; } ''
+        mkdir -p $out/bin
+        cp ${./files/gpt.sh} $out/bin/gpt
+        chmod +x $out/bin/gpt
+      '')
       (writeScriptBin "glm" ''
         #!${pkgs.bash}/bin/bash
-        ANTHROPIC_BASE_URL=https://api.z.ai/api/anthropic \
-        ANTHROPIC_AUTH_TOKEN="$GLM_AUTH_TOKEN" \
-        ${upkgs.claude-code}/bin/claude --model glm-4.7 "$@"
+        MODELS="GLM-5 GLM-4.7 GLM-4.6 GLM-4.5V GLM-4.5 GLM-4.5-Air"
+        MODEL=$(echo $MODELS | tr ' ' '\n' | ${pkgs.fzf}/bin/fzf --height=10 --prompt="Select GLM model: ")
+        ANTHROPIC_BASE_URL=https://api.z.ai/api/anthropic ANTHROPIC_AUTH_TOKEN="$GLM_AUTH_TOKEN" claude --model "$MODEL" "$@"
       '')
       upkgs.codex
 

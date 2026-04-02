@@ -97,8 +97,8 @@
  ;;  :desc "Show headers" "h" #'verb-toggle-show-headers)
 
  (:prefix-map ("v" . "Vibe code")
-  :desc "Open claude code ide" "c" #'my--open-or-toggle-claude-code
-  :desc "Open claude code ide" "C" #'my--open-claude-code-in-current-window
+  :desc "Open claude code ide" "c" #'claude-code-open-or-toggle
+  :desc "Force new claude code buffer" "C" #'claude-code-open
   :desc "Force show completion" "v" #'minuet-show-suggestion
   )
 

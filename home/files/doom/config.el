@@ -114,23 +114,6 @@
     (shell-command (concat "mkdir -p " full-directory))
     (message (concat "Created directory: " full-directory))))
 
-(defun my--open-or-toggle-claude-code ()
-  "Open or toggle Claude Code IDE interface."
-  (interactive)
-  (monet-mode 1)
-  (let* ((project-root (projectile-project-root))
-         (default-directory project-root)
-         (buf-name (format "claude (%s)" project-root))
-         (buf (get-buffer buf-name)))
-    (if buf
-        (switch-to-buffer buf)
-      (progn
-        (monet-start-server)
-        (vterm buf-name)
-        (persp-add-buffer buf-name)
-        (vterm-send-string "glm --continue 2>/dev/null || glm")
-        (vterm-send-return)))))
-
 ;; ;;;
 ;; ;;; random shit
 ;; ;;;

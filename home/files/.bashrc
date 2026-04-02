@@ -108,7 +108,7 @@ function delete() {
 }
 
 function ind() {
-    $1 &>>~/.app.log &
+    $@ &>>~/.app.log &
     disown
 }
 complete -cf ind
@@ -404,3 +404,6 @@ export GLM_AUTH_TOKEN=$(get-api-key glm 2>/dev/null || echo "") \
 alias gc="docker compose"
 
 eval "$(direnv hook bash)"
+
+
+export PATH=$HOME/.bun/bin:$PATH
