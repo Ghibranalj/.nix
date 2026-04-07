@@ -19,6 +19,7 @@ with lib; {
     ./advcpmv.nix
     ./lightdm.nix
     ./gdm.nix
+    ./wg-auto.nix
   ];
 
   environment.systemPackages = with pkgs; [

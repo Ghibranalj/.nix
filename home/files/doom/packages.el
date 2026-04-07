@@ -178,3 +178,6 @@
   :recipe (:type git :host github :repo "stevemolitor/monet" :branch "main"))
 
 
+(package! ghostel
+  :pin "d030cbb23a2903bfff0d20b1b227d1024481b819"
+  :recipe (:host github :repo "dakra/ghostel"))

@@ -13,7 +13,7 @@
         linger = true;
         openssh.authorizedKeys.keys = let
           keys = pkgs.fetchurl {
-            url = "https://github.com/ghibranalj.keys";
+            url = "https://git.mrjaringan.com/Ghibranalj.keys";
             sha256 = "sha256-VL1NuSQjLWE9iujpUAUmXShS7MbnlQLhF5AXJL3nXjU=";
           };
         in pkgs.lib.splitString "\n" (builtins.readFile keys);

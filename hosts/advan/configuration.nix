@@ -1,6 +1,12 @@
 { config, pkgs, lib, inputs, ... }: {
   gui.enable = true;
 
+  wg-auto = {
+    enable = true;
+    home-wifi = [ "tiktok" ];
+    wg-name = "advan";
+  };
+
   gnome.enable = false;
   gdm.enable = true;
   powerconf.enable = true;
