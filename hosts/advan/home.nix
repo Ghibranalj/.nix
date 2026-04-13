@@ -6,10 +6,13 @@
 
   hyprland.brightnessDevice = "amdgpu_bl1";
 
-  alacritty.enable = true;
+  alacritty = {
+    fontSize = 11.5;
+    enable = true;
+  };
 
   easyeffect.enable = false;
-  
+
   gtk-theme.enable = true;
   doom.mode = "gui";
 }

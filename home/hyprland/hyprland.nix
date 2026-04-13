@@ -102,7 +102,7 @@
           # DWM-style basic bindings
           "$mod SHIFT, Return, exec, alacritty" # spawn terminal
           "$mod, Q, killactive," # close window
-          "$mod SHIFT, E, exit," # quit dwm/hyprland
+          # "$mod SHIFT, E, exit," # quit dwm/hyprland
 
           "$nomod, SPACE, exec,YOFF=120px rofi -location 2  -show drun" # alternative launcher
           "$nomod, Return, exec, emacsclient -c" # alternative launcher

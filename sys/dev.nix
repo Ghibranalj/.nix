@@ -45,6 +45,7 @@
       upkgs.copilot-language-server
       typescript-language-server
       astro-language-server
+      jdt-language-server
 
       ## DB stuff
       beekeeper-studio
