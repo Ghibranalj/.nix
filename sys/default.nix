@@ -20,6 +20,7 @@ with lib; {
     ./lightdm.nix
     ./gdm.nix
     ./wg-auto.nix
+    ./paranoid-wifi.nix
   ];
 
   environment.systemPackages = with pkgs; [

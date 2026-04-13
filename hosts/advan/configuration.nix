@@ -7,6 +7,11 @@
     wg-name = "advan";
   };
 
+  paranoid-wifi = {
+    enable = true;
+    home-wifi = [ "tiktok" ];
+  };
+
   gnome.enable = false;
   gdm.enable = true;
   powerconf.enable = true;
