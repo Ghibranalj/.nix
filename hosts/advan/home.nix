@@ -1,5 +1,4 @@
-{ config, lib, pkgs, ... }:
-{
+{ config, lib, pkgs, ... }: {
   gnome.enable = false;
   hyprland.enable = true;
   hyprland.monitorConfig = [ ", preferred, auto, 1" ];
@@ -14,5 +13,12 @@
   easyeffect.enable = false;
 
   gtk-theme.enable = true;
-  doom.mode = "gui";
+   
+  doom = {
+    mode = "gui";
+    fontSize = {
+      normal = 17;
+      big = 23;
+    };
+  };
 }

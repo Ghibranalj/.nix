@@ -162,9 +162,9 @@
 (package! rainbow-delimiters :pin "7919681b0d883502155d5b26e791fec15da6aeca")
 ;; (package! persp-mode :pin "124f4430008859a75b25521c474f37aa9f75afeb")
 
-;; (package! claude-code-ide :pin "32d853e20b9d245a6ee89c4a153a4e568250c62c"
-;;   :recipe (:type git :host github :repo "manzaltu/claude-code-ide.el"
-;;            :branch "main"))
+(package! claude-code-ide :pin "56db02ee386d009ddb8b1482310f1f9beeefb810"
+  :recipe (:type git :host github :repo "manzaltu/claude-code-ide.el"
+           :branch "main"))
 
 (package! minuet :pin "2d9d2ad7768adf26fa54a8fdd8f6d78197a259f1"
   :recipe (:type git :host github :repo "milanglacier/minuet-ai.el"

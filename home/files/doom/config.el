@@ -478,5 +478,12 @@
               (lambda (orig-fun &rest args)
                 (call-interactively 'evil-window-up))))
 
+(use-package! claude-code-ide
+  :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
+  :custom
+  (claude-code-ide-cli-path "glm")
+  :config
+  (claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools
+
 (message "=== Done Loading Config ===")
 
