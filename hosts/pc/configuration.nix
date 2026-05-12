@@ -66,7 +66,7 @@
     devices = { persist-mouse0 = "btmouse"; };
   };
 
-  systemd.services.persistent-evdev = {
+  systemd.services.persistent-evde  = {
     wants = [ "bluetooth.service" ];
     after = [ "bluetooth.service" ];
   };
